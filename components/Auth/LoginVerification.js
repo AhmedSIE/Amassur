@@ -92,23 +92,29 @@ class LoginVerification extends React.Component{
                 this.state.loading ? (
                   <AppLoading />
                 ):(
-                  <ImageBackground source={require("./../../assets/images/hand-person-woman.jpg")} style={styles.imagebackground}>                      
-                        <Text style={styles.title}>Entrer le code reçu par sms</Text>
-                        <TextInput
-                            placeholder="Code"
-                            placeholderTextColor="white"
-                            style={styles.input}
-                            onChangeText={(text) => this.onChangeText(text)}
-                            returnKeyType="done"
-                            keyboardType="phone-pad"
-                        />
-                        <TouchableOpacity onPress={() => this.verifyCode()} style={styles.button}>
-                            <Text style={styles.textButton}>Valider</Text>
-                        </TouchableOpacity>
-                        <Image style={styles.authimage} source={require("./../../assets/images/logo.png")} />
+                  <Container style={styles.container}>
+                    <Image style={styles.authimage} source={require("./../../assets/images/logo.png")} />
+                            <Card style={styles.card}>
+                                <Text style={styles.tit}>
+                                    Bonjour
+                                </Text>
+                                <Text style={styles.title}>
+                                    Entrer le code reçu par sms
+                                </Text>
+                                <TextInput
+                                    placeholder="Code"
+                                    placeholderTextColor="white"
+                                    style={styles.input}
+                                    onChangeText={(text) => this.onChangeText(text)}
+                                    returnKeyType="done"
+                                    keyboardType="phone-pad"
+                                />
+                                <TouchableOpacity onPress={() => this.verifyCode()} style={styles.button}>
+                                    <Text style={styles.textButton}>Valider</Text>
+                                </TouchableOpacity>
+                            </Card>
                         <Text style={styles.title2}>Copyright @ 2020 par Switch Maker</Text>
-                        <Text style={styles.title3}>switch-maker.com</Text>
-                  </ImageBackground>
+                  </Container>
                 )
               }
             </View>
@@ -116,44 +122,83 @@ class LoginVerification extends React.Component{
     }
 }
 const styles = StyleSheet.create({
-    container: {
+  container: {
       flex: 1,
-      justifyContent: "center",
+      padding: 30,
+
+  },
+  card:{
+      borderRadius:15,
+      // paddingLeft:'30%',
+      // justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#87c965",
-    },
-    title: {
+      color:'white'
+
+  },
+  tit: {
+      textAlign: "left",
+      marginTop: 10,
+      width: "90%",
+      fontSize: 25,
+      fontWeight:'bold',
+      color: "black",
+      fontFamily: "muli",
+      
+  },
+  title: {
       textAlign: "center",
-      marginTop: 200,
-      width: "60%",
+      marginTop: 10,
+      width: "90%",
       fontSize: 17,
       marginBottom: 20,
-      color: "white",
+      color: "black",
       fontFamily: "muli",
-    },
-    input: {
-      width: "60%",
-      color: "white",
-  
+      
+  },
+  title2: {
+      textAlign: "center",
+      width: "100%",
+      fontSize: 13,
+      marginTop: 20,
+      marginBottom: 5,
+      color: "black",
+      fontFamily: "muli",
+  },
+  input: {
+      width: "90%",
+      color: "black",
       borderRadius: 10,
       padding: 15,
       borderWidth: 1,
       borderColor: "white",
       fontFamily: "muli",
       marginBottom: 20,
-    },
-    button: {
-      width: "50%",
-      backgroundColor: "red",
+      backgroundColor:'#cccccc35',
+      
+  },
+  button: {
+      width: 250,
+      backgroundColor: "#2E3682",
+      color: "white",
       paddingHorizontal: 20,
       paddingVertical: 15,
-      borderRadius: 10,
-    },
-    textButton: {
+      borderRadius: 30,
+      marginBottom:30,
+  },
+  textButton: {
       fontFamily: "muli",
       color: "white",
-    },
-    imagebackground:{
+      textAlign: "center",
+
+  },
+  textButton2: {
+      marginTop:20,
+      fontFamily: "muli",
+      color: "#2E3682",
+      textAlign: "center",
+
+  },
+  imagebackground:{
       width:"100%",
       height:"100%",
       justifyContent: "center",
@@ -161,28 +206,13 @@ const styles = StyleSheet.create({
       backgroundColor: "silver",
       opacity: 0.7,
       backgroundColor: 'black',
-    },
-    title2: {
-      textAlign: "center",
-      width: "60%",
-      fontSize: 13,
-      marginTop: 20,
-      marginBottom: 5,
-      color: "white",
-      fontFamily: "muli",
-    },
-    title3: {
-        textAlign: "center",
-        width: "60%",
-        fontSize: 12,
-        marginBottom: 20,
-        color: "white",
-        fontFamily: "muli",
-    },
-    authimage:{
+  },
+  authimage:{
       marginTop:20,
-      width:'12%',
-      height:'12%',
-    },
-  });
+      marginBottom:40,
+      marginLeft:'10%',
+      height:85,
+      width:'85%'
+  },
+});
   export default LoginVerification;

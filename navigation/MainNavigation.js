@@ -6,7 +6,6 @@ import AuthNavigation from './AuthNavigation';
 import {AsyncStorage} from 'react-native';  
 import AppLoading from '../components/AppLoading';
 
-
 const RootStack = createStackNavigator();
 class MainNavigation extends React.Component {
     constructor(props){
@@ -40,7 +39,7 @@ class MainNavigation extends React.Component {
         }) 
     } 
     render(){
-        // alert(this.state.token)
+        console.log(this.props)
         return(
             <View style={{flex:1}}>
             {
@@ -51,19 +50,19 @@ class MainNavigation extends React.Component {
                         screenOptions={{
                             headerShown: false
                         }}>
-                        {
-                            this.state.token ? (
+                        {/* {
+                            this.state.token ? ( */}
                                 <RootStack.Screen 
                                     name="userSpace"
                                     component={UserNavigation}
                                     />
-                            ) : (
+                             {/* ) : ( */}
                                 
                                 <RootStack.Screen
                                     name="AuthUser"
                                     component={AuthNavigation} />
-                            )
-                        }
+                             {/* )
+                         } */}
                     </RootStack.Navigator>
                 )
             }
@@ -71,5 +70,5 @@ class MainNavigation extends React.Component {
         )
     }   
 }
-
+ 
 export default MainNavigation

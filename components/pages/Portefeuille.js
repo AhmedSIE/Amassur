@@ -8,102 +8,202 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 class Portefeuille extends React.Component{
     constructor(props){
         super(props)
+      console.log(this.props)
     }
+  
     render(){
-        return (
-            <Container style={styles.corp}>
-                <HeaderNavigator/>
-                <ScrollView style={styles.scrollView}>
-                    <Container style={styles.display}>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file-text' style={styles.icone3}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Mes contrats</Text>  
-                                    </CardItem>
-                                        <Text style={styles.text2}>1 contrats</Text>
-                                </Card>
-                            </TouchableOpacity>
+        // console.log(this.props)
+        if (this.props) {
+            return (
+                <Container style={styles.corp}>
+                    <HeaderNavigator/>
+                    <ScrollView style={styles.scrollView}>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-text' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes contrats</Text>  
+                                        </CardItem>
+                                            <Text style={styles.text2}>1 contrats</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes devis</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 nouvelle information</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file' style={styles.icone2}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Mes devis</Text>
-                                    </CardItem>
-                                    <Text style={styles.text3}>0 nouvelle information</Text>
-                                </Card>
-                            </TouchableOpacity>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-photo-o' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes photos</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 manquante(s)</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-text-o' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes attestations</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 attestation(s)</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-
-                    </Container>
-                    <Container style={styles.display}>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file-photo-o' style={styles.icone2}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Mes photos</Text>
-                                    </CardItem>
-                                    <Text style={styles.text3}>0 manquante(s)</Text>
-                                </Card>
-                            </TouchableOpacity>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-o' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes factures</Text>
+                                        </CardItem>
+                                        <Text style={styles.text2}>3 factures</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-movie-o' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Vidéos</Text>
+                                        </CardItem>
+                                        <Text style={styles.text2}>Comprendre l'offre</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file-text-o' style={styles.icone2}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Mes attestations</Text>
-                                    </CardItem>
-                                    <Text style={styles.text3}>0 attestation(s)</Text>
-                                </Card>
-                            </TouchableOpacity>
+                    </ScrollView>
+                </Container>    
+            );    
+        } else {
+            return (
+                <Container style={styles.corp}>
+                    <HeaderNavigator/>
+                    <ScrollView style={styles.scrollView}>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-text' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes contrats</Text>  
+                                        </CardItem>
+                                            <Text style={styles.text2}>1 contrats</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes devis</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 nouvelle information</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-
-                    </Container>
-                    <Container style={styles.display}>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file-o' style={styles.icone3}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Mes factures</Text>
-                                    </CardItem>
-                                    <Text style={styles.text2}>3 factures</Text>
-                                </Card>
-                            </TouchableOpacity>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-photo-o' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes photos</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 manquante(s)</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-text-o' style={styles.icone2}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes attestations</Text>
+                                        </CardItem>
+                                        <Text style={styles.text3}>0 attestation(s)</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='file-movie-o' style={styles.icone3}/>
-                                    </CardItem>
-                                    <CardItem>
-                                        <Text style={styles.text}>Vidéos</Text>
-                                    </CardItem>
-                                    <Text style={styles.text2}>Comprendre l'offre</Text>
-                                </Card>
-                            </TouchableOpacity>
+                        <Container style={styles.display}>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-o' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Mes factures</Text>
+                                        </CardItem>
+                                        <Text style={styles.text2}>3 factures</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+                            <Container style={styles.display3}>
+                                <TouchableOpacity>
+                                    <Card style={styles.card2}>
+                                        <CardItem>
+                                            <FontAwesome name='file-movie-o' style={styles.icone3}/>
+                                        </CardItem>
+                                        <CardItem>
+                                            <Text style={styles.text}>Vidéos</Text>
+                                        </CardItem>
+                                        <Text style={styles.text2}>Comprendre l'offre</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                            </Container>
+    
                         </Container>
-
-                    </Container>
-                </ScrollView>
-            </Container>    
-        );
+                    </ScrollView>
+                </Container>    
+            );  
+        }
     }
 }
 

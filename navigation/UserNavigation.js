@@ -8,6 +8,7 @@ import PageServices from './../components/pages/Services';
 import PagePortefeuille from './../components/pages/Portefeuille';
 import PageOnboarding from './../components/onboarding/Onboarding';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 
 function Accueil({navigation}) {
@@ -75,24 +76,12 @@ const RootUserStack = createStackNavigator();
 class UserNavigation extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-          pross:'',
-      }
-    }
-    
-    async componentDidMount() {
-      await this.process();
     }
 
-    process = async()=>{ 
-          await AsyncStorage.getItem('process').then(process => {
-          this.setState({process:process});  
-        });
-    } 
     render() {
         return(
-              <RqootUserStack.Navigator>{
-                // this.state.pross ? (
+              <RootUserStack.Navigator>{
+                this.props.pross ? (
                     <RootUserStack.Screen 
                       name="userSpaceDrawer"
                       component={UserSpaceDrawer}
@@ -100,14 +89,14 @@ class UserNavigation extends React.Component {
                         headerShown: false
                       }} />
 
-                // ):(
-                //     <RootUserStack.Screen 
-                //       name="Onboarding" 
-                //       component={PageOnboarding}
-                //       options={{
-                //         headerShown: false
-                //       }} />
-                // )
+                ):(
+                    <RootUserStack.Screen 
+                      name="Onboarding" 
+                      component={PageOnboarding}
+                      options={{
+                        headerShown: false
+                      }} />
+                )
 
               }
               </RootUserStack.Navigator>
@@ -115,5 +104,10 @@ class UserNavigation extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    pross: state.pross
+  }
+}
 
-export default UserNavigation
+export default connect(mapStateToProps)(UserNavigation)

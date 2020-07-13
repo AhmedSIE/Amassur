@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, Touchable
 import Vue1 from './Vue1';
 import Vue2 from './Vue2';
 import Vue3 from './Vue3';
-export default class Onboarding extends React.Component {
+import { connect } from 'react-redux';
+
+class Onboarding extends React.Component {
   
    constructor(props) {
       super(props);
       this.state = {
-         pagePosition: 1
+         pagePosition: 1,
       }
       console.log(this.props.navigation)
    }
@@ -41,7 +43,7 @@ export default class Onboarding extends React.Component {
                   onPress={()=>this.closeTheOnboarding()}
                   style={styles.closeButton}
                >
-                  <Text>Passer</Text>
+                  <Text style={styles.text2}>Passer</Text>
                </TouchableOpacity>
                <View style={styles.bottomOptions}>
                   <View style={styles.positionIndicatorsRow}>
@@ -50,19 +52,11 @@ export default class Onboarding extends React.Component {
                      <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[2]}]} />
                   </View>
                   <TouchableOpacity
-                     onPress={this.signUp}
+                     onPress={()=>this.signIn()}
                      style={styles.signUpButton}
                   >
                      <Text style={styles.signUpButtonText}>
-                        S'INSCRIRE GRATUITEMENT
-                     </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     onPress={this.signIn}
-                     style={styles.signInButton}
-                  >
-                     <Text style={styles.signInButtonText}>
-                        SE CONNECTER
+                        Se connecter
                      </Text>
                   </TouchableOpacity>
                </View>
@@ -71,15 +65,14 @@ export default class Onboarding extends React.Component {
       );
    }
    closeTheOnboarding = () => {
-      let process = 1;
-      AsyncStorage.setItem('process',process);
-      this.props.navigation.navigate("userSpaceDrawer");
+      this.setState({
+         pross: 1,
+      })
+      const action = { type: "PROCESS_ACTION", value: this.state.pross }
+      this.props.dispatch(action)
    }
-   signUp = () => {
-         //TODO : Mettre la méthode d'ouverture de la page d'inscription
-      }
    signIn = () => {
-         //TODO : Mettre la méthode d'ouverture de la page de connexion
+         this.props.navigation.navigate('AuthUser')
       }
    onScrollHandler = (event) => {
       let pagePosition = 1;
@@ -139,17 +132,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20,
       color: 'white'
    },
-   signInButton: {
-      width: 200,
-      height: 40,
-      alignItems: 'center',
-      justifyContent: 'center'
-   },
-   signInButtonText: {
-      textAlign: 'center',
-      paddingHorizontal: 20,
-      color: '#fff'
-   },
    positionIndicatorsRow: {
       flexDirection:'row',
       justifyContent:'space-between',
@@ -162,5 +144,18 @@ const styles = StyleSheet.create({
       borderRadius:10,
       borderWidth:2,
       borderColor:'#fff'
-   }
+   },
+   text2:{
+      color:'red',
+      fontWeight:'bold',
+      fontSize:20,
+  }
 });
+
+const mapStateToProps = (state) => {
+   return {
+       pross: state.pross
+   }
+}
+ 
+export default connect(mapStateToProps)(Onboarding)
