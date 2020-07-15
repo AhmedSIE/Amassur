@@ -8,15 +8,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 class Portefeuille extends React.Component{
     constructor(props){
         super(props)
-      console.log(this.props)
     }
   
     render(){
-        // console.log(this.props)
-        if (this.props) {
+        let navigation = this.props.navigation
+        if (this.props.token) {
             return (
                 <Container style={styles.corp}>
-                    <HeaderNavigator/>
+                    <HeaderNavigator  navigation={navigation}/>
                     <ScrollView style={styles.scrollView}>
                         <Container style={styles.display}>
                             <Container style={styles.display3}>
@@ -111,7 +110,7 @@ class Portefeuille extends React.Component{
         } else {
             return (
                 <Container style={styles.corp}>
-                    <HeaderNavigator/>
+                    <HeaderNavigator navigation={navigation}/>
                     <ScrollView style={styles.scrollView}>
                         <Container style={styles.display}>
                             <Container style={styles.display3}>
@@ -210,7 +209,7 @@ class Portefeuille extends React.Component{
 const styles=StyleSheet.create({
     scrollView: {
         height:'78%',
-        marginTop:'5%',
+        // marginTop:'5%',
         backgroundColor: "#fafafa", 
     },
     container: {

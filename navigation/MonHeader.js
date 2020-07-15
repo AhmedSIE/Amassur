@@ -6,6 +6,18 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 class MonHeader extends React.Component{
     constructor(props){
         super(props);
+        this.naviagation=this.props.navigation
+        
+    }
+
+    profil=()=>{
+        this.props.navigation.navigate('Profil')
+    }
+    parametre=()=>{
+        this.props.navigation.navigate('Parametres')
+    }
+    accueil=()=>{
+        this.props.navigation.navigate('Accueil')
     }
     render(){
         return(
@@ -13,7 +25,7 @@ class MonHeader extends React.Component{
                 <Header style={styles.header}>
                     <View style={styles.display}>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity  style={styles.onPress} onPress={()=>this.profil()}>
                                 <Image style={styles.image1} source={require('./../assets/images/MaleUser.png')}/>
                             </TouchableOpacity>
                         </Container>
@@ -23,7 +35,7 @@ class MonHeader extends React.Component{
                             </TouchableOpacity>
                         </Container>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.parametre()}>
                                 <FontAwesome name='cog' style={styles.icone}/>
                             </TouchableOpacity>
                         </Container>
@@ -44,11 +56,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height:'26%',
         width:120,
+        zIndex:100,
+
     },
     image1:{
         width:40,
         height:40,
         marginTop:'5%',
+        zIndex:100,
+
     },
     icone:{
        fontSize:22, 

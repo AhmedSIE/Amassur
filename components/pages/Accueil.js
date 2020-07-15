@@ -1,29 +1,46 @@
 import React,{ Component } from "react";
-import {StyleSheet, Image,View,ScrollView} from 'react-native';
+import {StyleSheet, Image,View,ScrollView,Button,LayoutAnimation,} from 'react-native';
 import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HeaderNavigator from "../../navigation/MonHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 class Accueil extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            jour: '',
+        };
     }
-    accueil=()=>{
-        this.props.navigation.navigate('Accueil');
+
+    tarif=()=>{
+        this.props.navigation.navigate('Tarifs');
+    }
+    deleteRow() {
+       
+    }
+    componentDidMount() {
+        // les noms de jours 
+        var jours = new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+        // on recupere la date
+        var date = new Date();
+        // on construit le message
+        var message = jours[date.getDay()] + " ";   // nom du jour
+        this.setState({
+            jour: message,
+        });
     }
     render(){
-        // let navigation = this.props.navigation
+        let navigation = this.props.navigation
         return (
             <Container style={styles.corp}>
-                <HeaderNavigator/>
+                <HeaderNavigator navigation={navigation}/>
                 <ScrollView style={styles.scrollView}>
                     <Container style={styles.display}>
                         <Container style={styles.display2}>
                             <TouchableOpacity>
                                 <Card style={styles.card1}>
-                                    <CardItem>
-                                        <FontAwesome name='home' style={styles.icone}/>
+                                    <CardItem style={styles.carditem}>
+                                        <Image style={styles.image1} source={require('./../../assets/images/icone_Auto.png')}/>
                                     </CardItem>
                                 </Card>
                             </TouchableOpacity>
@@ -31,8 +48,8 @@ class Accueil extends React.Component {
                         <Container style={styles.display2}>
                             <TouchableOpacity>
                                 <Card style={styles.card1}>
-                                    <CardItem>
-                                        <FontAwesome name='file-text' style={styles.icone}/>
+                                    <CardItem style={styles.carditem}>
+                                        <Image style={styles.image1} source={require('./../../assets/images/icone_Moto.png')}/>
                                     </CardItem>
                                 </Card>
                             </TouchableOpacity>
@@ -40,8 +57,8 @@ class Accueil extends React.Component {
                         <Container style={styles.display2}>
                             <TouchableOpacity>
                                 <Card style={styles.card1}>
-                                    <CardItem>
-                                        <FontAwesome name='wheelchair' style={styles.icone}/>
+                                    <CardItem style={styles.carditem}>
+                                        <Image style={styles.image1} source={require('./../../assets/images/icone_House.png')}/>
                                     </CardItem>
                                 </Card>
                             </TouchableOpacity>
@@ -49,90 +66,65 @@ class Accueil extends React.Component {
                         <Container style={styles.display2}>
                             <TouchableOpacity>
                                 <Card style={styles.card1}>
-                                    <CardItem>
-                                        <FontAwesome name='id-badge' style={styles.icone}/>
+                                    <CardItem style={styles.carditem}>
+                                        <Image style={styles.image1} source={require('./../../assets/images/icone_Sante.png')}/>
                                     </CardItem>
                                 </Card>
                             </TouchableOpacity>
                         </Container>
                     </Container>
-                    <Text style={styles.entete}>Paiement - Procedure -Historique</Text>
-                    <Container style={styles.display}>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='money' style={styles.icone2}/>
-                                    </CardItem>
-                                </Card>
-                            </TouchableOpacity>
-                        </Container>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='exclamation-circle' style={styles.icone2}/>
-                                    </CardItem>
-                                </Card>
-                            </TouchableOpacity>
-                        </Container>
-                        <Container style={styles.display3}>
-                            <TouchableOpacity>
-                                <Card style={styles.card2}>
-                                    <CardItem>
-                                        <FontAwesome name='history' style={styles.icone2}/>
-                                    </CardItem>
-                                </Card>
-                            </TouchableOpacity>
-                        </Container>
-                    </Container>
-                    <Container style={styles.list}>
-                            <List>
-                                <Text style={styles.entete}>Liens utiles</Text>
-                                <TouchableOpacity >
-                                    <ListItem noIndent style={{ backgroundColor: "#cde1f9" }}>
-                                        <Left>
-                                            <Text style={styles.tex}>Une Assistance Complête(aide à domicile, SOS clefs, gardiennage, hébergement...)</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct}/>
-                                        </Right>
-                                    </ListItem>
-                                </TouchableOpacity>
-                                <TouchableOpacity  style={styles.card3}>
-                                    <ListItem>
-                                        <Left>
-                                            <Text style={styles.tex}>Gestion des sinistres en visio-conférence</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct} />
-                                        </Right>
-                                    </ListItem>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.card3}>
-                                    <ListItem>
-                                        <Left>
-                                            <Text style={styles.tex}>Nous résilions votre contrat pour vous</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct} />
-                                        </Right>
-                                    </ListItem>    
-                                </TouchableOpacity>
-                            </List>
-                    </Container>
-                    <Container style={styles.simplecard}>
-                        <Card>
-                            <Text style={styles.entete2}>Bon Plan</Text>
-                            <CardItem>
+                   
+                   
+                    <Text style={styles.entete4}>{this.state.jour}</Text>
+                    <Container style={styles.simplecard} >
+                        <Card style={styles.card} noShadow={true}>
+                            <CardItem style={styles.carditem}>
                                 <Body>
-                                    <Text>
+                                    <Text style={styles.paragr}>
+                                        Bienvenue dans la communauté amassur{"\n"}
+                                        Bienvenue dans l'univers Amassur, l'assurance qui vous 
+                                        simplifie la vie !{"\n"}
+                                        En tant qu'utilisateur non connecté, vous pouvez accéder
+                                        à certaines fonctionnalités dont les tarifs.{"\n"}
+                                        Pour pouvoir bénéficier de tous les services disponibles
+                                        sur l'application Amassur, vous pouvez créer un compte en moins d'une.
+                                        pour démarrer votre devis, appuyez sur "Obtenir un devis"
+                                    </Text>
+                                </Body>
+                            </CardItem>
+                        </Card>
+                    </Container>
+                    {/* <Container style={styles.simplecard} >
+                        <List>
+                            <ListItem>
+                                <Text> {dat </Text>
+                            </ListItem>}
+                            <Button full onPress={() => alert(data)}>
+                                <Icon active name="information-circle" />
+                            </Button>}
+                            <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                                <Icon active name="trash" />
+                            </Button>
+                        </List>
+                         
+                    </Container> */}
+                    <Container style={styles.simplecard}>
+                        <Card style={styles.card} noShadow={true}> 
+                            <Text style={styles.entete2}>Bon Plan</Text>
+                            <CardItem style={styles.carditem}>
+                                <Body>
+                                    <Text style={styles.paragr}>
                                         Les offres flotte, quant à elles, peuvent prendre en charge jusqu'à 10 
                                         véhicules avec des tarifs dégressifs et une remise de 40% sur la prime.
                                     </Text>
                                 </Body>
                             </CardItem>
                         </Card>
+                    </Container>
+                    <Container style={styles.sectionbtn}>  
+                        <TouchableOpacity onPress={()=>this.tarif()} style={styles.button}>
+                            <Text style={styles.textButton}>Obtenir un tarif</Text>
+                        </TouchableOpacity>
                     </Container>
                 </ScrollView>
             </Container>    
@@ -142,10 +134,8 @@ class Accueil extends React.Component {
 }
 const styles = StyleSheet.create({
     scrollView: {
-        // height:'78%',
-        marginTop:'15%',
+        height:'78%',
         backgroundColor: "#fafafa", 
-
     },
     container: {
         flex: 1,
@@ -154,12 +144,22 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 15,
     },
+    paragr:{
+        fontSize: 12,
+        textAlign:'justify',
+        width:'100%',
+    },
     list:{
         height:'50%',
 
     },
     simplecard:{
         height:'50%',
+        width:'95%',
+        marginLeft:'2.5%',
+        marginTop: 5,
+        marginBottom: 5,
+        backgroundColor:'transparent'
     },
     display:{
         flex:1,
@@ -167,6 +167,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'transparent',
         height:100,
+        marginLeft:15,
+        marginRight:15
     },
     display2:{
         flex:1, 
@@ -181,20 +183,27 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent',
         height:100, 
     },
-    entete:{
-        margin:20,
-        textAlign:'center',
-        color:'#2E3682',
-        fontWeight:'bold',
-    },
+   
     entete2:{
         margin:10,
         textAlign:'center',
         color:'#2E3682',
         fontWeight:'bold',
     },
-    tex:{
-        fontSize:15,
+   
+    entete4:{
+        textAlign:'center',
+        color:'#272822',
+        fontSize:12
+    },
+   
+    card:{  
+        borderRadius:10,
+        // height:'100%',
+        backgroundColor:'#fbfdc81a',
+    },
+    carditem:{  
+        backgroundColor:'transparent',
     },
     card1:{
         justifyContent: 'center',
@@ -234,6 +243,33 @@ const styles = StyleSheet.create({
         height:40,
         width:40,
         borderRadius:100,
+    },
+    button: {
+        width: 320,
+        alignItems: "center",
+        backgroundColor: "#2E3682",
+        color: "white",
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 30,
+        marginBottom:10,
+    },
+    textButton: {
+        // fontFamily: "muli",
+        color: "white",
+        textAlign: "center",
+        fontSize: 14,
+
+    },
+    sectionbtn:{
+        alignItems: "center",
+        height:'50%',
+        marginTop:'10%'
+    },
+    image1:{
+        height:35,
+        width:35,
+        backgroundColor:'transparent'
     },
 });
 

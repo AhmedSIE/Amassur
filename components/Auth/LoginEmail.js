@@ -3,7 +3,7 @@ import {  ImageBackground,AsyncStorage, View,ScrollView, StyleSheet,Image, TextI
 import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AppLoading from './../AppLoading'
-class LoginPage extends React.Component {
+class LoginEmail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -51,8 +51,8 @@ class LoginPage extends React.Component {
     register=()=>{
         this.props.navigation.navigate('Register');
     }
-    emailConnexion=()=>{
-        this.props.navigation.navigate('LoginEmail');
+    login=()=>{
+        this.props.navigation.navigate('loginPage');
     }
     render() {
         return (
@@ -66,28 +66,32 @@ class LoginPage extends React.Component {
                                 <Image style={styles.authimage} source={require("./../../assets/images/logo2.png")} />
                                 <Card style={styles.card}>
                                     <Text style={styles.title}>
-                                        Connectez vous avec votre numéro de téléphone
+                                        Connectez vous avec votre adresse email
                                     </Text>
                                     <TextInput
                                         onChangeText={(text) => this.onChangeText(text)}
                                         // value={this.state.phone}
                                         keyboardType="phone-pad"
-
-                                        placeholder="Numéro de téléphone"
+                                        placeholder="Email"
+                                        placeholderTextColor="#888"
+                                        style={styles.input}
+                                        returnKeyType="done"
+                                        autoCompleteType="tel"
+                                    />
+                                    <TextInput
+                                        onChangeText={(text) => this.onChangeText(text)}
+                                        keyboardType="phone-pad"
+                                        placeholder="Mot de passe"
                                         placeholderTextColor="#888"
                                         style={styles.input}
                                         returnKeyType="done"
                                         autoCompleteType="tel"
                                     />
                                     <TouchableOpacity onPress={() => this.sendCode()} style={styles.button}>
-                                        {/* {this.state.loading ? (
-                                            <ActivityIndicator color="#87c965" />
-                                        ) : ( */}
-                                                <Text style={styles.textButton}>Se connecter</Text>
-                                            {/* )} */}
+                                        <Text style={styles.textButton}>Se connecter</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={()=>this.emailConnexion()}>
-                                        <Text style={styles.button2}>Connexion par Email</Text>
+                                    <TouchableOpacity onPress={()=>this.login()} >
+                                        <Text style={styles.button2}>Connexion par Téléphone</Text>
                                     </TouchableOpacity>
                                 </Card>
                             
@@ -107,7 +111,7 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage;
+export default LoginEmail;
 
 const styles = StyleSheet.create({
     container: {
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "100%",
         fontSize: 13,
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: 5,
         color: "black",
         fontFamily: "muli",
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
         width: "90%",
         color: "black",
         borderRadius: 10,
-        padding: 15,
+        padding: 10,
         borderWidth: 1,
         borderColor: "white",
         fontFamily: "muli",
@@ -176,7 +180,6 @@ const styles = StyleSheet.create({
         width: 250,
         backgroundColor: "#E01D41",
         color: "white",
-        paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 30,
         marginBottom:20,
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
 
     },
     textButton2: {
-        marginTop:20,
+        marginTop:10,
         fontFamily: "muli",
         color: "#2E3682",
         textAlign: "center",
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     authimage:{
-        marginTop:20,
+        marginTop:15,
         marginBottom:10,
         marginLeft:'10%',
         height:85,

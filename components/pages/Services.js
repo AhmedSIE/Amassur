@@ -10,60 +10,32 @@ class Services extends React.Component{
         super(props)
     }
     render(){
+        let navigation = this.props.navigation
         return (
             <Container style={styles.corp}>
-                <HeaderNavigator/>
+                <HeaderNavigator navigation={navigation}/>
                 <ScrollView style={styles.scrollView}>
                     <Container style={styles.list}>
                         <List>
-                            <Text style={styles.entete}>Que voulez-vous faire ?</Text>
+                            <Text style={styles.entete}>Nos services</Text>
                             <TouchableOpacity>
                                 <Card style={styles.select}>
-                                    <ListItem>
-                                            <Left>
-                                                <Text style={styles.select2}>J'ai besoin d'être contacté</Text>
-                                            </Left>
-                                            <Right>
-                                                <FontAwesome name="chevron-right" style={styles.direct2}/>
-                                            </Right>
-
-                                    </ListItem>
+                                   <Text style={styles.montitre}>FREE</Text>
                                 </Card>
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <Card>
-                                    <ListItem >
-                                        <Left>
-                                            <Text style={styles.tex}>J'ai besoin de connaitre mes garanties</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct} />
-                                        </Right>
-                                    </ListItem>
+                                <Card style={styles.select}>
+                                   <Text style={styles.montitre}>PLATINUME</Text>
                                 </Card>
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <Card>
-                                    <ListItem>
-                                        <Left>
-                                            <Text style={styles.tex}>J'ai besoin de connaitre les modes d'acquisition</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct} />
-                                        </Right>
-                                    </ListItem>    
+                                <Card style={styles.select}>
+                                   <Text style={styles.montitre}>Gold</Text>
                                 </Card>
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <Card style={styles.listb}>
-                                    <ListItem>
-                                        <Left>
-                                            <Text style={styles.tex}>J'ai besoin de connaitre les avantages liés à un compte</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct} />
-                                        </Right>
-                                    </ListItem>
+                                <Card style={styles.select}>
+                                   <Text style={styles.montitre}>Gold</Text>
                                 </Card>
                             </TouchableOpacity>
                         </List>
@@ -75,8 +47,8 @@ class Services extends React.Component{
 }
 const styles=StyleSheet.create({
     scrollView: {
-        // height:'78%',
-        marginTop:'16%',
+        height:'78%',
+        // marginTop:'16%',
         backgroundColor: "#fafafa", 
 
     },
@@ -104,7 +76,10 @@ const styles=StyleSheet.create({
 
     },
     select:{
-        backgroundColor:'#2E3682',
+        backgroundColor:'#fafafa',
+        height:200,
+        marginLeft:5,
+        marginRight:5,
 
     },
     select2:{
@@ -121,5 +96,8 @@ const styles=StyleSheet.create({
         width:40,
         borderRadius:100,
     },
+    montitre:{
+        padding:30,
+    }
 });
 export default Services

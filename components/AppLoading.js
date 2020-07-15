@@ -1,6 +1,6 @@
 import React from 'react'
 import {ActivityIndicator, StyleSheet}  from 'react-native'
-import { View, Text } from 'native-base'
+import { View, Text,Container,Spinner,Content } from 'native-base'
 
 class AppLoading extends React.Component {
     constructor(props) {
@@ -9,10 +9,10 @@ class AppLoading extends React.Component {
 
     render() {
         return(
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size='large' />
-                <Text>{this.props.titreMessage ?? 'Veuillez Patienter ...'}</Text>
-            </View>
+            <Container style={styles.loadingContainer}>
+                <Spinner color='blue' />
+                <Text>{this.props.titreMessage }</Text>
+            </Container>
         )
     }
 }

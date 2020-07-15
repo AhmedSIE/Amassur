@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, TouchableOpacity,AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, ScrollView,Image, Dimensions, SafeAreaView, TouchableOpacity,AsyncStorage } from 'react-native';
 import Vue1 from './Vue1';
 import Vue2 from './Vue2';
 import Vue3 from './Vue3';
 import { connect } from 'react-redux';
+import { Container,Card } from 'native-base';
 
 class Onboarding extends React.Component {
   
@@ -16,51 +17,65 @@ class Onboarding extends React.Component {
    }
    
    render() {
-      let circleBackgroundColor = ['transparent', 'transparent', 'transparent'];
+      let circleBackgroundColor = ['silver', 'silver', 'silver'];
       circleBackgroundColor[this.state.pagePosition-1] = '#fff';
       
       return (
          <SafeAreaView style={styles.container}>
-            <View>
-               <ScrollView
-                  style={styles.onboardingScrollView}
-                  horizontal={true}
-                  pagingEnabled={true}
-                  showsHorizontalScrollIndicator={false}
-                  onScroll={this.onScrollHandler}
-               >
-                  <View style={styles.onboardingView}>
-                     <Vue1/>
+            {/* <View > */}
+               <Container style={styles.cardscrol}>
+                  <Image style={styles.authimage} source={require("./../../assets/images/logo2.png")} />
+                  <View style={styles.cardscrol2}>
+                     <ScrollView
+                        style={styles.onboardingScrollView}
+                        horizontal={true}
+                        pagingEnabled={true}
+                        showsHorizontalScrollIndicator={false}
+                        onScroll={this.onScrollHandler}
+                     >
+                        <Card style={styles.card1} noShadow={true}>
+                           <View style={styles.onboardingView}>
+                              <Vue1/>
+                           </View>
+                        </Card>
+                        <Card style={styles.card1} noShadow={true}>
+                           <View style={styles.onboardingView}>
+                              <Vue2/>
+                           </View>
+                        </Card>
+                        <Card style={styles.card1} noShadow={true}>
+                           <View style={styles.onboardingView}>
+                              <Vue3/>
+                           </View>
+                        </Card>
+                     </ScrollView>
                   </View>
-                  <View style={styles.onboardingView}>
-                     <Vue2/>
-                  </View>
-                  <View style={styles.onboardingView}>
-                     <Vue3/>
-                  </View>
-               </ScrollView>
-               <TouchableOpacity
-                  onPress={()=>this.closeTheOnboarding()}
-                  style={styles.closeButton}
-               >
-                  <Text style={styles.text2}>Passer</Text>
-               </TouchableOpacity>
-               <View style={styles.bottomOptions}>
-                  <View style={styles.positionIndicatorsRow}>
-                     <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[0]}]} />
-                     <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[1]}]} />
-                     <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[2]}]} />
-                  </View>
-                  <TouchableOpacity
-                     onPress={()=>this.signIn()}
-                     style={styles.signUpButton}
-                  >
-                     <Text style={styles.signUpButtonText}>
-                        Se connecter
+                  <View style={styles.bottomOptions}>
+                     <View style={styles.positionIndicatorsRow}>
+                        <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[0]}]} />
+                        <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[1]}]} />
+                        <View style={[styles.positionIndicatorCircle, {backgroundColor:circleBackgroundColor[2]}]} />
+                     </View>
+                     <TouchableOpacity
+                        onPress={()=>this.closeTheOnboarding()}
+                        style={styles.signUpButton}
+                     >
+                        <Text style={styles.signUpButtonText}>
+                           Démarrer
+                        </Text>
+                     </TouchableOpacity>
+                     <Text style={styles.signUp}>
+                        J'ai déjà un compte ? <TouchableOpacity
+                           onPress={()=>this.signIn()}
+                           >
+                           <Text style={styles.signUp2}>
+                              Se connecter
+                           </Text>
+                        </TouchableOpacity>
                      </Text>
-                  </TouchableOpacity>
-               </View>
-            </View>
+                  </View>                    
+               </Container>
+            {/* </View> */}
          </SafeAreaView>
       );
    }
@@ -90,6 +105,14 @@ class Onboarding extends React.Component {
    }
 }
 const styles = StyleSheet.create({
+   cardscrol:{
+      padding:20,    
+      alignItems: 'center',
+      
+   },
+   cardscrol2:{
+      height:'65%',      
+   },
    container: {
       flex: 1,
       backgroundColor: '#6789a0',
@@ -98,13 +121,14 @@ const styles = StyleSheet.create({
    },
    onboardingScrollView: {
       flex: 1,
-      width: Dimensions.get('screen').width
+      width: Dimensions.get('screen').width,
    },
    onboardingView: {
       flex: 1,
-      width: Dimensions.get('screen').width,
+      // width: Dimensions.get('screen').width,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor:'blue',
    },
    closeButton: {
       position: 'absolute',
@@ -114,18 +138,32 @@ const styles = StyleSheet.create({
    bottomOptions: {
       position: 'absolute',
       bottom: 0,
-      left: 0,
+      // left: 0,
       width: Dimensions.get('screen').width,
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'center',
+
    },
    signUpButton: {
-      width: 200,
+      width: 300,
       height: 50,
       alignItems: 'center',
       justifyContent: 'center',
       marginVertical: 10,
+      marginTop:50,
       backgroundColor:'#2E3682',
-      borderRadius:100
+      borderRadius:100,
+   },
+   signUp: {
+      position:'relative',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop:5,
+      marginBottom:20,
+   },
+   signUp2: {
+      color:'#2E3682',
+      marginBottom:-5
    },
    signUpButtonText: {
       textAlign: 'center',
@@ -135,21 +173,34 @@ const styles = StyleSheet.create({
    positionIndicatorsRow: {
       flexDirection:'row',
       justifyContent:'space-between',
-      width:100,
+      width:40,
       marginVertical:10
    },
    positionIndicatorCircle: {
-      width:20,
-      height:20,
+      width:10,
+      height:10,
       borderRadius:10,
-      borderWidth:2,
-      borderColor:'#fff'
+      borderWidth:1,
+      borderColor:'transparent',
    },
    text2:{
       color:'red',
       fontWeight:'bold',
       fontSize:20,
-  }
+  }, 
+  authimage:{
+      marginTop:5,
+      marginBottom:20,
+      height:55,
+      width:150,  
+      alignItems: 'center',
+      justifyContent: 'center'   
+   },
+   card1:{
+      // borderRadius:25,
+      overflow:'hidden',
+      marginLeft:-0.5,
+   },
 });
 
 const mapStateToProps = (state) => {

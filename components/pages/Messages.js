@@ -10,9 +10,10 @@ class Messages extends React.Component{
         super(props)
     }
     render(){
+        let navigation=this.props.navigation
         return (
             <Container>
-                <HeaderNavigator/>
+                <HeaderNavigator navigation={navigation}/>
                 <ScrollView style={styles.scrollView}>
                     
                        
@@ -23,8 +24,8 @@ class Messages extends React.Component{
 }
 const styles=StyleSheet.create({
     scrollView: {
-        // height:'78%',
-        marginTop:'15%',
+        height:'78%',
+        // marginTop:'15%',
         backgroundColor: "#fafafa", 
 
     },
