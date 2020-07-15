@@ -141,7 +141,7 @@ class RegisterPage extends React.Component {
                                 </Container>
                             </ScrollView>
                             <TouchableOpacity onPress={()=>this.connexion()}>
-                                <Text style={styles.textButton2}>Connexion</Text>
+                                <Text style={styles.textButton2}>Se connecter</Text>
                             </TouchableOpacity>
                         
                             <Text style={styles.title2}>Copyright @ 2020 par Switch Maker</Text>
