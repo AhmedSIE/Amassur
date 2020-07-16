@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import {  ImageBackground,AsyncStorage, View,ScrollView, StyleSheet,Image, TextInput, ActivityIndicator, Alert } from 'react-native';
-import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
+import { View,ScrollView, StyleSheet,Image, TextInput} from 'react-native';
+import {Container, Text, Card} from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AppLoading from './../AppLoading'
 class LoginPage extends React.Component {
@@ -9,13 +9,6 @@ class LoginPage extends React.Component {
         this.state = {
             phone: '',
             loading: false,
-        }
-    }
-
-    async componentDidMount() {
-        let user = await AsyncStorage.getItem('user');
-        if(user) {
-
         }
     }
  
@@ -35,9 +28,8 @@ class LoginPage extends React.Component {
                 console.log(resData.otp)
                 this.setState({ loading: false })
                 let otp = resData.otp;
-                let tel1 =  this.state.phone;
-                AsyncStorage.setItem('tel1',tel1);
-                this.props.navigation.navigate("verify", { verificationOtp: otp });
+                let tel = this.state.phone;
+                this.props.navigation.navigate("Verify", { verificationOtp: otp, tel:tel });
             })
             .catch((e) => console.log(e));
         } else {
@@ -144,7 +136,7 @@ const styles = StyleSheet.create({
     title2: {
         textAlign: "center",
         width: "100%",
-        fontSize: 13,
+        fontSize: 11,
         marginTop: 20,
         marginBottom: 5,
         color: "black",

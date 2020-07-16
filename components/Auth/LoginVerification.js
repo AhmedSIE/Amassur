@@ -1,5 +1,6 @@
 import React from 'react';
-import { ImageBackground,Text, View, StyleSheet, Image, TextInput, ActivityIndicator, Alert, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, Image, TextInput, AsyncStorage } from 'react-native';
+import {Container, Card} from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AppLoading } from './../AppLoading';
 
@@ -9,77 +10,72 @@ class LoginVerification extends React.Component{
         super(props)
         this.state = {
             code: "",
-            phone:'',
             loading: false,
         }
-
         this.verificationOtp = props.route.params.verificationOtp; 
+        this.numeroTel = props.route.params.tel; 
     }
 
 /*recuperation automatique de SMS*/
-    getHash = () =>
-        RNOtpVerify.getHash()
-        .then(console.log)
-        .catch(console.log);
+    // getHash = () =>
+    //     RNOtpVerify.getHash()
+    //     .then(console.log)
+    //     .catch(console.log);
 
-    startListeningForOtp = () =>
-        RNOtpVerify.getOtp()
-        .then(p => RNOtpVerify.addListener(this.otpHandler))
-        .catch(p => console.log(p));
+    // startListeningForOtp = () =>
+    //     RNOtpVerify.getOtp()
+    //     .then(p => RNOtpVerify.addListener(this.otpHandler))
+    //     .catch(p => console.log(p));
 
-    otpHandler = (message) => {
-            const otp = /(\d{6})/g.exec(message)[1];
-            this.setState({ otp });
-            RNOtpVerify.removeListener();
-            Keyboard.dismiss();
-    }
+    // otpHandler = (message) => {
+    //         const otp = /(\d{6})/g.exec(message)[1];
+    //         this.setState({ otp });
+    //         RNOtpVerify.removeListener();
+    //         Keyboard.dismiss();
+    // }
 
-    componentWillUnmount() {
-        RNOtpVerify.removeListener();
-    }
+    // componentWillUnmount() {
+    //     RNOtpVerify.removeListener();
+    // }
 /*fin recuperation automatique de SMS*/
 
 
 
     verifyCode = () => {
-        // setLoading(true);
         this.setState({loading:true})
+        alert(this.verificationOtp==this.state.code)
         if (this.verificationOtp==this.state.code) {
-            this.tel1();
+            this.setState({loading:false})
+            this.auth();
         } else {
-            this.props.navigation.navigate('Main');
+            this.setState({loading:false})
+            this.props.navigation.navigate('LoginPage');
         }
     };
 
-    tel1 = ()=>{  
-        AsyncStorage.getItem('tel1').then(_tel => {
-          this.setState({phone:_tel});  
-          this.auth();
-        });
-    } 
-
     auth = async() => {
-      const tel =this.state.phone;
-          await fetch('http://192.168.1.112:8000/api/auth/login',{
-              method:'POST',
-              headers:{
-                  'Accept':'application/json',
-                  'Content-Type':'application/json'
-              },
-              body: JSON.stringify({"tel" : tel})
-          }).then(res=>res.json())
-          .then(resData=>{
-              let user = {  
-                  token: resData.access_token,  
-                  nom:resData.name,
-                  email: resData.email,  
-                  tel:resData.tel,
-                  sessionsexpire:resData.expires_in,
-              } 
-              AsyncStorage.setItem('user',JSON.stringify(user))
-              this.props.navigation.navigate('Main');
-          });
-      }
+        const tel =this.numeroTel;
+        await fetch('http://192.168.1.113:8000/api/auth/login',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({"tel" : tel})
+        }).then(res=>res.json())
+        .then((resData)=>{
+            console.log(this.props.navigation);
+            let user = {  
+                token: resData.access_token,  
+                nom:resData.name,
+                email: resData.email,  
+                tel:resData.tel,
+                sessionsexpire:resData.expires_in,
+            } 
+            AsyncStorage.setItem('user',JSON.stringify(user))
+            this.props.navigation.navigate('Main');
+        });
+    }
     
     onChangeText(input) {
       this.setState({ code: input })
@@ -87,23 +83,20 @@ class LoginVerification extends React.Component{
 
     render(){
         return(
-            <View style={styles.container}>
+            <View style={{flex:1}}>
               {
                 this.state.loading ? (
                   <AppLoading />
                 ):(
                   <Container style={styles.container}>
-                    <Image style={styles.authimage} source={require("./../../assets/images/logo.png")} />
+                    <Image style={styles.authimage} source={require("./../../assets/images/logo2.png")} />
                             <Card style={styles.card}>
-                                <Text style={styles.tit}>
-                                    Bonjour
-                                </Text>
                                 <Text style={styles.title}>
                                     Entrer le code reçu par sms
                                 </Text>
                                 <TextInput
                                     placeholder="Code"
-                                    placeholderTextColor="white"
+                                    placeholderTextColor="silver"
                                     style={styles.input}
                                     onChangeText={(text) => this.onChangeText(text)}
                                     returnKeyType="done"
@@ -158,7 +151,7 @@ const styles = StyleSheet.create({
   title2: {
       textAlign: "center",
       width: "100%",
-      fontSize: 13,
+      fontSize: 11,
       marginTop: 20,
       marginBottom: 5,
       color: "black",
@@ -215,4 +208,5 @@ const styles = StyleSheet.create({
       width:'85%'
   },
 });
-  export default LoginVerification;
+
+export default LoginVerification;

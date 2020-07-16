@@ -90,9 +90,10 @@ class UserNavigation extends React.Component {
     }
 
     render() {
+        // console.log(this.props.token)
         return(
               <RootUserStack.Navigator>{
-                  this.props.pross ? (
+                  this.props.token || this.props.pross ? (
                       <RootUserStack.Screen 
                         name="userSpaceDrawer"
                         component={UserSpaceDrawer}
@@ -102,7 +103,7 @@ class UserNavigation extends React.Component {
 
                   ):(
                       <RootUserStack.Screen 
-                        name="Onboarding" 
+                        name="Onboarding"   
                         component={PageOnboarding}
                         options={{
                           headerShown: false
@@ -135,7 +136,8 @@ class UserNavigation extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    pross: state.pross
+    pross: state.pross,
+    token: state.token
   }
 }
 

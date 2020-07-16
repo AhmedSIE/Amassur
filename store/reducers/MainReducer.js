@@ -1,5 +1,5 @@
 
-const initialState = { pross:'' }
+const initialState = { pross:'', token:'' }
 
 function toggleFavorite(state = initialState, action) {
     let nextState
@@ -10,9 +10,16 @@ function toggleFavorite(state = initialState, action) {
               pross: [action.value]
             }
             // console.log(nextState)
-          return nextState || state
+            return nextState || state
+        case 'PROCESS_TOKEN':          
+            nextState = {
+              ...state,
+              token: [action.value]
+            }
+            // console.log(nextState)
+            return nextState || state
         default:
-          return state
+            return state
     }
 }
 

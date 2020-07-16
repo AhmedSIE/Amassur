@@ -13,7 +13,6 @@ class Onboarding extends React.Component {
       this.state = {
          pagePosition: 1,
       }
-      console.log(this.props.navigation)
    }
    
    render() {

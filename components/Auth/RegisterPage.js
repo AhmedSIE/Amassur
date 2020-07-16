@@ -7,32 +7,40 @@ class RegisterPage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            phone: '',
+            nom: '',
+            prenom: '',
+            telephone: '',
+            email: '',
+            password: '',
+            confirm:'',
             loading: false,
         }
     }
 
     async componentDidMount() {
         let user = await AsyncStorage.getItem('user');
-        if(user) {
-
-        }
     }
  
     sendCode = async() => {
-        if (this.state.phone.length >= 9) {
-            const tel = this.state.phone;
+        if (this.state.password == this.state.confirm) {
+            alert('Ok')
             this.setState({ loading: true })
-            await fetch('http://192.168.1.113:8000/api/auth/login',{
+            await fetch('http://192.168.1.113:8000/api/auth/register',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json'
                 },
-                body: JSON.stringify({"tel" : tel})
+                body: JSON.stringify({
+                    "nom" : this.state.nom,
+                    "prenom" : this.state.prenom,
+                    "telephone" : this.state.telephone,
+                    "email" : this.state.email,
+                    "password" : this.state.password,
+                })
             }).then(res=>res.json())
             .then((resData) => {
-                console.log(resData.otp)
+                console.log(resData)
                 this.setState({ loading: false })
                 let otp = resData.otp;
                 let tel1 =  this.state.phone;
@@ -41,15 +49,30 @@ class RegisterPage extends React.Component {
             })
             .catch((e) => console.log(e));
         } else {
-            alert("Numéro invalide");
+            alert("Erreur de mot de passe");
         }
     };
     
-    onChangeText(input) {
-        this.setState({ phone: input })
+    onChangeNom(input) {
+        this.setState({ nom: input })
+    }
+    onChangePrenom(input) {
+        this.setState({ prenom: input })
+    }
+    onChangeEmail(input) {
+        this.setState({ email: input })
+    }
+    onChangeTel(input) {
+        this.setState({ telephone: input })
+    }
+    onChangePass(input) {
+        this.setState({ password: input })
+    }
+    onChangeConfirm(input) {
+        this.setState({ confirm: input })
     }
     connexion=()=>{
-        this.props.navigation.navigate('loginPage');
+        this.props.navigation.navigate('LoginPage');
     }
     render() {
         return (
@@ -69,9 +92,9 @@ class RegisterPage extends React.Component {
                                             Renseigner le formulaire
                                         </Text>
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangeNom(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
+                                            // keyboardType="phone"
 
                                             placeholder="Nom"
                                             placeholderTextColor="#888"
@@ -80,9 +103,9 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangePrenom(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
+                                            keyboardType="phone"
 
                                             placeholder="Prénom(s)"
                                             placeholderTextColor="#888"
@@ -91,9 +114,9 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangeTel(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
+                                            keyboardType="numeric"
 
                                             placeholder="Téléphone"
                                             placeholderTextColor="#888"
@@ -102,9 +125,9 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangeEmail(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
+                                            keyboardType="email-address"
 
                                             placeholder="Email"
                                             placeholderTextColor="#888"
@@ -113,10 +136,11 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangePass(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
-
+                                            
+                                            keyboardType="visible-password"
+                                            // secureTextEntry
                                             placeholder="Mot de passe"
                                             placeholderTextColor="#888"
                                             style={styles.input}
@@ -124,9 +148,9 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeText(text)}
+                                            onChangeText={(text) => this.onChangeConfirm(text)}
                                             // value={this.state.phone}
-                                            keyboardType="phone-pad"
+                                            keyboardType="visible-password"
 
                                             placeholder="Confirmation mot de passe"
                                             placeholderTextColor="#888"
@@ -154,7 +178,6 @@ class RegisterPage extends React.Component {
     }
 }
 
-export default RegisterPage;
 
 const styles = StyleSheet.create({
     container: {
@@ -194,7 +217,7 @@ const styles = StyleSheet.create({
     title2: {
         textAlign: "center",
         width: "100%",
-        fontSize: 13,
+        fontSize: 11,
         marginTop: 20,
         marginBottom: 5,
         color: "black",
@@ -255,3 +278,5 @@ const styles = StyleSheet.create({
         width:'50%'
     },
 });
+
+export default RegisterPage;

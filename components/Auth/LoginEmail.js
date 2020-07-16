@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     title2: {
         textAlign: "center",
         width: "100%",
-        fontSize: 13,
+        fontSize: 11,
         marginTop: 10,
         marginBottom: 5,
         color: "black",

@@ -12,14 +12,14 @@ function AuthNavigation(props) {
     return(
         <NavAuthRoot.Navigator>
             <NavAuthRoot.Screen
-                name="loginPage"
+                name="LoginPage"
                 component={LoginPage}
                 options={{
                     headerShown:false
                 }}
                 />
             <NavAuthRoot.Screen
-                name="verify"
+                name="Verify"
                 component={LoginVerification}
                 options={{
                     headerShown:false

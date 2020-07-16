@@ -60,6 +60,17 @@ class Profil extends React.Component {
                     </ListItem>
                     <ListItem>
                         <Left>
+                            <Text style={styles.tex}>Téléphone</Text>
+                        </Left>
+                        <Text style={styles.tex}>22671879519</Text>
+                        <Right>
+                            <TouchableOpacity>
+                                <FontAwesome name="pencil-square-o" style={styles.direct}/>
+                            </TouchableOpacity>
+                        </Right>
+                    </ListItem>
+                    <ListItem>
+                        <Left>
                             <Text style={styles.tex}>Email</Text>
                         </Left>
                         <Text style={styles.tex}>ahmedsie3@gmail.com</Text>

@@ -5,6 +5,8 @@ import UserNavigation from './UserNavigation';
 import AuthNavigation from './AuthNavigation';
 import {AsyncStorage} from 'react-native';  
 import AppLoading from '../components/AppLoading';
+import { connect } from 'react-redux';
+
 
 const RootStack = createStackNavigator();
 class MainNavigation extends React.Component {
@@ -22,21 +24,16 @@ class MainNavigation extends React.Component {
     }
 
     user = async ()=>{ 
-        this.setState({
-            isLoading: true
-        }) 
+        this.setState({isLoading: true}) 
         let user = await AsyncStorage.getItem('user');   
         let parsed = JSON.parse(user); 
-        let tokenUser = 'xxxx';
-        
         if (parsed) {
-            if(parsed.token)  
-                tokenUser = parsed.token
-        }     
-        this.setState({
-            token: tokenUser,
-            isLoading: false
-        }) 
+            if(parsed.token) 
+                this.setState({token: parsed.token})
+                const action = { type: "PROCESS_TOKEN", value: this.state.token }
+                this.props.dispatch(action)
+        } 
+        this.setState({isLoading: false})     
     } 
     render(){
         console.log(this.props)
@@ -50,19 +47,14 @@ class MainNavigation extends React.Component {
                         screenOptions={{
                             headerShown: false
                         }}>
-                        {/* {
-                            this.state.token ? ( */}
-                                <RootStack.Screen 
-                                    name="userSpace"
-                                    component={UserNavigation}
-                                    />
-                             {/* ) : ( */}
-                                
-                                <RootStack.Screen
-                                    name="AuthUser"
-                                    component={AuthNavigation} />
-                             {/* )
-                         } */}
+                        <RootStack.Screen 
+                            name="userSpace"
+                            component={UserNavigation}
+                            />
+                        <RootStack.Screen
+                            name="AuthUser"
+                            component={AuthNavigation} 
+                            />
                     </RootStack.Navigator>
                 )
             }
@@ -70,5 +62,11 @@ class MainNavigation extends React.Component {
         )
     }   
 }
- 
-export default MainNavigation
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.token
+    }
+}
+  
+export default connect(mapStateToProps)(MainNavigation)
