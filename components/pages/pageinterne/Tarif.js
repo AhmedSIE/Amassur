@@ -9,6 +9,18 @@ class Tarifs extends React.Component{
     constructor(props){
         super(props)
     }
+    assuranceAuto=()=>{
+        this.props.navigation.navigate('Assurance Auto');
+    }
+    assuranceMoto=()=>{
+        this.props.navigation.navigate('Assurance Moto');
+    }
+    assuranceMaison=()=>{
+        this.props.navigation.navigate('Assurance Maison');
+    }
+    assuranceSante=()=>{
+        this.props.navigation.navigate('Assurance Sante');
+    }
     render(){
         return (
             <Container style={styles.corp}>
@@ -18,7 +30,7 @@ class Tarifs extends React.Component{
                         <List>
                             <Text style={styles.entete}>Que souhaitez-{"\n"}vous assurer ?</Text>
                             <Text style={styles.entete2}>Obtenez votre devis en moins de 45 seconde.</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceAuto()}>
                                 <Card style={styles.select} noShadow={true}>
                                     <ListItem>
                                             <Left>
@@ -32,7 +44,7 @@ class Tarifs extends React.Component{
                                     </ListItem>
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceMoto()}>
                                 <Card style={styles.select} noShadow={true}>
                                     <ListItem >
                                         <Left>
@@ -45,7 +57,7 @@ class Tarifs extends React.Component{
                                     </ListItem>
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceMaison()}>
                                 <Card style={styles.select} noShadow={true}>
                                     <ListItem>
                                         <Left>
@@ -58,7 +70,7 @@ class Tarifs extends React.Component{
                                     </ListItem>    
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceSante()}>
                                 <Card style={styles.select} noShadow={true}>
                                     <ListItem>
                                         <Left>

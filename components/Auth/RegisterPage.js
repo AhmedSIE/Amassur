@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import {  ImageBackground,AsyncStorage, View,ScrollView, StyleSheet,Image, TextInput, ActivityIndicator, Alert } from 'react-native';
-import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
+import { AsyncStorage, View,ScrollView, StyleSheet,Image, TextInput } from 'react-native';
+import {Container, Text, Card,} from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AppLoading from './../AppLoading'
 class RegisterPage extends React.Component {
@@ -22,34 +22,43 @@ class RegisterPage extends React.Component {
     }
  
     sendCode = async() => {
-        if (this.state.password == this.state.confirm) {
-            alert('Ok')
-            this.setState({ loading: true })
-            await fetch('http://192.168.1.113:8000/api/auth/register',{
-                method:'POST',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify({
-                    "nom" : this.state.nom,
-                    "prenom" : this.state.prenom,
-                    "telephone" : this.state.telephone,
-                    "email" : this.state.email,
-                    "password" : this.state.password,
+        if (this.state.nom !='' && this.state.prenom !='' && this.state.email !='' && 
+            this.state.telephone !='' && this.state.password !='') {
+            if (this.state.password == this.state.confirm) {
+                await fetch('http://192.168.1.125:8000/api/auth/register',{
+                    method:'POST',
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        "nom" : this.state.nom,
+                        "prenom" : this.state.prenom,
+                        "telephone" : this.state.telephone,
+                        "email" : this.state.email,
+                        "password" : this.state.password,
+                    })
+                }).then(res=>res.json())
+                .then((resData) => {
+                    console.log(resData.nom)
+                    this.setState({ loading: false })
+                    let user ={
+                        nom:resData.nom,
+                        prenom:resData.prenom,
+                        telephone:resData.telephone,
+                        email:resData.email,
+                        photo:resData.photo,
+                        token:resData.access_token,
+                    }  
+                    AsyncStorage.setItem('user',JSON.stringify(user));
+                    this.props.navigation.navigate("Main");
                 })
-            }).then(res=>res.json())
-            .then((resData) => {
-                console.log(resData)
-                this.setState({ loading: false })
-                let otp = resData.otp;
-                let tel1 =  this.state.phone;
-                AsyncStorage.setItem('tel1',tel1);
-                this.props.navigation.navigate("verify", { verificationOtp: otp });
-            })
-            .catch((e) => console.log(e));
+                .catch((e) => console.log(e));
+            } else {
+                alert("Erreur de mot de passe");
+            }    
         } else {
-            alert("Erreur de mot de passe");
+            alert("Tous les champs sont obligatoires");
         }
     };
     
@@ -125,10 +134,10 @@ class RegisterPage extends React.Component {
                                             autoCompleteType="tel"
                                         />
                                         <TextInput
-                                            onChangeText={(text) => this.onChangeEmail(text)}
+                                            onChangeText={text => this.onChangeEmail(text)}
                                             // value={this.state.phone}
+                                            // underlineColorAndroid='transparent'
                                             keyboardType="email-address"
-
                                             placeholder="Email"
                                             placeholderTextColor="#888"
                                             style={styles.input}
@@ -139,8 +148,7 @@ class RegisterPage extends React.Component {
                                             onChangeText={(text) => this.onChangePass(text)}
                                             // value={this.state.phone}
                                             
-                                            keyboardType="visible-password"
-                                            // secureTextEntry
+                                            secureTextEntry={true}
                                             placeholder="Mot de passe"
                                             placeholderTextColor="#888"
                                             style={styles.input}
@@ -150,8 +158,7 @@ class RegisterPage extends React.Component {
                                         <TextInput
                                             onChangeText={(text) => this.onChangeConfirm(text)}
                                             // value={this.state.phone}
-                                            keyboardType="visible-password"
-
+                                            secureTextEntry={true}
                                             placeholder="Confirmation mot de passe"
                                             placeholderTextColor="#888"
                                             style={styles.input}

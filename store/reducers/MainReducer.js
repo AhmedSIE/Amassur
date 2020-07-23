@@ -1,5 +1,5 @@
 
-const initialState = { pross:'', token:'' }
+const initialState = { pross:'', token:'', users:'' }
 
 function toggleFavorite(state = initialState, action) {
     let nextState
@@ -15,6 +15,19 @@ function toggleFavorite(state = initialState, action) {
             nextState = {
               ...state,
               token: [action.value]
+            }
+            // console.log(nextState)
+            return nextState || state
+        case 'PROCESS_USER':          
+            nextState = {
+              ...state,
+              users: action.value
+            }
+            // console.log(nextState)
+            return nextState || state
+        case 'PROCESS_USER_DECONNEXION':          
+            nextState = {
+              users: action.value
             }
             // console.log(nextState)
             return nextState || state

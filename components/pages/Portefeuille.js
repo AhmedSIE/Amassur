@@ -9,10 +9,12 @@ class Portefeuille extends React.Component{
     constructor(props){
         super(props)
     }
-  
+    connexion=()=>{
+        this.props.navigation.navigate('AuthUser')
+    }
     render(){
         let navigation = this.props.navigation
-        if (this.props.token) {
+        if (this.props.token)  {
             return (
                 <Container style={styles.corp}>
                     <HeaderNavigator  navigation={navigation}/>
@@ -112,92 +114,16 @@ class Portefeuille extends React.Component{
                 <Container style={styles.corp}>
                     <HeaderNavigator navigation={navigation}/>
                     <ScrollView style={styles.scrollView}>
-                        <Container style={styles.display}>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file-text' style={styles.icone3}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Mes contrats</Text>  
-                                        </CardItem>
-                                            <Text style={styles.text2}>1 contrats</Text>
-                                    </Card>
+                        <Container style={styles.mondisplay}>
+                            <FontAwesome name='file-text-o' style={styles.monicone}/>
+                            <Text style={styles.montext}>Portefeuille</Text>
+                            <Text style={styles.montext2}>Connectez-vous pour pouvoir accéder à vos contrats, 
+                            attestations, factures, ainsi que d'autres fonctionnalités</Text>
+                            <Container style={styles.sectionbtn}>  
+                                <TouchableOpacity onPress={()=>this.connexion()} style={styles.button}>
+                                    <Text style={styles.textButton}>Se connecter</Text>
                                 </TouchableOpacity>
-                            </Container>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file' style={styles.icone2}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Mes devis</Text>
-                                        </CardItem>
-                                        <Text style={styles.text3}>0 nouvelle information</Text>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Container>
-    
-                        </Container>
-                        <Container style={styles.display}>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file-photo-o' style={styles.icone2}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Mes photos</Text>
-                                        </CardItem>
-                                        <Text style={styles.text3}>0 manquante(s)</Text>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Container>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file-text-o' style={styles.icone2}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Mes attestations</Text>
-                                        </CardItem>
-                                        <Text style={styles.text3}>0 attestation(s)</Text>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Container>
-    
-                        </Container>
-                        <Container style={styles.display}>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file-o' style={styles.icone3}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Mes factures</Text>
-                                        </CardItem>
-                                        <Text style={styles.text2}>3 factures</Text>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Container>
-                            <Container style={styles.display3}>
-                                <TouchableOpacity>
-                                    <Card style={styles.card2}>
-                                        <CardItem>
-                                            <FontAwesome name='file-movie-o' style={styles.icone3}/>
-                                        </CardItem>
-                                        <CardItem>
-                                            <Text style={styles.text}>Vidéos</Text>
-                                        </CardItem>
-                                        <Text style={styles.text2}>Comprendre l'offre</Text>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Container>
-    
+                            </Container> 
                         </Container>
                     </ScrollView>
                 </Container>    
@@ -223,6 +149,15 @@ const styles=StyleSheet.create({
         backgroundColor:'transparent',
         height:150,
     },
+    mondisplay:{
+        flex:1,
+        justifyContent: 'center',
+        alignItems:'center',
+        backgroundColor:'transparent',
+        paddingTop:'15%',
+        height:'50%'
+
+    },
     display3:{
         flex:1, 
         height:150, 
@@ -236,6 +171,13 @@ const styles=StyleSheet.create({
         paddingBottom:5,
         // backgroundColor:'#fafafa',
 
+    },
+    monicone:{
+        // marginTop:'1%',
+        fontSize:100,
+        backgroundColor:'transparent',
+        color:'#2E3682',
+        
     },
     icone2:{
         fontSize:50,
@@ -265,6 +207,42 @@ const styles=StyleSheet.create({
         fontSize:12,
         marginTop:-10,
         padding:0,
-    }
+    },
+    montext:{
+        fontSize:28,
+        marginTop:'10%',
+        fontWeight:'bold',
+        padding:0,
+    },
+    montext2:{
+        fontSize:12,
+        // marginTop:'1%',
+        padding:0,
+        textAlign:'center',
+        padding:20,
+    },
+    sectionbtn:{
+        alignItems: "center",
+        height:'50%',
+        marginTop:'10%',
+        backgroundColor:'transparent',
+
+    },
+    button: {
+        width: 320,
+        alignItems: "center",
+        backgroundColor: "#2E3682",
+        color: "white",
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 30,
+        marginBottom:10,
+    },
+    textButton: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 14,
+
+    },
 });
 export default Portefeuille

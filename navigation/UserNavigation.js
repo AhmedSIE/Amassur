@@ -11,6 +11,14 @@ import PageTarif from './../components/pages/pageinterne/Tarif';
 import PageOnboarding from './../components/onboarding/Onboarding';
 import PageProfil from './../components/pages/Profil';
 import PageParametres from './../components/pages/Parametres';
+import PageAssuranceAuto from './../components/pages/pageinterne/assurances/AssuranceAuto';
+import PageAssuranceSante from './../components/pages/pageinterne/assurances/AssuranceSante';
+import PageAssuranceMoto from './../components/pages/pageinterne/assurances/AssuranceMoto';
+import PageAssuranceMaison from './../components/pages/pageinterne/assurances/AssuranceMaison';
+import CardFree from './../components/pages/pageinterne/services/Free';
+import CardSilver from './../components/pages/pageinterne/services/Silver';
+import CardGold from './../components/pages/pageinterne/services/Gold';
+import CardPlatinum from './../components/pages/pageinterne/services/Platinum';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
@@ -20,8 +28,6 @@ function Accueil({navigation}) {
         <PageAccueil navigation={navigation} />
     );
 }
-  
- 
 function Messages({navigation}) {
   return (
     <PageMessages navigation={navigation}/>
@@ -46,7 +52,6 @@ function Portefeuille({navigation}) {
 const Tab = createBottomTabNavigator();
 function UserSpaceDrawer (props) {
   return (
-    
         <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarIcon: ({ focused, color, size }) => {
@@ -79,7 +84,6 @@ function UserSpaceDrawer (props) {
             <Tab.Screen name="Parrainage" component={Parrainage} />
             <Tab.Screen name="Portefeuille" component={Portefeuille} />
         </Tab.Navigator>
-
   )
 } 
 
@@ -90,10 +94,9 @@ class UserNavigation extends React.Component {
     }
 
     render() {
-        // console.log(this.props.token)
         return(
               <RootUserStack.Navigator>{
-                  this.props.token || this.props.pross ? (
+                  this.props.users.token || this.props.pross ? (
                       <RootUserStack.Screen 
                         name="userSpaceDrawer"
                         component={UserSpaceDrawer}
@@ -129,16 +132,64 @@ class UserNavigation extends React.Component {
                         options={{
                           headerShown: true
                         }} />
+                <RootUserStack.Screen 
+                        name="Assurance Auto" 
+                        component={PageAssuranceAuto}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Assurance Moto" 
+                        component={PageAssuranceMoto}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Assurance Maison" 
+                        component={PageAssuranceMaison}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Assurance Sante" 
+                        component={PageAssuranceSante}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="FREE CARD" 
+                        component={CardFree}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="SILVER CARD" 
+                        component={CardSilver}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="GOLD CARD" 
+                        component={CardGold}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="PLATINUM CARD" 
+                        component={CardPlatinum}
+                        options={{
+                          headerShown: true
+                        }} />
               </RootUserStack.Navigator>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    pross: state.pross,
-    token: state.token
-  }
+    return {
+      pross: state.pross,
+      users: state.users
+    }
 }
 
 export default connect(mapStateToProps)(UserNavigation)

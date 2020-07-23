@@ -29,6 +29,19 @@ class Accueil extends React.Component {
             jour: message,
         });
     }
+    assuranceAuto= ()=> {
+        this.props.navigation.navigate('Assurance Auto');
+    }
+    assuranceMoto=()=>{
+        this.props.navigation.navigate('Assurance Moto');
+    }
+    assuranceMaison=()=>{
+        this.props.navigation.navigate('Assurance Maison');
+    }
+    assuranceSante=()=>{
+        this.props.navigation.navigate('Assurance Sante');
+    }
+
     render(){
         let navigation = this.props.navigation
         return (
@@ -37,7 +50,7 @@ class Accueil extends React.Component {
                 <ScrollView style={styles.scrollView}>
                     <Container style={styles.display}>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceAuto()}>
                                 <Card style={styles.card1}>
                                     <CardItem style={styles.carditem}>
                                         <Image style={styles.image1} source={require('./../../assets/images/icone_Auto.png')}/>
@@ -46,7 +59,7 @@ class Accueil extends React.Component {
                             </TouchableOpacity>
                         </Container>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceMoto()}>
                                 <Card style={styles.card1}>
                                     <CardItem style={styles.carditem}>
                                         <Image style={styles.image1} source={require('./../../assets/images/icone_Moto.png')}/>
@@ -55,7 +68,7 @@ class Accueil extends React.Component {
                             </TouchableOpacity>
                         </Container>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceMaison()}>
                                 <Card style={styles.card1}>
                                     <CardItem style={styles.carditem}>
                                         <Image style={styles.image1} source={require('./../../assets/images/icone_House.png')}/>
@@ -64,7 +77,7 @@ class Accueil extends React.Component {
                             </TouchableOpacity>
                         </Container>
                         <Container style={styles.display2}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.assuranceSante()}>
                                 <Card style={styles.card1}>
                                     <CardItem style={styles.carditem}>
                                         <Image style={styles.image1} source={require('./../../assets/images/icone_Sante.png')}/>
@@ -94,20 +107,6 @@ class Accueil extends React.Component {
                             </CardItem>
                         </Card>
                     </Container>
-                    {/* <Container style={styles.simplecard} >
-                        <List>
-                            <ListItem>
-                                <Text> {dat </Text>
-                            </ListItem>}
-                            <Button full onPress={() => alert(data)}>
-                                <Icon active name="information-circle" />
-                            </Button>}
-                            <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
-                                <Icon active name="trash" />
-                            </Button>
-                        </List>
-                         
-                    </Container> */}
                     <Container style={styles.simplecard}>
                         <Card style={styles.card} noShadow={true}> 
                             <Text style={styles.entete2}>Bon Plan</Text>
@@ -121,21 +120,30 @@ class Accueil extends React.Component {
                             </CardItem>
                         </Card>
                     </Container>
-                    <Container style={styles.sectionbtn}>  
-                        <TouchableOpacity onPress={()=>this.tarif()} style={styles.button}>
-                            <Text style={styles.textButton}>Obtenir un tarif</Text>
-                        </TouchableOpacity>
+                    <Container style={styles.marg}>  
                     </Container>
                 </ScrollView>
+                <Container style={styles.sectionbtn}>  
+                    <TouchableOpacity onPress={()=>this.tarif()} style={styles.button}>
+                        <Text style={styles.textButton}>Obtenir un tarif</Text>
+                    </TouchableOpacity>
+                </Container>
             </Container>    
         );
     }
     
 }
 const styles = StyleSheet.create({
+    corp:{
+        backgroundColor:'#fafafa',
+        flex:1,
+
+    },
     scrollView: {
-        height:'78%',
-        backgroundColor: "#fafafa", 
+        height:'75%',
+        // marginTop:'18%',
+        backgroundColor: "#fafafa",
+    
     },
     container: {
         flex: 1,
@@ -264,13 +272,22 @@ const styles = StyleSheet.create({
     sectionbtn:{
         alignItems: "center",
         height:'50%',
-        marginTop:'10%'
+        marginBottom:'5%',
+        backgroundColor:'transparent',
+        position:'absolute',
+        top:'85%',
+        left:'6%'
+        
+        
     },
     image1:{
         height:35,
         width:35,
         backgroundColor:'transparent'
     },
+    marg:{
+        height:100
+    }
 });
 
 export default Accueil

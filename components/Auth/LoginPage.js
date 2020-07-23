@@ -16,13 +16,13 @@ class LoginPage extends React.Component {
         if (this.state.phone.length >= 9) {
             const tel = this.state.phone;
             this.setState({ loading: true })
-            await fetch('http://192.168.1.113:8000/api/auth/login',{
+            await fetch('http://192.168.1.125:8000/api/auth/login',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json'
                 },
-                body: JSON.stringify({"tel" : tel})
+                body: JSON.stringify({"telephone" : tel})
             }).then(res=>res.json())
             .then((resData) => {
                 console.log(resData.otp)

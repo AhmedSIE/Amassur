@@ -2,12 +2,13 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet,Image } from 'react-native';
 import { Container, Header, Title, Card, CardItem,Content ,Icon} from "native-base";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 class MonHeader extends React.Component{
     constructor(props){
         super(props);
         this.naviagation=this.props.navigation
-        
+        console.log(this.props.users)
     }
 
     profil=()=>{
@@ -19,15 +20,29 @@ class MonHeader extends React.Component{
     accueil=()=>{
         this.props.navigation.navigate('Accueil')
     }
+    connexion=()=>{
+        this.props.navigation.navigate('AuthUser')
+    }
     render(){
         return(
-            <Container>
+            <View style={{flex:1}}>
                 <Header style={styles.header}>
                     <View style={styles.display}>
                         <Container style={styles.display2}>
-                            <TouchableOpacity  style={styles.onPress} onPress={()=>this.profil()}>
-                                <Image style={styles.image1} source={require('./../assets/images/MaleUser.png')}/>
-                            </TouchableOpacity>
+                                {
+                                    this.props.users.photo ? (
+                                        <TouchableOpacity  style={styles.onPress} onPress={()=>this.profil()}>
+                                            <Image style={styles.image2} 
+                                            source={{
+                                                uri: 'data:image/jpeg;base64,' + this.props.users.photo,
+                                            }}/>
+                                        </TouchableOpacity>
+                                    ):(
+                                        <TouchableOpacity style={styles.onPress} onPress={()=>this.connexion()}>
+                                            <Image style={styles.image1} source={require('./../assets/images/MaleUser.png')}/>
+                                        </TouchableOpacity>
+                                    )
+                                }
                         </Container>
                         <Container style={styles.display2}>
                             <TouchableOpacity onPress={()=>this.accueil()}>
@@ -42,13 +57,15 @@ class MonHeader extends React.Component{
                     </View>      
                 </Header>
 
-            </Container>
+            </View>
         );
     }
 }
 const styles = StyleSheet.create({
     header:{
         backgroundColor:'white',
+        // position:'absolute',
+        // zIndex:1,
     },
     authimage:{
         marginTop:'5%',
@@ -64,6 +81,14 @@ const styles = StyleSheet.create({
         height:40,
         marginTop:'5%',
         zIndex:100,
+
+    },
+    image2:{
+        width:40,
+        height:40,
+        marginTop:'5%',
+        zIndex:100,
+        borderRadius:100,
 
     },
     icone:{
@@ -110,4 +135,10 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent'
     },
 });
-export default MonHeader;
+const mapStateToProps = (state) => {
+    return {
+        users:state.users,
+    }
+}
+
+export default connect(mapStateToProps)(MonHeader);

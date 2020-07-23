@@ -9,6 +9,18 @@ class Services extends React.Component{
     constructor(props){
         super(props)
     }
+    free(){
+        this.props.navigation.navigate('FREE CARD');
+    }
+    silver(){
+        this.props.navigation.navigate('SILVER CARD');
+    }
+    gold(){
+        this.props.navigation.navigate('GOLD CARD');
+    }
+    platinum(){
+        this.props.navigation.navigate('PLATINUM CARD');
+    }
     render(){
         let navigation = this.props.navigation
         return (
@@ -18,24 +30,24 @@ class Services extends React.Component{
                     <Container style={styles.list}>
                         <List>
                             <Text style={styles.entete}>Nos services</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.free()}>
                                 <Card style={styles.select}>
-                                   <Text style={styles.montitre}>FREE</Text>
+                                    <Image style={styles.image1} source={require('./../../assets/images/Cartes/free_card.png')}/>
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.silver()}>
                                 <Card style={styles.select}>
-                                   <Text style={styles.montitre}>PLATINUME</Text>
+                                    <Image style={styles.image1} source={require('./../../assets/images/Cartes/silver_card.png')}/>
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.gold()}>
                                 <Card style={styles.select}>
-                                   <Text style={styles.montitre}>Gold</Text>
+                                    <Image style={styles.image1} source={require('./../../assets/images/Cartes/gold_card.png')}/>
                                 </Card>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>this.platinum()}>
                                 <Card style={styles.select}>
-                                   <Text style={styles.montitre}>Gold</Text>
+                                    <Image style={styles.image1} source={require('./../../assets/images/Cartes/platinum_card.png')}/>
                                 </Card>
                             </TouchableOpacity>
                         </List>
@@ -98,6 +110,10 @@ const styles=StyleSheet.create({
     },
     montitre:{
         padding:30,
+    },
+    image1:{
+        width:'100%',
+        height:'100%',
     }
 });
 export default Services

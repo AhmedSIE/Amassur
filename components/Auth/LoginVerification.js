@@ -43,10 +43,11 @@ class LoginVerification extends React.Component{
 
     verifyCode = () => {
         this.setState({loading:true})
-        alert(this.verificationOtp==this.state.code)
         if (this.verificationOtp==this.state.code) {
-            this.setState({loading:false})
             this.auth();
+            this.setState({loading:false})
+            this.props.navigation.navigate('Main');
+
         } else {
             this.setState({loading:false})
             this.props.navigation.navigate('LoginPage');
@@ -55,25 +56,27 @@ class LoginVerification extends React.Component{
 
     auth = async() => {
         const tel =this.numeroTel;
-        await fetch('http://192.168.1.113:8000/api/auth/login',{
+        // this.setState({loading:true})
+        await fetch('http://192.168.1.125:8000/api/auth/login',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify({"tel" : tel})
+            body: JSON.stringify({"telephone" : tel})
         }).then(res=>res.json())
         .then((resData)=>{
-            console.log(this.props.navigation);
+            // this.setState({loading:false})
             let user = {  
                 token: resData.access_token,  
-                nom:resData.name,
+                nom:resData.nom,
+                prenom:resData.prenom,
                 email: resData.email,  
-                tel:resData.tel,
+                telephone:resData.telephone,
+                photo:resData.photo,
                 sessionsexpire:resData.expires_in,
             } 
             AsyncStorage.setItem('user',JSON.stringify(user))
-            this.props.navigation.navigate('Main');
         });
     }
     

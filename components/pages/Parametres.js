@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,TouchableOpacity,Image } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,TouchableOpacity,AsyncStorage } from 'react-native';
 import {Container, Card,CardItem, List, ListItem, Left, Right} from "native-base";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AppLoading from './../AppLoading';
+import {connect} from 'react-redux';
 
 
 // import SwipeablePanel from 'rn-swipeable-panel';
@@ -11,118 +13,126 @@ class Parametres extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            swipeablePanelActive: false
+            swipeablePanelActive: false,
+            loading:false,
         };
-        console.log(this.props)
+        // console.log(this.props)
     }
+
     connexion=()=>{
         this.props.navigation.navigate('AuthUser')
     }
-    // componentDidMount = () => {
-    //     this.openPanel();
-    // };
-
-    // openPanel = () => {
-    //     this.setState({ swipeablePanelActive: true });
-    // };
-
-    // closePanel = () => {
-    //     this.setState({ swipeablePanelActive: false });
-    // };
-
-    render() {
+    deconnexion=()=>{
+        this.clearAsyncStorage();
+        this.props.navigation.navigate('Accueil');
+    }
+    clearAsyncStorage =() => {
+        this.setState({loading:true});
+        AsyncStorage.clear();
+        const action = { type: "PROCESS_USER_DECONNEXION", value: ''};
+        this.props.dispatch(action);
+        this.setState({ loading:false});
+    }
+ 
+    render(){
         return (
-            <View >
-                <ScrollView style={styles.scrollView}>
-                    <Container style={styles.list}>
-                        <List>
-                            <Text style={styles.entete}>Général</Text>
-                            <TouchableOpacity>
-                                <ListItem style={styles.listItem}>
-                                        <Left>
-                                            <FontAwesome name="cog" style={styles.direct2}/>
-                                            <Text style={styles.tex}>Paramètres de l'appli</Text>
-                                        </Left>
-                                        <Right>
-                                            <FontAwesome name="chevron-right" style={styles.direct}/>
-                                        </Right>
-                                </ListItem>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <ListItem style={styles.listItem}>
-                                    <Left>
-                                        <FontAwesome name="file-text" style={styles.direct4}/>
-                                        <Text style={styles.tex}>Condition générales d'utilisation</Text>
-                                    </Left>
-                                    <Right>
-                                        <FontAwesome name="chevron-right" style={styles.direct} />
-                                    </Right>
-                                </ListItem>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <ListItem style={styles.listItem}>
-                                    <Left>
-                                        <FontAwesome name="star" style={styles.direct3}/>
-                                        <Text style={styles.tex}>Notez-nous sur Play store</Text>
-                                    </Left>
-                                    <Right>
-                                        <FontAwesome name="chevron-right" style={styles.direct} />
-                                    </Right>
-                                </ListItem>    
-                            </TouchableOpacity>
-                        </List>
-                    </Container>
-                    <Container style={styles.list}>
-                        <List>
-                            <Text style={styles.entete}>Réseaux sociaux</Text>
-                            <Container style={styles.display}>
-                                <Container style={styles.display2}>
+            <View style={{flex:1}}>
+                {
+                    this.state.loading ? (
+                        <AppLoading titreMessage={'Veuillez patienter ...'} />
+                    ):(
+                        <ScrollView style={styles.scrollView}>
+                            <Container style={styles.list}>
+                                <List>
+                                    <Text style={styles.entete}>Général</Text>
                                     <TouchableOpacity>
-                                        <Card style={styles.card1} noShadow={true}>
-                                            <CardItem style={styles.carditem}>
-                                                <Text style={styles.image1}>WWW</Text>
-                                                {/* <FontAwesome name="facebook-official" style={styles.image1}/> */}
-                                            </CardItem>
-                                        </Card>
+                                        <ListItem style={styles.listItem}>
+                                                <Left>
+                                                    <FontAwesome name="cog" style={styles.direct2}/>
+                                                    <Text style={styles.tex}>Paramètres de l'appli</Text>
+                                                </Left>
+                                                <Right>
+                                                    <FontAwesome name="chevron-right" style={styles.direct}/>
+                                                </Right>
+                                        </ListItem>
                                     </TouchableOpacity>
-                                </Container>
-                                <Container style={styles.display2}>
                                     <TouchableOpacity>
-                                        <Card style={styles.card2} noShadow={true}>
-                                            <CardItem style={styles.carditem}>
-                                                <FontAwesome name="facebook" style={styles.image2}/>
-                                            </CardItem>
-                                        </Card>
+                                        <ListItem style={styles.listItem}>
+                                            <Left>
+                                                <FontAwesome name="file-text" style={styles.direct4}/>
+                                                <Text style={styles.tex}>Condition générales d'utilisation</Text>
+                                            </Left>
+                                            <Right>
+                                                <FontAwesome name="chevron-right" style={styles.direct} />
+                                            </Right>
+                                        </ListItem>
                                     </TouchableOpacity>
-                                </Container>
-                                <Container style={styles.display2}>
                                     <TouchableOpacity>
-                                        <Card style={styles.card3} noShadow={true}>
-                                            <CardItem style={styles.carditem}>
-                                                <FontAwesome name="share-alt" style={styles.image3}/>
-                                            </CardItem>
-                                        </Card>
+                                        <ListItem style={styles.listItem}>
+                                            <Left>
+                                                <FontAwesome name="star" style={styles.direct3}/>
+                                                <Text style={styles.tex}>Notez-nous sur Play store</Text>
+                                            </Left>
+                                            <Right>
+                                                <FontAwesome name="chevron-right" style={styles.direct} />
+                                            </Right>
+                                        </ListItem>    
                                     </TouchableOpacity>
-                                </Container>
+                                </List>
                             </Container>
-                        </List>
-                        <Container style={styles.sectionbtn}>  
-                            <TouchableOpacity onPress={()=>this.connexion()} style={styles.button}>
-                                <Text style={styles.textButton}>Se connecter</Text>
-                            </TouchableOpacity>
-                        </Container> 
-                    </Container>
-                </ScrollView>
-                {/* <Text style={styles.welcome}>Welcome to React Native!</Text>
-                <Text style={styles.instructions}>To get started, edit App.js</Text>
-                <SwipeablePanel
-                    fullWidth
-                    isActive={this.state.swipeablePanelActive}
-                    onClose={this.closePanel}
-                    onPressCloseButton={this.closePanel}
-                >
-					<PanelContent /> 
-				</SwipeablePanel> */}
+                            <Container style={styles.list}>
+                                <List>
+                                    <Text style={styles.entete}>Réseaux sociaux</Text>
+                                    <Container style={styles.display}>
+                                        <Container style={styles.display2}>
+                                            <TouchableOpacity>
+                                                <Card style={styles.card1} noShadow={true}>
+                                                    <CardItem style={styles.carditem}>
+                                                        <Text style={styles.image1}>WWW</Text>
+                                                    </CardItem>
+                                                </Card>
+                                            </TouchableOpacity>
+                                        </Container>
+                                        <Container style={styles.display2}>
+                                            <TouchableOpacity>
+                                                <Card style={styles.card2} noShadow={true}>
+                                                    <CardItem style={styles.carditem}>
+                                                        <FontAwesome name="facebook" style={styles.image2}/>
+                                                    </CardItem>
+                                                </Card>
+                                            </TouchableOpacity>
+                                        </Container>
+                                        <Container style={styles.display2}>
+                                            <TouchableOpacity>
+                                                <Card style={styles.card3} noShadow={true}>
+                                                    <CardItem style={styles.carditem}>
+                                                        <FontAwesome name="share-alt" style={styles.image3}/>
+                                                    </CardItem>
+                                                </Card>
+                                            </TouchableOpacity>
+                                        </Container>
+                                    </Container>
+                                </List>
+                                {
+                                    this.props.users.token ? (
+                                        <Container style={styles.sectionbtn}>  
+                                            <TouchableOpacity onPress={()=>this.deconnexion()} style={styles.button}>
+                                                <Text style={styles.textButton}>Deconnexion</Text>
+                                            </TouchableOpacity>
+                                        </Container> 
+
+                                    ):(
+                                        <Container style={styles.sectionbtn}>  
+                                            <TouchableOpacity onPress={()=>this.connexion()} style={styles.button}>
+                                                <Text style={styles.textButton}>Se connecter</Text>
+                                            </TouchableOpacity>
+                                        </Container> 
+                                    )        
+                                }
+                            </Container>
+                        </ScrollView>
+                    )
+                }
             </View>
         );
     }
@@ -276,4 +286,11 @@ const styles=StyleSheet.create({
         backgroundColor:'transparent'
     },
 });
-export default Parametres
+
+const mapStateToProps = (state) => {
+    return{
+        users:state.users
+    }
+}
+export default connect(mapStateToProps)(Parametres)
+// export default Parametres

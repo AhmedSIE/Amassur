@@ -23,7 +23,7 @@ class Parrainage extends React.Component{
                         <Text style={styles.entext}>Parrainez vos amis - Gagnez une carte</Text>
                     </Container>
                     <Container style={styles.simplecard} >
-                        <Text style={styles.entete3}>Participes à nos nouvelles offres et faites-en bénéficier à vos proches</Text>
+                        <Text style={styles.entete3}>Participez à nos nouvelles offres et faites-en bénéficier à vos proches</Text>
                     </Container>
                     
                     <Container style={styles.sectionbtn}>  

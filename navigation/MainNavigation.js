@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Text } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import UserNavigation from './UserNavigation';
 import AuthNavigation from './AuthNavigation';
-import {AsyncStorage} from 'react-native';  
 import AppLoading from '../components/AppLoading';
 import { connect } from 'react-redux';
 
@@ -13,10 +12,10 @@ class MainNavigation extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            token:'',
             isLoading: false
         }
         this.user = this.user.bind(this)
+        console.log(this.props.users)
     }
 
     async componentDidMount() {
@@ -26,17 +25,20 @@ class MainNavigation extends React.Component {
     user = async ()=>{ 
         this.setState({isLoading: true}) 
         let user = await AsyncStorage.getItem('user');   
-        let parsed = JSON.parse(user); 
+        let parsed = JSON.parse(user);
+        
         if (parsed) {
-            if(parsed.token) 
-                this.setState({token: parsed.token})
-                const action = { type: "PROCESS_TOKEN", value: this.state.token }
+            if (parsed.token) {
+                const action = { type: "PROCESS_USER", value: parsed}
                 this.props.dispatch(action)
-        } 
+            }
+        } else {
+            const action = { type: "PROCESS_USER_DECONNEXION", value: ''}
+            this.props.dispatch(action)
+        }
         this.setState({isLoading: false})     
     } 
     render(){
-        console.log(this.props)
         return(
             <View style={{flex:1}}>
             {
@@ -65,7 +67,8 @@ class MainNavigation extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.token
+        token: state.token,
+        users: state.users
     }
 }
   
