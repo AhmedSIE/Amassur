@@ -8,7 +8,6 @@ class MonHeader extends React.Component{
     constructor(props){
         super(props);
         this.naviagation=this.props.navigation
-        console.log(this.props.users)
     }
 
     profil=()=>{

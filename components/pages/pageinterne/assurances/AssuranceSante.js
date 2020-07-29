@@ -152,13 +152,28 @@ class AssuranceSante extends React.Component{
                                     />
                                     <View style={styles.cartgrise}>
                                         <TouchableOpacity onPress={this.selectFile}>
-                                            <Text style={styles.entete1}>Photo de profil</Text>
-                                            <Image
-                                                source={{
-                                                uri: 'data:image/jpeg;base64,' + this.state.resourcePathProfil,
-                                                }}
-                                                style={styles.image1}
-                                            />
+                                            {
+                                                this.state.resourcePathProfil !='' ? (
+                                                    <View>
+                                                        <Text style={styles.entete4}>Modifier</Text>
+                                                        <Image
+                                                            source={{
+                                                            uri: 'data:image/jpeg;base64,' + this.state.resourcePathProfil,
+                                                            }}
+                                                            style={styles.image1}
+                                                        />
+                                                    </View>
+                                                ):(
+                                                    <View>
+                                                        <Text style={styles.entete3}>Photo de profil</Text>
+                                                        <Image
+                                                            source={{
+                                                            uri: 'data:image/jpeg;base64,' + this.state.resourcePathProfil,
+                                                            }}
+                                                        />
+                                                    </View>
+                                                )
+                                            }
                                         </TouchableOpacity>       
                                     </View>
                                 </View>
@@ -363,6 +378,22 @@ const styles=StyleSheet.create({
         fontSize:28,
 
     },
+    entete3:{
+        color:'#2E3682',
+        fontWeight:'bold',
+        padding:20,
+        fontSize:16,
+
+    },
+    entete4:{
+        marginTop:0,
+        marginBottom:10,
+        color:'#2E3682',
+        fontWeight:'bold',
+        padding:5,
+        fontSize:14,
+
+    }, 
     sousent:{
         fontSize: 12,
         paddingLeft:20,
@@ -389,7 +420,8 @@ const styles=StyleSheet.create({
     },
     image1:{
         height:200,
-        width:'auto',
+        minWidth:200,
+        marginBottom:20
     },
     cartgrise:{
         borderWidth:1,

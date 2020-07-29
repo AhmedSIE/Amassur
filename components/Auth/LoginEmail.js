@@ -7,7 +7,8 @@ class LoginEmail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            phone: '',
+            email: '',
+            password: '',
             loading: false,
         }
     }
@@ -20,39 +21,54 @@ class LoginEmail extends React.Component {
     }
  
     sendCode = async() => {
-        if (this.state.phone.length >= 9) {
-            const tel = this.state.phone;
-            this.setState({ loading: true })
-            await fetch('http://192.168.1.125:8000/api/auth/login',{
+        this.setState({ loading: true })
+        if (this.state.email != '' && this.state.password != '') {
+            const email = this.state.email;
+            const password = this.state.password;
+            await fetch('http://192.168.1.120:8000/api/auth/loginemail',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
                     'Content-Type':'application/json'
                 },
-                body: JSON.stringify({"tel" : tel})
+                body: JSON.stringify({'email' : email, 'password':password})
             }).then(res=>res.json())
             .then((resData) => {
-                console.log(resData.otp)
                 this.setState({ loading: false })
-                let otp = resData.otp;
-                let tel1 =  this.state.phone;
-                AsyncStorage.setItem('tel1',tel1);
-                this.props.navigation.navigate("verify", { verificationOtp: otp });
+                let user = {  
+                    token: resData.access_token,  
+                    nom:resData.nom,
+                    prenom:resData.prenom,
+                    email: resData.email,  
+                    telephone:resData.telephone,
+                    photo:resData.photo,
+                    sessionsexpire:resData.expires_in,
+                } 
+                AsyncStorage.setItem('user',JSON.stringify(user))
+                this.props.navigation.navigate("Main");
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                this.setState({ loading: false })
+                console.log(e);
+                alert("Identifiant incorrect !");
+            });
         } else {
-            alert("Numéro invalide");
+            this.setState({ loading: false })
+            alert("Identifiant incomplet !");
         }
     };
 
     onChangeText(input) {
-        this.setState({ phone: input })
+        this.setState({ email: input })
+    }
+    onChangePassword(input) {
+        this.setState({ password: input })
     }
     register=()=>{
         this.props.navigation.navigate('Register');
     }
     login=()=>{
-        this.props.navigation.navigate('loginPage');
+        this.props.navigation.navigate('LoginPage');
     }
     render() {
         return (
@@ -70,8 +86,7 @@ class LoginEmail extends React.Component {
                                     </Text>
                                     <TextInput
                                         onChangeText={(text) => this.onChangeText(text)}
-                                        // value={this.state.phone}
-                                        keyboardType="phone-pad"
+                                        keyboardType="email-address"
                                         placeholder="Email"
                                         placeholderTextColor="#888"
                                         style={styles.input}
@@ -79,8 +94,8 @@ class LoginEmail extends React.Component {
                                         autoCompleteType="tel"
                                     />
                                     <TextInput
-                                        onChangeText={(text) => this.onChangeText(text)}
-                                        keyboardType="phone-pad"
+                                        onChangeText={(text) => this.onChangePassword(text)}
+                                        secureTextEntry={true}
                                         placeholder="Mot de passe"
                                         placeholderTextColor="#888"
                                         style={styles.input}

@@ -16,31 +16,6 @@ class LoginVerification extends React.Component{
         this.numeroTel = props.route.params.tel; 
     }
 
-/*recuperation automatique de SMS*/
-    // getHash = () =>
-    //     RNOtpVerify.getHash()
-    //     .then(console.log)
-    //     .catch(console.log);
-
-    // startListeningForOtp = () =>
-    //     RNOtpVerify.getOtp()
-    //     .then(p => RNOtpVerify.addListener(this.otpHandler))
-    //     .catch(p => console.log(p));
-
-    // otpHandler = (message) => {
-    //         const otp = /(\d{6})/g.exec(message)[1];
-    //         this.setState({ otp });
-    //         RNOtpVerify.removeListener();
-    //         Keyboard.dismiss();
-    // }
-
-    // componentWillUnmount() {
-    //     RNOtpVerify.removeListener();
-    // }
-/*fin recuperation automatique de SMS*/
-
-
-
     verifyCode = () => {
         this.setState({loading:true})
         if (this.verificationOtp==this.state.code) {
@@ -57,7 +32,7 @@ class LoginVerification extends React.Component{
     auth = async() => {
         const tel =this.numeroTel;
         // this.setState({loading:true})
-        await fetch('http://192.168.1.125:8000/api/auth/login',{
+        await fetch('http://192.168.1.120:8000/api/auth/login',{
             method:'POST',
             headers:{
                 'Accept':'application/json',

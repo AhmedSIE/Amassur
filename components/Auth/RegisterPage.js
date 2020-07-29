@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
         if (this.state.nom !='' && this.state.prenom !='' && this.state.email !='' && 
             this.state.telephone !='' && this.state.password !='') {
             if (this.state.password == this.state.confirm) {
-                await fetch('http://192.168.1.125:8000/api/auth/register',{
+                await fetch('http://192.168.1.121:8000/api/auth/register',{
                     method:'POST',
                     headers:{
                         'Accept':'application/json',

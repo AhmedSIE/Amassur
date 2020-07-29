@@ -15,7 +15,7 @@ class MainNavigation extends React.Component {
             isLoading: false
         }
         this.user = this.user.bind(this)
-        console.log(this.props.users)
+        // console.log(this.props.users)
     }
 
     async componentDidMount() {

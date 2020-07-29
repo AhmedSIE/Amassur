@@ -3,6 +3,7 @@ import  {StyleSheet, Image,View,ScrollView} from 'react-native';
 import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HeaderNavigator from "../../navigation/MonHeader";
+import {connect} from 'react-redux';
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 class Portefeuille extends React.Component{
@@ -14,7 +15,7 @@ class Portefeuille extends React.Component{
     }
     render(){
         let navigation = this.props.navigation
-        if (this.props.token)  {
+        if (this.props.users.token!='')  {
             return (
                 <Container style={styles.corp}>
                     <HeaderNavigator  navigation={navigation}/>
@@ -245,4 +246,11 @@ const styles=StyleSheet.create({
 
     },
 });
-export default Portefeuille
+
+const mapStateToProps=(state)=>{
+    return {
+        users:state.users
+    }
+}
+
+export default connect(mapStateToProps)(Portefeuille)

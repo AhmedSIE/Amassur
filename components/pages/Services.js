@@ -24,7 +24,7 @@ class Services extends React.Component{
     render(){
         let navigation = this.props.navigation
         return (
-            <Container style={styles.corp}>
+            <View style={{flex:1}}>
                 <HeaderNavigator navigation={navigation}/>
                 <ScrollView style={styles.scrollView}>
                     <Container style={styles.list}>
@@ -53,7 +53,7 @@ class Services extends React.Component{
                         </List>
                     </Container>  
                 </ScrollView>
-            </Container>    
+            </View>    
         );
     }
 }
