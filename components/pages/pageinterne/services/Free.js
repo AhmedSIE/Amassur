@@ -14,22 +14,37 @@ class Free extends React.Component{
             servicesfree:[],
             autreservices:[],
         }
-        this.lesservices();
     }
-     lesservices= async()=>{
 
-        let servic = await AsyncStorage.getItem('servicesfree');
-        let autreservices = await AsyncStorage.getItem('autreservices');
+    lesservices = async()=> {
+        this.setState({ loading: false })
+        let servic =  await AsyncStorage.getItem('servicesfree');
+        let autreservices =  await AsyncStorage.getItem('autreservices');
         let parsed =   JSON.parse(servic);
         let parsed2 =  JSON.parse(autreservices);
         this.setState({servicesfree: parsed,autreservices: parsed2}); 
     }
+    lesservices2 = async()=> {
+        this.setState({ loading: false })
+        let servic = await AsyncStorage.getItem('servicesfree');
+        let autreservices = await AsyncStorage.getItem('autreservices');
+        let parsed =   JSON.parse(servic);
+        let parsed2 =  JSON.parse(autreservices);
+        if (parsed) {
+            this.setState({servicesfree: parsed,autreservices: parsed2});  
+        } else {
+           alert("Pas d'accès internet");
+           this.props.navigation.navigate('Services');
+        }
+    }
+
     componentDidMount() {
+        this.setState({ loading: true })
         this.services();
     }
-    services = async()=>{
-        this.setState({ loading: false })
-        await fetch('http://192.168.1.120:8000/api/services/servicesfree',{
+
+    services = async()=> {
+        await fetch('http://192.168.1.146:8000/api/services/servicesfree',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -37,44 +52,41 @@ class Free extends React.Component{
             },
         }).then(res=>res.json())
         .then((resData) => {
-            this.setState({ loading: false })
             let services=resData.messervices
             let autreservices=resData.autreservices
             AsyncStorage.setItem('servicesfree',JSON.stringify(services));
             AsyncStorage.setItem('autreservices',JSON.stringify(autreservices));
+            this.lesservices();
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+            console.log(e);
+            this.lesservices2();
+        });
     }
     
-    messervices=()=>{
-        // this.setState({loading:false})
-        if (this.state.servicesfree !='') {
-            return this.state.servicesfree.map(servicesfree=>{
-                return (
-                    <View>
-                        <ListItem>
-                            <Left>
-                                <Text style={styles.text3}>{servicesfree.libelle}</Text>
-                            </Left>
-                            <Right>
-                                <FontAwesome name="check-circle" style={styles.icon}/>
-                            </Right>    
-                        </ListItem>
-                    </View>
-                )
-            }) 
-        } else {
-            this.setState({loading:true})
-        }
+    messervices=() => {
+        return this.state.servicesfree.map((servicesfre) => (
+            <View>
+                <ListItem>
+                    <Left>
+                        <Text style={styles.text3}>{servicesfre.libelle}</Text>
+                    </Left>
+                    <Right>
+                        <FontAwesome name="check-circle" style={styles.icon}/>
+                    </Right>    
+                </ListItem>
+            </View> 
+        )) 
     }
+
     autreservices= () => {
-        if (this.state.autreservices!='') {
+        if (this.state.autreservices.length>0) {
             return this.state.autreservices.map((autreservice) => {
                 return (
                     <View>
                         <ListItem >
                             <Left>
-                                <Text>{autreservice.libelle}</Text>
+                                <Text style={styles.text4}>{autreservice.libelle}</Text>
                             </Left>
                             <Right>
                                 <FontAwesome name="check-circle" style={styles.icon2}/>
@@ -130,7 +142,10 @@ const styles=StyleSheet.create({
     text3:{
         fontSize:14,
         color:'green',
-        fontWeight:'bold',
+    },
+    text4:{
+        fontSize:13,
+
     },
     icon:{
         color:'green',

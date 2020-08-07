@@ -93,7 +93,7 @@ class AssuranceMoto extends React.Component{
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.120:8000/api/assurances/assuranceMoto/save',{
+        await fetch('http://192.168.1.109:8000/api/assurances/assuranceMoto/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -392,7 +392,7 @@ const styles=StyleSheet.create({
         fontFamily: "muli",
         marginBottom: 15,
         backgroundColor:'#cccccc35',
-        
+        height:50, 
     },
     image1:{
         height:200,

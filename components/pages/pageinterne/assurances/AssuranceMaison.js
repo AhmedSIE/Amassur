@@ -3,325 +3,371 @@ import {StyleSheet,View,Text,TouchableOpacity,Image,} from 'react-native';
 import {Container,Tabs,Tab} from 'native-base';
 import { TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
+import {connect}  from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
+import AppLoading from '../../../AppLoading';
 
 class AssuranceMaison extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            loading:false,
-            etape:1,
-            select1:false,
-            select2:false,
-            select3:false,
-            nombrehabitant:'',
-            nombrenfant:'',
-            valeurelectronique:'',
-            valeurmobilier:'',
-            bienprecieux:'',
-            stockagemarchandise:'',
-            nombrepiece:'',
-            ville:'',
-            statut:'proprietaire',
-            bienconcerne:'',
+            loading:false,etape:1,select1:false,select2:false,select3:false,
+            nombrehabitant:'', nombrenfant:'', valeurelectronique:'', valeurmobilier:'',
+            bienprecieux:'', stockagemarchandise:'', nombrepiece:'', ville:'',
+            statut:'proprietaire', bienconcerne:'', offre:'', compagnie:'', modepayement:'', 
         };
     }
     
     premier= () => {
-        if (this.state.nombrepiece!='' && this.state.ville!='' && this.state.statut!='' &&
-        (this.state.select1!=false || this.state.select1!=false || this.state.select1!=false)) {
+        if (this.state.nombrepiece!='' && this.state.ville!='' && this.state.statut!=''
+        //  && (this.state.select1!=false || this.state.select1!=false || this.state.select1!=false)
+        ) {
             this.setState({etape:2})   
         } else {
             alert('Champs incomplets')
         }
     }
     deuxieme= () => {
-        if (this.state.age!='' && this.state.agepermis!='' && 
-        this.state.ville!='' && this.state.resourcePathPermis!='') {
+        if (this.state.nombrehabitant!='' && this.state.nombrenfant!='') {
             this.setState({etape:3})   
         } else {
             alert('Champs incomplets')
         }
     }
     troisieme= () => {
-        if (this.state.immatriculation!='' && this.state.marque!='' && 
-        this.state.modele!='' && this.state.resourcePath!='') {
-            alert('1')
+        if (this.state.valeurelectronique!='' && this.state.valeurmobilier!='' && 
+        this.state.bienprecieux!='' && this.state.stockagemarchandise!='') {
             this.setState({etape:4})   
         } else {
             alert('Champs incomplets')
         }
     }
+    statut(text){this.setState({statut:text})}
+    ville(text){this.setState({ville:text})}
+    nombrepiece(text){this.setState({nombrepiece:text})}
     nombrehabitant(text){this.setState({nombrehabitant:text})}
+    // test(text){this.setState({nombrehabitant:text})}
     nombrenfant(text){this.setState({nombrenfant:text})}
     valeurelectronique(text){this.setState({valeurelectronique:text})}
     valeurmobilier(text){this.setState({valeurmobilier:text})}
     bienprecieux(text){this.setState({bienprecieux:text})}
     stockagemarchandise(text){this.setState({stockagemarchandise:text})}
-    nombrepiece(text){this.setState({nombrepiece:text})}
-    ville(text){this.setState({ville:text})}
-    statut(text){this.setState({statut:text})}
+    offre(text){this.setState({offre:text})}
+    compagnie(text){this.setState({compagnie:text})}
+    modepayement(text){this.setState({modepayement:text})}
+
     non=()=>{
         this.props.navigation.navigate('Accueil');
     }
+    confirme=()=>{
+        this.setState({etape:5}) 
+    }
+   
+    valider = async() => {
+        this.setState({ loading: true })
+        await fetch('http://192.168.1.109:8000/api/assurances/assuranceMaison/save',{
+            method:'POST',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                "token":this.props.users.token,
+                "ville":this.state.ville,
+                "nombrehabitant" : this.state.nombrehabitant,
+                "nombrenfant":this.state.nombrenfant,
+                "valeurelectronique":this.state.valeurelectronique,
+                "valeurmobilier":this.state.valeurmobilier,
+                "bienprecieux":this.state.bienprecieux,
+                "stockagemarchandise":this.state.stockagemarchandise,
+                "nombrepiece":this.state.nombrepiece,
+                "statut":this.state.statut,
+                "bienconcerne":this.state.bienconcerne,
+                "offre":this.state.offre,
+                "compagnie":this.state.compagnie,
+                "modepayement":this.state.modepayement,
+            })
+        }).then(res=>res.json())
+        .then((resData) => {
+            this.setState({ loading: false })
+            alert(resData);
+            console.log(resData)
+            this.props.navigation.navigate("Accueil");
+        })
+        .catch((e) =>{
+            this.setState({ loading: false })
+            console.log(e)
+            alert("Erreur d'enregistrment, veuillez réessayer plus tard ! ")
+        });
+
+
+    };
+
     render(){
         const {select1,select2,select3} = this.state
         return(
-            <Container style={{flex:1}}>
-                <ScrollView>
-                    {
-                        this.state.etape == 1 ? (
-                            <View style={styles.section1}>
-                                <Text style={styles.entete2}>Mon logement</Text>
-                                <Text style={styles.entete}> principal</Text>
-                                <View style={styles.imagecontain}>
-                                    <View style={styles.imagecontainer}>
-                                        <Image style={styles.image} source={require('./../../../../assets/images/icone_House.png')}/>
+            <View style={{flex:1}}>
+                {
+                    this.state.loading ? (
+                        <AppLoading />
+                    ):(
+                        <Container style={{flex:1}}>
+                            <ScrollView>
+                            {
+                                this.state.etape == 1 ? (
+                                    <View style={styles.section1}>
+                                        <Text style={styles.entete2}>Mon logement</Text>
+                                        <Text style={styles.entete}> principal</Text>
+                                        <View style={styles.imagecontain}>
+                                            <View style={styles.imagecontainer}>
+                                                <Image style={styles.image} source={require('./../../../../assets/images/icone_House.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.container}>
+                                            <Text style={styles.ent}>Vous êtes :</Text>     
+                                            <Tabs 
+                                                tabBarUnderlineStyle={{ backgroundColor: "transparent" }}
+                                                tabContainerStyle={{backgroundColor:'transparent',elevation:0}}
+                                                onChangeTab={({ ref }) => this.statut( ref.props.heading)}                                        
+                                                >
+                                                <Tab 
+                                                    tabStyle={styles.tabs}
+                                                    textStyle={{color:'black'}}
+                                                    activeTabStyle={styles.tabsactive}
+                                                    style={styles.none}
+                                                    heading="Propriétaire"                                            
+                                                ><Text></Text></Tab>
+                                                <Tab 
+                                                    tabStyle={styles.tabs}
+                                                    textStyle={{color:'black'}}
+                                                    activeTabStyle={styles.tabsactive}
+                                                    heading="Locataire"
+                                                ><Text></Text></Tab>
+                                            </Tabs>
+                                            <Text style={styles.ent}>Votre bien concerne :</Text>     
+                                            <Tabs 
+                                                tabBarUnderlineStyle={{ backgroundColor: "transparent" }}
+                                                tabContainerStyle={{backgroundColor:'transparent',elevation:0}}
+                                                >
+                                                <Tab 
+                                                    tabStyle={styles.tabs}
+                                                    textStyle={{color:'black'}}
+                                                    activeTabStyle={styles.tabsactive}
+                                                    style={styles.none}
+                                                    heading="Appartement"
+                                                    >
+                                                    <View style={styles.item} >
+                                                        <CheckBox checked={select3} color="#2E3682" onPress={()=>this.setState({select3:!select3,select1:false,select2:false})}/>
+                                                        <Text style={
+                                                        {...styles.checkBoxTxt,
+                                                            color:this.state.select3?"#2E3682":"gray",
+                                                            fontWeight:this.state.select3? "bold" :"normal"
+                                                        }}
+                                                        >Je déclare habiter au rez de chaussée de mon immeuble</Text>
+                                                    </View>
+                                                </Tab>
+                                                <Tab 
+                                                    tabStyle={styles.tabs}
+                                                    textStyle={{color:'black'}}
+                                                    activeTabStyle={styles.tabsactive}
+                                                    heading="Maison"
+                                                >
+                                                    <View style={styles.item} >
+                                                        <CheckBox checked={select1} color="#2E3682" onPress={()=>this.setState({select1:!select1,select3:false})}/>
+                                                        <Text style={
+                                                        {...styles.checkBoxTxt,
+                                                            color:this.state.select1?"#2E3682":"gray",
+                                                            fontWeight:this.state.select1? "bold" :"normal"
+                                                        }}
+                                                        >Je déclare avoir une dépendance de plus de 30m²</Text>
+                                                    </View>
+                                                    <View style={styles.item2} >
+                                                        <CheckBox checked={select2} color="#2E3682" onPress={()=>this.setState({select2:!select2,select3:false})}/>
+                                                        <Text style={
+                                                        {...styles.checkBoxTxt,
+                                                            color:this.state.select2?"#2E3682":"gray",
+                                                            fontWeight:this.state.select2? "bold" :"normal"
+                                                        }}
+                                                        >Je déclare avoir une véranda extérieur à ma maison</Text>
+                                                    </View>
+                                                </Tab>
+                                            </Tabs>
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Nombre de pièce"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.nombrepiece(text)}
+        
+                                            />
+                                             <TextInput
+                                                placeholder="Ville du logement"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.ville(text)}
+                                            />
+                                        </View>
+                                        <View style={styles.center}>
+                                            <TouchableOpacity onPress={() => this.premier()} style={styles.button}>
+                                                <Text style={styles.textButton}>Suivant</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-                                </View>
-                                <View style={styles.container}>
-                                    <Text style={styles.ent}>Vous êtes :</Text>     
-                                    <Tabs 
-                                        tabBarUnderlineStyle={{ backgroundColor: "transparent" }}
-                                        tabContainerStyle={{backgroundColor:'transparent',elevation:0}}
-                                        onChangeTab={({ ref }) => this.statut( ref.props.heading)}                                        
-                                        >
-                                        <Tab 
-                                            tabStyle={styles.tabs}
-                                            textStyle={{color:'black'}}
-                                            activeTabStyle={styles.tabsactive}
-                                            style={styles.none}
-                                            heading="Propriétaire"
-                                            onPress={()=>this.proprietaire()}
-                                            
-                                        ><Text></Text></Tab>
-                                        <Tab 
-                                            tabStyle={styles.tabs}
-                                            textStyle={{color:'black'}}
-                                            activeTabStyle={styles.tabsactive}
-                                            heading="Locataire"
-                                        ><Text></Text></Tab>
-                                    </Tabs>
-                                    <Text style={styles.ent}>Votre bien concerne :</Text>     
-                                    <Tabs 
-                                        tabBarUnderlineStyle={{ backgroundColor: "transparent" }}
-                                        tabContainerStyle={{backgroundColor:'transparent',elevation:0}}
-                                        >
-                                        <Tab 
-                                            tabStyle={styles.tabs}
-                                            textStyle={{color:'black'}}
-                                            activeTabStyle={styles.tabsactive}
-                                            style={styles.none}
-                                            heading="Appartement"
-                                            >
-                                            <View style={styles.item} >
-                                                <CheckBox checked={select3} color="#2E3682" onPress={()=>this.setState({select3:!select3,select1:false,select2:false})}/>
-                                                <Text style={
-                                                {...styles.checkBoxTxt,
-                                                    color:this.state.select3?"#2E3682":"gray",
-                                                    fontWeight:this.state.select3? "bold" :"normal"
-                                                }}
-                                                >Je déclare habiter au rez de chaussée de mon immeuble</Text>
-                                            </View>
-                                        </Tab>
-                                        <Tab 
-                                            tabStyle={styles.tabs}
-                                            textStyle={{color:'black'}}
-                                            activeTabStyle={styles.tabsactive}
-                                            heading="Maison"
-                                        >
-                                            <View style={styles.item} >
-                                                <CheckBox checked={select1} color="#2E3682" onPress={()=>this.setState({select1:!select1,select3:false})}/>
-                                                <Text style={
-                                                {...styles.checkBoxTxt,
-                                                    color:this.state.select1?"#2E3682":"gray",
-                                                    fontWeight:this.state.select1? "bold" :"normal"
-                                                }}
-                                                >Je déclare avoir une dépendance de plus de 30m²</Text>
-                                            </View>
-                                            <View style={styles.item2} >
-                                                <CheckBox checked={select2} color="#2E3682" onPress={()=>this.setState({select2:!select2,select3:false})}/>
-                                                <Text style={
-                                                {...styles.checkBoxTxt,
-                                                    color:this.state.select2?"#2E3682":"gray",
-                                                    fontWeight:this.state.select2? "bold" :"normal"
-                                                }}
-                                                >Je déclare avoir une véranda extérieur à ma maison</Text>
-                                            </View>
-                                        </Tab>
-                                    </Tabs>
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Nombre de pièce"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onChangeText={(text)=>this.nombrepiece(text)}
-
-                                    />
-                                     <TextInput
-                                        placeholder="Ville du logement"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onChangeText={(text)=>this.ville(text)}
-                                    />
-                                </View>
-                                <View style={styles.center}>
-                                    <TouchableOpacity onPress={() => this.premier()} style={styles.button}>
-                                        <Text style={styles.textButton}>Suivant</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        ): this.state.etape == 2 ? (
-                            <View style={styles.section}>
-                                 <Text style={styles.entete}>Personnes</Text>
-                                <View style={styles.container}>
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Nombre d'habitants"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onPress={(text)=>this.nombrehabitant(text)}
-                                    />
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Nombre d'enfants"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onPress={(text)=>this.nombrenfant(text)}
-                                    />
-                                </View>
-                                <View style={styles.center}> 
-                                    <TouchableOpacity onPress={() => this.deuxieme()} style={styles.button}>
-                                        <Text style={styles.textButton}>Suivant</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        ): this.state.etape == 3 ?(
-                            <View style={styles.section}>
-                                 <Text style={styles.entete}>Biens</Text>
-                                <View style={styles.container}>
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Estimer la valeur electronique"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onChangeText={(text)=>this.valeurelectronique(text)}
-                                    />
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Estimer la valeur du mobiliers"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onChangeText={(text)=>this.valeurmobilier(text)}
-                                    />
-                                    <TextInput
-                                        keyboardType='phone-pad'
-                                        placeholder="Estimer les biens précieux"
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        autoCompleteType="tel"
-                                        onChangeText={(text)=>this.bienprecieux(text)}
-                                    />
-                                    <TextInput
-                                        placeholder="Indiquer si stockage de marchandises, ..."
-                                        placeholderTextColor="#888"
-                                        style={styles.input}
-                                        returnKeyType="done"
-                                        onChangeText={(text)=>this.stockagemarchandise(text)}
-                                    />
-                                </View>
-                                <View style={styles.center}>
-                                    <TouchableOpacity onPress={() => this.troisieme()} style={styles.button}>
-                                        <Text style={styles.textButton}>Suivant</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        ): this.state.etape == 4 ?(
-                            <View style={styles.section}>
-                                <Text style={styles.entete2}>Mon histoire avec</Text>
-                                <Text style={styles.entete}>la route et l'assurance</Text>
-                                <View style={styles.center}> 
-                                    <View style={styles.secticon}>
-                                        <FontAwesome name="history" style={styles.icon}/>
+                                ): this.state.etape == 2 ? (
+                                    <View style={styles.section}>
+                                         <Text style={styles.entete}>Personnes</Text>
+                                        <View style={styles.iconecontainer}>
+                                            <FontAwesome name='users' style={styles.icone}/>
+                                        </View>
+                                        <View style={styles.container}>
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Nombre d'habitants"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=> this.nombrehabitant(text)}
+                                            />
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Nombre d'enfants"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.nombrenfant(text)}
+                                            />
+                                        </View>
+                                        <View style={styles.center}> 
+                                            <TouchableOpacity onPress={()=> this.deuxieme()} style={styles.button}>
+                                                <Text style={styles.textButton}>Suivant</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-                                    <Text style={styles.corptext}>Je déclare ne pas avoir été condamné
-                                     à l'une des infractions ou avoir fait l'objet de l'une des mesures
-                                      d'exclusion prévues par le produit d'Amassur durant ces 3 dernières années</Text>
-                                </View>
-                                <View style={styles.center}>
-                                    <TouchableOpacity onPress={() => this.troisieme()} style={styles.button2}>
-                                        <Text style={styles.textButton2}>Voir le détail</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.confirm}>
-                                    <TouchableOpacity onPress={() => this.non()} style={styles.button3}>
-                                        <Text style={styles.textButton}>Non</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.confirme()} style={styles.button4}>
-                                        <Text style={styles.textButton}>Je confirme</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        ):(
-                            <View style={styles.section}>
-                                <Text style={styles.entete2}>Choisir Offre</Text>
-                                <Text style={styles.entete}>Compagnie</Text>
-                                <View style={styles.container}>
-                                    <TextInput
-                                            keyboardType='phone-pad'
-                                            placeholder="Choisir l'offres"
-                                            placeholderTextColor="#888"
-                                            style={styles.input}
-                                            returnKeyType="done"
-                                            autoCompleteType="tel"
-                                            onChangeText={(text)=>this.vol(text)}
-                                        />
-                                        <TextInput
-                                            // keyboardType='phone-pad'
-                                            placeholder="Choisir la compagnie"
-                                            placeholderTextColor="#888"
-                                            style={styles.input}
-                                            returnKeyType="done"
-                                            autoCompleteType="tel"
-                                            onChangeText={(text)=>this.vol(text)}
-                                        />
-                                    <TextInput
-                                            keyboardType='phone-pad'
-                                            placeholder="Choisir le mode de payement"
-                                            placeholderTextColor="#888"
-                                            style={styles.input}
-                                            returnKeyType="done"
-                                            autoCompleteType="tel"
-                                            onChangeText={(text)=>this.vol(text)}
-                                        />
-                                </View>
-                                <View style={styles.confirm2}>
-                                    <TouchableOpacity onPress={() => this.non()} style={styles.button3}>
-                                        <Text style={styles.textButton}>Annuler</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.confirme()} style={styles.button4}>
-                                        <Text style={styles.textButton}>Valider</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>   
-                        )
-                    }
-                </ScrollView>
-            </Container>
+                                ): this.state.etape == 3 ?(
+                                    <View style={styles.section}>
+                                         <Text style={styles.entete}>Biens</Text>
+                                        <View style={styles.container}>
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Estimer la valeur electronique"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.valeurelectronique(text)}
+                                            />
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Estimer la valeur du mobiliers"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.valeurmobilier(text)}
+                                            />
+                                            <TextInput
+                                                keyboardType='phone-pad'
+                                                placeholder="Estimer les biens précieux"
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                autoCompleteType="tel"
+                                                onChangeText={(text)=>this.bienprecieux(text)}
+                                            />
+                                            <TextInput
+                                                placeholder="Indiquer si stockage de marchandises, ..."
+                                                placeholderTextColor="#888"
+                                                style={styles.input}
+                                                returnKeyType="done"
+                                                onChangeText={(text)=>this.stockagemarchandise(text)}
+                                            />
+                                        </View>
+                                        <View style={styles.center}>
+                                            <TouchableOpacity onPress={() => this.troisieme()} style={styles.button}>
+                                                <Text style={styles.textButton}>Suivant</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                ): this.state.etape == 4 ?(
+                                    <View style={styles.section}>
+                                        <Text style={styles.entete2}>Mon histoire avec</Text>
+                                        <Text style={styles.entete}>la route et l'assurance</Text>
+                                        <View style={styles.center}> 
+                                            <View style={styles.secticon}>
+                                                <FontAwesome name="history" style={styles.icon}/>
+                                            </View>
+                                            <Text style={styles.corptext}>Je déclare ne pas avoir été condamné
+                                             à l'une des infractions ou avoir fait l'objet de l'une des mesures
+                                              d'exclusion prévues par le produit d'Amassur durant ces 3 dernières années</Text>
+                                        </View>
+                                        <View style={styles.center}>
+                                            <TouchableOpacity style={styles.button2}>
+                                                <Text style={styles.textButton2}>Voir le détail</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={styles.confirm}>
+                                            <TouchableOpacity onPress={() => this.non()} style={styles.button3}>
+                                                <Text style={styles.textButton}>Non</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => this.confirme()} style={styles.button4}>
+                                                <Text style={styles.textButton}>Je confirme</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                ):(
+                                    <View style={styles.section}>
+                                        <Text style={styles.entete2}>Choisir Offre</Text>
+                                        <Text style={styles.entete}>Compagnie</Text>
+                                        <View style={styles.container}>
+                                            <TextInput
+                                                    placeholder="Choisir l'offres"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input}
+                                                    returnKeyType="done"
+                                                    autoCompleteType="tel"
+                                                    onChangeText={(text)=>this.offre(text)}
+                                                />
+                                                <TextInput
+                                                    placeholder="Choisir la compagnie"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input}
+                                                    returnKeyType="done"
+                                                    autoCompleteType="tel"
+                                                    onChangeText={(text)=>this.compagnie(text)}
+                                                />
+                                            <TextInput
+                                                    placeholder="Choisir le mode de payement"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input}
+                                                    returnKeyType="done"
+                                                    autoCompleteType="tel"
+                                                    onChangeText={(text)=>this.modepayement(text)}
+                                                />
+                                        </View>
+                                        <View style={styles.confirm2}>
+                                            <TouchableOpacity onPress={() => this.non()} style={styles.button3}>
+                                                <Text style={styles.textButton}>Annuler</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={() => this.valider()} style={styles.button4}>
+                                                <Text style={styles.textButton}>Valider</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>   
+                                )
+                            }
+                        </ScrollView>
+                    </Container>
+                    )
+                }
+            </View>
+           
         );
     }
 
@@ -388,7 +434,7 @@ const styles=StyleSheet.create({
         fontFamily: "muli",
         marginBottom: 15,
         backgroundColor:'#cccccc35',
-        
+        height:50, 
     },
     imagecontain:{
         alignItems:'center',
@@ -513,10 +559,23 @@ const styles=StyleSheet.create({
         marginBottom:0,
         flexDirection:"row",
       },
-      checkBoxTxt:{
+    checkBoxTxt:{
         marginTop:5,
         paddingLeft:-10,
         fontSize:13
-      },
+    },
+    iconecontainer:{
+        alignItems:'center',
+    },
+    icone:{
+        fontSize:75,
+        margin:20,
+        color:'#2E3682',
+    },
 });
-export default AssuranceMaison
+const mapStateToProps= (state) => {
+    return {
+        users: state.users
+    }
+}
+export default connect(mapStateToProps)(AssuranceMaison)

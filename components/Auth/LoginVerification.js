@@ -32,7 +32,7 @@ class LoginVerification extends React.Component{
     auth = async() => {
         const tel =this.numeroTel;
         // this.setState({loading:true})
-        await fetch('http://192.168.1.120:8000/api/auth/login',{
+        await fetch('http://192.168.1.109:8000/api/auth/login',{
             method:'POST',
             headers:{
                 'Accept':'application/json',

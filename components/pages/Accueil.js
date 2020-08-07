@@ -22,7 +22,7 @@ class Accueil extends React.Component {
         let parsed=   JSON.parse(notifications);
         this.setState({notifications: parsed});  
     }
-    tarif=()=>{
+    tarif=()=> {
         this.props.navigation.navigate('Tarifs');
     }
     deleteRow() {
@@ -33,7 +33,7 @@ class Accueil extends React.Component {
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.1.120:8000/api/auth/notifications',{
+            await fetch('http://192.168.1.146:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -48,20 +48,20 @@ class Accueil extends React.Component {
             .catch((e) => console.log(e));
     }
     notifications= () => {
-        if (this.state.notifications != '') {
-            return this.state.notifications.map((notifications) => {
+        if (this.state.notifications.length>0) {
+            return this.state.notifications.map((notification) => {
                 return (
                     <View>
-                        <Text style={styles.entete4}>{notifications.jour}</Text>
+                        <Text style={styles.entete4}>{notification.jour}</Text>
                         <Container style={styles.simplecard} >
                             <Card style={styles.card} noShadow={true}>
                                 <CardItem style={styles.carditem}>
                                     <Body>
                                         <Text style={styles.paragr2}>
-                                            {notifications.libelle}
+                                            {notification.libelle}
                                         </Text>
                                         <Text style={styles.paragr}>
-                                            {notifications.description}
+                                            {notification.description}
                                         </Text>
                                     </Body>
                                 </CardItem>
@@ -70,11 +70,8 @@ class Accueil extends React.Component {
                     </View>
                 )
             }) 
-        } else {
-            return (
-                    this.setState({ loading: true })
-            )  
-        }
+        } 
+        // this.setState({ loading: true })
     }
     assuranceAuto= ()=> {
         if (this.props.users.token!='') {
@@ -156,7 +153,31 @@ class Accueil extends React.Component {
                                         </TouchableOpacity>
                                     </Container>
                                 </Container>
-                                {this.notifications()}
+                                {
+                                    this.props.users.token ?(
+                                        this.notifications()
+                                    ):(
+                                        <View style={{flex:1}}>
+                                            <Text style={styles.entete4}>Lundi</Text>
+                                            <Container style={styles.simplecard} >
+                                                <Card style={styles.card} noShadow={true}>
+                                                    <CardItem style={styles.carditem}>
+                                                        <Body>
+                                                            <Text style={styles.paragr2}>
+                                                                Bienvenue dans la communauté amassur
+                                                            </Text>
+                                                            <Text style={styles.paragr}>
+                                                            Bienvenue dans l'univers Amassur, l'assurance qui vous simplifie la vie !
+                                                            En tant qu'utilisateur non connecté, vous pouvez accéder à certaines fonctionnalités dont les tarifs.
+                                                            Pour pouvoir bénéficier de tous les services disponibles sur l'application Amassur, vous pouvez créer un compte en moins d'une. pour démarrer votre devis, appuyez sur "Obtenir un devis"
+                                                            </Text>
+                                                        </Body>
+                                                    </CardItem>
+                                                </Card>
+                                            </Container>
+                                        </View> 
+                                    )
+                                }
 
                                 <Container style={styles.simplecard}>
                                     <Card style={styles.card} noShadow={true}> 

@@ -14,20 +14,37 @@ class Gold extends React.Component{
             servicesgold:[],
             autreservices:[],
         }
-        this.lesservices();
     }
-     lesservices= async()=>{
-        let servic = await AsyncStorage.getItem('servicesgold');
-        let autreservices = await AsyncStorage.getItem('autreservices');
+    
+    lesservices = async()=> {
+        this.setState({ loading: false })
+        let servic =  await AsyncStorage.getItem('servicesfree');
+        let autreservices =  await AsyncStorage.getItem('autreservices');
         let parsed =   JSON.parse(servic);
-        let parsed2 =   JSON.parse(autreservices);
+        let parsed2 =  JSON.parse(autreservices);
         this.setState({servicesgold: parsed,autreservices: parsed2}); 
     }
+    lesservices2 = async()=> {
+        this.setState({ loading: false })
+        let servic = await AsyncStorage.getItem('servicesfree');
+        let autreservices = await AsyncStorage.getItem('autreservices');
+        let parsed =   JSON.parse(servic);
+        let parsed2 =  JSON.parse(autreservices);
+        if (parsed) {
+            this.setState({servicesgold: parsed,autreservices: parsed2});  
+        } else {
+           alert("Pas d'accès internet");
+           this.props.navigation.navigate('Services');
+        }
+    }
+
     componentDidMount() {
+        this.setState({ loading: true })
         this.services();
     }
+
     services = async()=>{
-        await fetch('http://192.168.1.120:8000/api/services/servicesgold',{
+        await fetch('http://192.168.1.146:8000/api/services/servicesgold',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -40,48 +57,42 @@ class Gold extends React.Component{
             let autreservices=resData.autreservices;
             AsyncStorage.setItem('servicesgold',JSON.stringify(services))
             AsyncStorage.setItem('autreservices',JSON.stringify(autreservices))
+            this.lesservices();
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+            console.log(e);
+            this.lesservices2();
+        });
     }
     
     messervices=()=>{
-        if (this.state.servicesgold != '') {
-            return this.state.servicesgold.map((servicesgold) => {
-                return (
-                    <View>
-                        <ListItem>
-                            <Left>
-                                <Text style={styles.text3}>{servicesgold.libelle}</Text>
-                            </Left>
-                            <Right>
-                                <FontAwesome name="check-circle" style={styles.icon}/>
-                            </Right>    
-                        </ListItem>
-                    </View>
-                )
-            }) 
-        } else {
-            this.setState({ loading: true })
-            
-        }
+        return this.state.servicesgold.map((servicesgol) => (
+                <View>
+                    <ListItem>
+                        <Left>
+                            <Text style={styles.text3}>{servicesgol.libelle}</Text>
+                        </Left>
+                        <Right>
+                            <FontAwesome name="check-circle" style={styles.icon}/>
+                        </Right>    
+                    </ListItem>
+                </View>
+            )
+        )         
     }
-    autreservices=()=>{
-        if (this.state.autreservices!='') {
-            return this.state.autreservices.map(autreservice=>{
-                return (
-                    <View>
-                        <ListItem >
-                                <Left>
-                                    <Text>{autreservice.libelle}</Text>
-                                </Left>
-                                <Right>
-                                    <FontAwesome name="check-circle" style={styles.icon2}/>
-                                </Right>
-                        </ListItem>
-                    </View>
-                )
-            }) 
-        }
+    autreservices=()=> {
+        return this.state.autreservices.map(autreservice=> (  
+            <View>
+                <ListItem >
+                        <Left>
+                            <Text style={styles.text3}>{autreservice.libelle}</Text>
+                        </Left>
+                        <Right>
+                            <FontAwesome name="check-circle" style={styles.icon2}/>
+                        </Right>
+                </ListItem>
+            </View>    
+        )) 
     }
 
     render(){
@@ -128,7 +139,9 @@ const styles=StyleSheet.create({
     text3:{
         fontSize:14,
         color:'green',
-        fontWeight:'bold',
+    },
+    text4:{
+        fontSize:13,
     },
     icon:{
         color:'green',

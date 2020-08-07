@@ -9,13 +9,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 class Portefeuille extends React.Component{
     constructor(props){
         super(props)
+        console.log(this.props.users.token)
     }
     connexion=()=>{
         this.props.navigation.navigate('AuthUser')
     }
     render(){
         let navigation = this.props.navigation
-        if (this.props.users.token!='')  {
+        if (this.props.users.token != null)  {
             return (
                 <Container style={styles.corp}>
                     <HeaderNavigator  navigation={navigation}/>
