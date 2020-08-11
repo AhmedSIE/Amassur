@@ -22,15 +22,13 @@ class MainNavigation extends React.Component {
         await this.user();
     }
 
-    user = async ()=>{ 
+    user = async ()=> { 
         this.setState({isLoading: true}) 
         let user = await AsyncStorage.getItem('user');   
         let parsed = JSON.parse(user);
-        
         if (parsed) {
             if (parsed.token) {
-                const action = { type: "PROCESS_USER", value: parsed}
-                this.props.dispatch(action)
+                this.testToken(parsed.token,parsed);
             }
         } else {
             const action = { type: "PROCESS_USER_DECONNEXION", value: ''}
@@ -38,6 +36,35 @@ class MainNavigation extends React.Component {
         }
         this.setState({isLoading: false})     
     } 
+
+    async testToken(token,parsed) {
+        await fetch('http://192.168.1.123:8000/api/auth/montoken',{
+            method:'post',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                "token":token,
+            })
+        }).then(res=>res.json())
+        .then((resData) => {
+            this.setState({ loading: false })
+            // console.log(resData)
+            if (resData=='erreur') {
+                AsyncStorage.clear();
+                const action = { type: "PROCESS_USER_DECONNEXION", value: ''}
+                this.props.dispatch(action)
+            }else {
+                const action = { type: "PROCESS_USER", value: parsed}
+                this.props.dispatch(action)      
+            }
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    }
+
     render(){
         return(
             <View style={{flex:1}}>

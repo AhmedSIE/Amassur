@@ -15,25 +15,34 @@ class Accueil extends React.Component {
             notifications:[],
             loading:false,
         };
-        this.anciennotifications()
     }
-    async anciennotifications(){
+
+    notification = async()=> {
         let notifications = await AsyncStorage.getItem('notifications');
         let parsed=   JSON.parse(notifications);
         this.setState({notifications: parsed});  
     }
+    notification2 = async()=> {
+        let notifications = await AsyncStorage.getItem('notifications');
+        let parsed=   JSON.parse(notifications);
+        if (parsed) {
+            this.setState({notifications: parsed});    
+        } else {
+           alert("Pas d'accès internet");
+        }
+    }
+
+
     tarif=()=> {
         this.props.navigation.navigate('Tarifs');
     }
-    deleteRow() {
-       
-    }
+ 
     componentDidMount() {
         this.mesnotifications();
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.1.146:8000/api/auth/notifications',{
+            await fetch('http://192.168.1.123:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -44,8 +53,12 @@ class Accueil extends React.Component {
                 this.setState({ loading: false })
                 let notifications=resData
                 AsyncStorage.setItem('notifications',JSON.stringify(notifications))
+                this.notification();
             })
-            .catch((e) => console.log(e));
+            .catch((e) =>{
+                console.log(e);
+                this.notification2();
+            });
     }
     notifications= () => {
         if (this.state.notifications.length>0) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet,View,Text,TouchableOpacity,Image,} from 'react-native';
-import {Container,Card,CardItem,Icon, Picker, Form,Button } from 'native-base';
+import {Container,Card,CardItem,Icon, Picker, Form,Button, List, ListItem,Body , Left,Right } from 'native-base';
 import { TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-picker';
@@ -27,10 +27,11 @@ class AssuranceSante extends React.Component{
             ageconjoint:'',
             selected: "",
             selectedfemme: "",
-            selectedenfant: "",
+            selectedenfant: '',
             ageenfant:'',
             nomenfant:'',
             prenomenfant:'',
+            enfants:[],
             offre:'',
             compagnie:'',
             modepayement:'',
@@ -80,7 +81,6 @@ class AssuranceSante extends React.Component{
     non=()=>{this.props.navigation.navigate('Accueil');}
     
     age(text){this.setState({age:text})}
-    profession(text){this.setState({profession:text})}
     nom(text){this.setState({nom:text})}
     prenom(text){this.setState({prenom:text})}
     ville(text){this.setState({ville:text})}
@@ -99,7 +99,7 @@ class AssuranceSante extends React.Component{
 
     nomenfant(value){this.setState({nomenfant: value});}
     prenomenfant(value){this.setState({prenomenfant: value}); }
-    agenfant(value){this.setState({agenfant: value});}
+    agenfant(value){this.setState({ageenfant: value});}
 
     vous(){this.setState({etape:11})}
     vousVotre(){this.setState({etape:21})}
@@ -113,11 +113,51 @@ class AssuranceSante extends React.Component{
     offre(text){this.setState({offre:text})}
     compagnie(text){this.setState({compagnie:text})}
     modepayement(text){this.setState({modepayement:text})}
-
+    enfants(){
+        // console.log(this.state.enfants)
+        if (this.state.enfants.length>0) {
+            return this.state.enfants.map((enfant) => (
+                    <View>
+                        <List>
+                            <ListItem style={styles.listItem}>
+                                <Text style={styles.enfant}>{enfant.nom}</Text>
+                                <Text style={styles.enfant}>{enfant.prenom}</Text>       
+                                <Text style={styles.enfant}>{enfant.age}</Text>
+                                <Text style={styles.enfant}>{enfant.regime}</Text>
+                            </ListItem>
+                        </List>
+                    </View>
+                )
+            ) 
+        } 
+    }
+    ajouter=()=> {
+        if (this.state.nomenfant!='' && this.state.prenomenfant!='' 
+            && this.state.ageenfant!='' && this.state.selectedenfant!='') {
+            this.setState({ 
+                enfants:[
+                    ...this.state.enfants,
+                    {
+                    nom:this.state.nomenfant,
+                    prenom:this.state.prenomenfant,
+                    age:this.state.ageenfant, 
+                    regime:this.state.selectedenfant
+                }] 
+            });
+           this.setState({
+                nomenfant:'', 
+                prenomenfant:'', 
+                ageenfant:'', 
+                selectedenfant:'', 
+           });
+        } else {
+            alert('Tous les champs sont obligatoire !')
+        }
+    }
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.146:8000/api/assurances/assuranceSante/save',{
+        await fetch('http://192.168.1.123:8000/api/assurances/assuranceSante/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -133,17 +173,14 @@ class AssuranceSante extends React.Component{
                 "ville":this.state.ville,
                 "profil":this.state.resourcePathProfil,
                 "telephone":this.state.telephone,
-                "regimeoblogatoire":this.state.selected,
+                "regimeobligatoire":this.state.selected,
 
                 "nomconjoint":this.state.nomconjoint,
                 "prenomconjoint":this.state.prenomconjoint,
                 "ageconjoint":this.state.ageconjoint,
-                "regimeoblogatoirefemme":this.state.selectedfemme,
+                "regimeobligatoirefemme":this.state.selectedfemme,
 
-                "nomenfant":this.state.nomenfant,
-                "prenomenfant":this.state.prenomenfant,
-                "ageenfant":this.state.ageenfant,
-                "regimeoblogatoirenfant":this.state.selectedenfant,
+                "enfants":this.state.enfants,
 
                 "offre":this.state.offre,
                 "compagnie":this.state.compagnie,
@@ -152,14 +189,15 @@ class AssuranceSante extends React.Component{
         }).then(res=>res.json())
         .then((resData) => {
             this.setState({ loading: false })
-            alert(resData);
             console.log(resData)
+            alert(resData)
             this.props.navigation.navigate("Accueil");
         })
         .catch((e) =>{
             this.setState({ loading: false })
             console.log(e)
             alert("Erreur d'enregistrment, veuillez réessayer plus tard ! ")
+            this.props.navigation.navigate("Accueil");
         });
 
 
@@ -273,7 +311,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
-                                                onChangeText={(text)=>this.profession(text)}
+                                                onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
                                                 placeholder="email"
@@ -373,7 +411,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
-                                                onChangeText={(text)=>this.profession(text)}
+                                                onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
                                                 placeholder="email"
@@ -524,7 +562,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
-                                                onChangeText={(text)=>this.profession(text)}
+                                                onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
                                                 placeholder="email"
@@ -592,11 +630,28 @@ class AssuranceSante extends React.Component{
                                         </View>
                                     </View>
                                     ): this.state.etape == 32 ? (
-                                        <View style={styles.section1}>
-                                        <Text style={styles.entete2}>Informations</Text>
+                                    <View style={styles.section1}>
                                         <Text style={styles.entete}>Les enfants à assurer</Text>
+                                        {
+                                            this.state.enfants.length > 0 ? (
+                                                <View style={styles.mywid}>
+                                                    <Text style={styles.entete10}>Liste des enfants</Text>
+                                                    <ListItem style={styles.listItem}>
+                                                        <Text style={styles.enfant}>Nom</Text>
+                                                        <Text style={styles.enfant}>Prenom</Text>       
+                                                        <Text style={styles.enfant}>Age</Text>
+                                                        <Text style={styles.enfant}>Régime</Text>
+                                                    </ListItem>
+                                                    {this.enfants()}
+                                                </View>
+                                            ):(
+                                                <Text style={styles.center}>Aucun enfant ajouté !</Text>
+                                            )
+                                        }
+                                        
                                         <View style={styles.container2}>
                                             <TextInput
+                                                value = {this.state.nomenfant}
                                                 placeholder="Nom"
                                                 placeholderTextColor="#888"
                                                 style={styles.input2}
@@ -607,6 +662,7 @@ class AssuranceSante extends React.Component{
                                         </View>
                                         <View style={styles.container2}>
                                             <TextInput
+                                                value = {this.state.prenomenfant}
                                                 placeholder="Prénoms"
                                                 placeholderTextColor="#888"
                                                 style={styles.input2}
@@ -616,6 +672,7 @@ class AssuranceSante extends React.Component{
                                         </View>
                                         <View style={styles.container2}>
                                             <TextInput
+                                                value = {this.state.ageenfant}
                                                 keyboardType='phone-pad'
                                                 placeholder="Age"
                                                 placeholderTextColor="#888"
@@ -626,6 +683,7 @@ class AssuranceSante extends React.Component{
                                         </View>
                                         <Form style={styles.form2}>
                                             <Picker
+                                                value = {this.state.selectedenfant}
                                                 mode="dropdown"
                                                 iosIcon={<Icon name="arrow-down" />}
                                                 headerStyle={{ backgroundColor: "#b95dd3" }}
@@ -686,7 +744,7 @@ class AssuranceSante extends React.Component{
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
-                                                    onChangeText={(text)=>this.profession(text)}
+                                                    onChangeText={(text)=>this.ville(text)}
                                                 />
                                                 <TextInput
                                                     placeholder="email"
@@ -944,7 +1002,18 @@ class AssuranceSante extends React.Component{
 const styles=StyleSheet.create({
     center:{
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        textAlign:'center'
+    },
+    enfant:{
+        margin:5,
+    },
+    mywid:{
+        width:'90%'
+    },
+    entete10:{
+        fontSize:18,
+        textAlign:'center',
     },
     form:{
         marginBottom:10,

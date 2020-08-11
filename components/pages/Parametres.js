@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView,TouchableOpacity,AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,TouchableOpacity,AsyncStorage ,Share,Linking} from 'react-native';
 import {Container, Card,CardItem, List, ListItem, Left, Right} from "native-base";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AppLoading from './../AppLoading';
@@ -33,7 +33,26 @@ class Parametres extends React.Component {
         this.props.dispatch(action);
         this.setState({ loading:false});
     }
- 
+    onShare = async () => {
+        const result = await Share.share({
+            title: 'App link',
+            message: "Veuillez installer cette application facile d'utilisation pour vos assurances , AppLink :https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en", 
+            url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en'
+        });
+    }
+    onLink = async() => {
+        await Linking.openURL('https://www.switch-maker.com')
+    }
+    facebook = async() => {
+        await Linking.openURL('https://www.facebook.com')
+    }
+    playStore = async() => {
+        await Linking.openURL('https://play.google.com/store/apps/details?id=www.switch_maker.com.frayalabusiness&hl=fr')
+    }
+    paramettre=async() => {
+        await Linking.openSettings('app-settings:')
+    }
+
     render(){
         return (
             <View style={{flex:1}}>
@@ -42,50 +61,52 @@ class Parametres extends React.Component {
                         <AppLoading titreMessage={'Veuillez patienter ...'} />
                     ):(
                         <ScrollView style={styles.scrollView}>
-                            <Container style={styles.list}>
+                            <View style={styles.list}>
                                 <List>
                                     <Text style={styles.entete}>Général</Text>
-                                    <TouchableOpacity>
-                                        <ListItem style={styles.listItem}>
-                                                <Left>
-                                                    <FontAwesome name="cog" style={styles.direct2}/>
+                                    <ListItem style={styles.listItem}>
+                                            <Left>
+                                                <FontAwesome name="cog" style={styles.direct2}/>
+                                                <TouchableOpacity onPress={()=>this.paramettre()}>
                                                     <Text style={styles.tex}>Paramètres de l'appli</Text>
-                                                </Left>
-                                                <Right>
-                                                    <FontAwesome name="chevron-right" style={styles.direct}/>
-                                                </Right>
-                                        </ListItem>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <ListItem style={styles.listItem}>
-                                            <Left>
-                                                <FontAwesome name="file-text" style={styles.direct4}/>
-                                                <Text style={styles.tex}>Condition générales d'utilisation</Text>
+                                                </TouchableOpacity>
                                             </Left>
                                             <Right>
-                                                <FontAwesome name="chevron-right" style={styles.direct} />
+                                                <FontAwesome name="chevron-right" style={styles.direct}/>
                                             </Right>
-                                        </ListItem>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <ListItem style={styles.listItem}>
-                                            <Left>
+                                    </ListItem>
+                                    <ListItem style={styles.listItem}>
+                                        <Left>
+                                            <FontAwesome name="file-text" style={styles.direct4}/>
+                                            <Text style={styles.tex}>Condition générales d'utilisation</Text>
+                                        </Left>
+                                        <Right>
+                                            <FontAwesome name="chevron-right" style={styles.direct} />
+                                        </Right>
+                                    </ListItem>
+                                    <ListItem style={styles.listItem}>
+                                        <Left>
+                                            <TouchableOpacity onPress={()=>this.playStore()}>
                                                 <FontAwesome name="star" style={styles.direct3}/>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.playStore()}>
                                                 <Text style={styles.tex}>Notez-nous sur Play store</Text>
-                                            </Left>
-                                            <Right>
+                                            </TouchableOpacity>
+                                        </Left>
+                                        <Right>
+                                            <TouchableOpacity onPress={()=>this.playStore()}>
                                                 <FontAwesome name="chevron-right" style={styles.direct} />
-                                            </Right>
-                                        </ListItem>    
-                                    </TouchableOpacity>
+                                            </TouchableOpacity>
+                                        </Right>
+                                    </ListItem>    
                                 </List>
-                            </Container>
-                            <Container style={styles.list}>
+                            </View>
+                            <View style={styles.list}>
                                 <List>
                                     <Text style={styles.entete}>Réseaux sociaux</Text>
-                                    <Container style={styles.display}>
+                                    <View style={styles.display}>
                                         <Container style={styles.display2}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.onLink()}>
                                                 <Card style={styles.card1} noShadow={true}>
                                                     <CardItem style={styles.carditem}>
                                                         <Text style={styles.image1}>WWW</Text>
@@ -94,7 +115,7 @@ class Parametres extends React.Component {
                                             </TouchableOpacity>
                                         </Container>
                                         <Container style={styles.display2}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.facebook()}>
                                                 <Card style={styles.card2} noShadow={true}>
                                                     <CardItem style={styles.carditem}>
                                                         <FontAwesome name="facebook" style={styles.image2}/>
@@ -103,7 +124,7 @@ class Parametres extends React.Component {
                                             </TouchableOpacity>
                                         </Container>
                                         <Container style={styles.display2}>
-                                            <TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.onShare()}>
                                                 <Card style={styles.card3} noShadow={true}>
                                                     <CardItem style={styles.carditem}>
                                                         <FontAwesome name="share-alt" style={styles.image3}/>
@@ -111,15 +132,15 @@ class Parametres extends React.Component {
                                                 </Card>
                                             </TouchableOpacity>
                                         </Container>
-                                    </Container>
+                                    </View>
                                 </List>
                                 {
                                     this.props.users.token ? (
-                                        <Container style={styles.sectionbtn}>  
+                                        <View style={styles.sectionbtn}>  
                                             <TouchableOpacity onPress={()=>this.deconnexion()} style={styles.button}>
                                                 <Text style={styles.textButton}>Deconnexion</Text>
                                             </TouchableOpacity>
-                                        </Container> 
+                                        </View> 
 
                                     ):(
                                         <Container style={styles.sectionbtn}>  
@@ -129,7 +150,7 @@ class Parametres extends React.Component {
                                         </Container> 
                                     )        
                                 }
-                            </Container>
+                            </View>
                         </ScrollView>
                     )
                 }
@@ -138,6 +159,9 @@ class Parametres extends React.Component {
     }
 }
 const styles=StyleSheet.create({
+    link:{
+        backgroundColor:'red'
+    },
     scrollView:{
         height:'100%',
         backgroundColor:'white'
@@ -199,7 +223,7 @@ const styles=StyleSheet.create({
     sectionbtn:{
         alignItems: "center",
         height:'50%',
-        marginTop:'10%'
+        // marginTop:'10%'
     },
     button: {
         width: 320,

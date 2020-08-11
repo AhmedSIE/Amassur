@@ -25,7 +25,7 @@ class LoginEmail extends React.Component {
         if (this.state.email != '' && this.state.password != '') {
             const email = this.state.email;
             const password = this.state.password;
-            await fetch('http://192.168.1.146:8000/api/auth/loginemail',{
+            await fetch('http://192.168.1.123:8000/api/auth/loginemail',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
