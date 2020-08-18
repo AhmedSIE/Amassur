@@ -44,7 +44,7 @@ class Free extends React.Component{
     }
 
     services = async()=> {
-        await fetch('http://192.168.1.115:8000/api/services/servicesfree',{
+        await fetch('http://192.168.1.123:8000/api/services/servicesfree',{
             method:'get',
             headers:{
                 'Accept':'application/json',

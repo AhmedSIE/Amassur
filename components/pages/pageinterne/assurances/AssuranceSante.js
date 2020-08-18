@@ -864,65 +864,85 @@ class AssuranceSante extends React.Component{
                                         </View>
                                     ): this.state.etape == 43 ? (
                                         <View style={styles.section1}>
-                                        <Text style={styles.entete2}>Informations</Text>
-                                        <Text style={styles.entete}>Les enfants à assurer</Text>
-                                        <View style={styles.container2}>
-                                            <TextInput
-                                                placeholder="Nom"
-                                                placeholderTextColor="#888"
-                                                style={styles.input2}
-                                                returnKeyType="done"
-                                                onChangeText={(text)=>this.nomenfant(text)}
-                                            />
-                                    
+                                            <Text style={styles.entete}>Les enfants à assurer</Text>
+                                            {
+                                                this.state.enfants.length > 0 ? (
+                                                    <View style={styles.mywid}>
+                                                        <Text style={styles.entete10}>Liste des enfants</Text>
+                                                        <ListItem style={styles.listItem}>
+                                                            <Text style={styles.enfant}>Nom</Text>
+                                                            <Text style={styles.enfant}>Prenom</Text>       
+                                                            <Text style={styles.enfant}>Age</Text>
+                                                            <Text style={styles.enfant}>Régime</Text>
+                                                        </ListItem>
+                                                        {this.enfants()}
+                                                    </View>
+                                                ):(
+                                                    <Text style={styles.center}>Aucun enfant ajouté !</Text>
+                                                )
+                                            }
+                                            
+                                            <View style={styles.container2}>
+                                                <TextInput
+                                                    value = {this.state.nomenfant}
+                                                    placeholder="Nom"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input2}
+                                                    returnKeyType="done"
+                                                    onChangeText={(text)=>this.nomenfant(text)}
+                                                />
+                                        
+                                            </View>
+                                            <View style={styles.container2}>
+                                                <TextInput
+                                                    value = {this.state.prenomenfant}
+                                                    placeholder="Prénoms"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input2}
+                                                    returnKeyType="done"
+                                                    onChangeText={(text)=>this.prenomenfant(text)}
+                                                />
+                                            </View>
+                                            <View style={styles.container2}>
+                                                <TextInput
+                                                    value = {this.state.ageenfant}
+                                                    keyboardType='phone-pad'
+                                                    placeholder="Age"
+                                                    placeholderTextColor="#888"
+                                                    style={styles.input2}
+                                                    returnKeyType="done"
+                                                    onChangeText={(text)=>this.agenfant(text)}
+                                                />
+                                            </View>
+                                            <Form style={styles.form2}>
+                                                <Picker
+                                                    value = {this.state.selectedenfant}
+                                                    mode="dropdown"
+                                                    iosIcon={<Icon name="arrow-down" />}
+                                                    headerStyle={{ backgroundColor: "#b95dd3" }}
+                                                    headerBackButtonTextStyle={{ color: "#fff" }}
+                                                    headerTitleStyle={{ color: "#fff" }}
+                                                    selectedValue={this.state.selectedenfant}
+                                                    onValueChange={this.onValueChange2.bind(this)}
+                                                >
+                                                    <Picker.Item label="Régimes obligatoires" />
+                                                    <Picker.Item label="Régime général" value="Régime général" />
+                                                    <Picker.Item label="Régime agricole" value="Régime agricole" />
+                                                    <Picker.Item label="Régime social des indépendants" value="Régime social des indépendants" />
+                                                    <Picker.Item label="Régimes spéciaux" value="Régimes spéciaux" />
+                                                </Picker>
+                                            </Form>
+                                            <View style={styles.center}>
+                                                <TouchableOpacity onPress={() => this.ajouter()} style={styles.button5}>
+                                                    <Text style={styles.textButton}>+</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.center}>
+                                                <TouchableOpacity onPress={() => this.premier()} style={styles.button}>
+                                                    <Text style={styles.textButton}>Suivant</Text>
+                                                </TouchableOpacity>
+                                            </View>
                                         </View>
-                                        <View style={styles.container2}>
-                                            <TextInput
-                                                placeholder="Prénoms"
-                                                placeholderTextColor="#888"
-                                                style={styles.input2}
-                                                returnKeyType="done"
-                                                onChangeText={(text)=>this.prenomenfant(text)}
-                                            />
-                                        </View>
-                                        <View style={styles.container2}>
-                                            <TextInput
-                                                keyboardType='phone-pad'
-                                                placeholder="Age"
-                                                placeholderTextColor="#888"
-                                                style={styles.input2}
-                                                returnKeyType="done"
-                                                onChangeText={(text)=>this.agenfant(text)}
-                                            />
-                                        </View>
-                                        <Form style={styles.form2}>
-                                            <Picker
-                                                mode="dropdown"
-                                                iosIcon={<Icon name="arrow-down" />}
-                                                headerStyle={{ backgroundColor: "#b95dd3" }}
-                                                headerBackButtonTextStyle={{ color: "#fff" }}
-                                                headerTitleStyle={{ color: "#fff" }}
-                                                selectedValue={this.state.selectedenfant}
-                                                onValueChange={this.onValueChange2.bind(this)}
-                                            >
-                                                <Picker.Item label="Régimes obligatoires" />
-                                                <Picker.Item label="Régime général" value="Régime général" />
-                                                <Picker.Item label="Régime agricole" value="Régime agricole" />
-                                                <Picker.Item label="Régime social des indépendants" value="Régime social des indépendants" />
-                                                <Picker.Item label="Régimes spéciaux" value="Régimes spéciaux" />
-                                            </Picker>
-                                        </Form>
-                                        <View style={styles.center}>
-                                            <TouchableOpacity onPress={() => this.ajouter()} style={styles.button5}>
-                                                <Text style={styles.textButton}>+</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View style={styles.center}>
-                                            <TouchableOpacity onPress={() => this.premier()} style={styles.button}>
-                                                <Text style={styles.textButton}>Suivant</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
                                     ): this.state.etape == 3 ?(
                                         <View style={styles.section}>
                                             <Text style={styles.entete2}>Mon histoire avec</Text>

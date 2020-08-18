@@ -19,6 +19,11 @@ import CardFree from './../components/pages/pageinterne/services/Free';
 import CardSilver from './../components/pages/pageinterne/services/Silver';
 import CardGold from './../components/pages/pageinterne/services/Gold';
 import CardPlatinum from './../components/pages/pageinterne/services/Platinum';
+import Factures from './../components/pages/pageinterne/portefeuille/Factures';
+import Videos from './../components/pages/pageinterne/portefeuille/Videos';
+import Devis from './../components/pages/pageinterne/portefeuille/Devis';
+import Attestations from './../components/pages/pageinterne/portefeuille/Attestations';
+import Photos from './../components/pages/pageinterne/portefeuille/Photos';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 
@@ -177,6 +182,36 @@ class UserNavigation extends React.Component {
                 <RootUserStack.Screen 
                         name="PLATINUM CARD" 
                         component={CardPlatinum}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES VIDEOS" 
+                        component={Videos}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES DEVIS" 
+                        component={Devis}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES PHOTOS" 
+                        component={Photos}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES ATTESTATIONS" 
+                        component={Attestations}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES FACTURES" 
+                        component={Factures}
                         options={{
                           headerShown: true
                         }} />

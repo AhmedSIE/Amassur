@@ -38,7 +38,8 @@ class MainNavigation extends React.Component {
     } 
 
     async testToken(token,parsed) {
-        await fetch('http://192.168.1.123:8000/api/auth/montoken',{
+        await fetch('http://192.168.1.115:8000/api/auth/montoken',{
+            
             method:'post',
             headers:{
                 'Accept':'application/json',

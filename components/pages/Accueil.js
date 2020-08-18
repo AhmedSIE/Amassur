@@ -1,6 +1,5 @@
 import React,{ Component,} from "react";
 import {StyleSheet, Image,View,ScrollView,Button,LayoutAnimation,AsyncStorage} from 'react-native';
-// import {ReactDOM} from 'react-dom';
 import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
 import HeaderNavigator from "../../navigation/MonHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -42,7 +41,7 @@ class Accueil extends React.Component {
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.1.123:8000/api/auth/notifications',{
+            await fetch('http://192.168.1.115:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -62,8 +61,7 @@ class Accueil extends React.Component {
     }
     notifications= () => {
         if (this.state.notifications.length>0) {
-            return this.state.notifications.map((notification) => {
-                return (
+            return this.state.notifications.map((notification) =>  (
                     <View>
                         <Text style={styles.entete4}>{notification.jour}</Text>
                         <Container style={styles.simplecard} >
@@ -82,7 +80,7 @@ class Accueil extends React.Component {
                         </Container>
                     </View>
                 )
-            }) 
+            ) 
         } 
         // this.setState({ loading: true })
     }
