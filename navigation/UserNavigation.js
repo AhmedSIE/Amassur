@@ -20,6 +20,7 @@ import CardSilver from './../components/pages/pageinterne/services/Silver';
 import CardGold from './../components/pages/pageinterne/services/Gold';
 import CardPlatinum from './../components/pages/pageinterne/services/Platinum';
 import Factures from './../components/pages/pageinterne/portefeuille/Factures';
+import Contrats from './../components/pages/pageinterne/portefeuille/Contrats';
 import Videos from './../components/pages/pageinterne/portefeuille/Videos';
 import Devis from './../components/pages/pageinterne/portefeuille/Devis';
 import Attestations from './../components/pages/pageinterne/portefeuille/Attestations';
@@ -212,6 +213,12 @@ class UserNavigation extends React.Component {
                 <RootUserStack.Screen 
                         name="MES FACTURES" 
                         component={Factures}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="MES CONTRATS" 
+                        component={Contrats}
                         options={{
                           headerShown: true
                         }} />

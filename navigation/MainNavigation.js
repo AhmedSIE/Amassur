@@ -11,11 +11,8 @@ const RootStack = createStackNavigator();
 class MainNavigation extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            isLoading: false
-        }
-        this.user = this.user.bind(this)
-        // console.log(this.props.users)
+        this.state = {isLoading: false,timePassed: false}
+        this.user = this.user.bind(this);
     }
 
     async componentDidMount() {
@@ -38,7 +35,7 @@ class MainNavigation extends React.Component {
     } 
 
     async testToken(token,parsed) {
-        await fetch('http://192.168.1.115:8000/api/auth/montoken',{
+        await fetch('http://192.168.11.62:8000/api/auth/montoken',{
             
             method:'post',
             headers:{
@@ -51,7 +48,6 @@ class MainNavigation extends React.Component {
         }).then(res=>res.json())
         .then((resData) => {
             this.setState({ loading: false })
-            // console.log(resData)
             if (resData=='erreur') {
                 AsyncStorage.clear();
                 const action = { type: "PROCESS_USER_DECONNEXION", value: ''}

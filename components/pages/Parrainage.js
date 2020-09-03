@@ -17,10 +17,10 @@ class Parrainage extends React.Component{
             <Container>
                 <HeaderNavigator  navigation={navigation}/>
                 <ScrollView style={styles.scrollView}>
-
+                <Text style={styles.entete55}>Mes parrainages</Text>
                     <Container style={styles.entete} >
                         <Image style={styles.image1} source={require('./../../assets/images/icone_partenaire.png')}/>
-                        <Text style={styles.entext}>Parrainez vos amis - Gagnez une carte</Text>
+                        <Text style={styles.entext}>Parrainez vos proches - Gagnez une carte</Text>
                     </Container>
                     <Container style={styles.simplecard} >
                         <Text style={styles.entete3}>Participez à nos nouvelles offres et faites-en bénéficier à vos proches</Text>
@@ -28,7 +28,7 @@ class Parrainage extends React.Component{
                     
                     <Container style={styles.sectionbtn}>  
                         <TouchableOpacity style={styles.button}>
-                            <Text style={styles.textButton}>Parrainez vos  mis par sms</Text>
+                            <Text style={styles.textButton}>Parrainez vos proches par sms</Text>
                         </TouchableOpacity>
                     </Container>
                     <Container style={styles.display}>
@@ -59,6 +59,14 @@ const styles=StyleSheet.create({
         // marginTop:'15%',
         backgroundColor: "#fafafa", 
 
+    },
+    entete55:{
+        padding:5,
+        textAlign:'center',
+        color:'#2E3682',
+        fontWeight:'bold',
+        fontSize:16,
+        backgroundColor: "white", 
     },
     container: {
         flex: 1,
@@ -128,7 +136,7 @@ const styles=StyleSheet.create({
         alignItems:'center'
     },
     entext:{
-      fontSize:18,
+      fontSize:16,
       fontWeight:'bold',
       textAlign:'center',
       color:'#2E3682',

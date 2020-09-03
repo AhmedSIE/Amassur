@@ -1,47 +1,40 @@
 {
-  "project_info": {
-    "project_number": "957704868032",
-    "firebase_url": "https://assurances-c9e4a.firebaseio.com",
-    "project_id": "assurances-c9e4a",
-    "storage_bucket": "assurances-c9e4a.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:957704868032:android:b9083926d1621c4f57dd25",
-        "android_client_info": {
-          "package_name": "com.amassur"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "957704868032-omqni0vnqfaqk6gkq14cd43v58gghbrs.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAiU3lCnh_gTlpiTTlg07UZbA6aS07A0Xk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "957704868032-omqni0vnqfaqk6gkq14cd43v58gghbrs.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "957704868032-pknmouqq63gkkr9bkjgnkh2gco8md9fn.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "switch-maker.assurances"
-              }
+    "project_info": {
+        "project_number": "957704868032",
+        "firebase_url": "https://assurances-c9e4a.firebaseio.com",
+        "project_id": "assurances-c9e4a",
+        "storage_bucket": "assurances-c9e4a.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:957704868032:android:b9083926d1621c4f57dd25",
+            "android_client_info": {
+                "package_name": "com.amassur"
             }
-          ]
+        },
+        "oauth_client": [{
+            "client_id": "957704868032-omqni0vnqfaqk6gkq14cd43v58gghbrs.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyAiU3lCnh_gTlpiTTlg07UZbA6aS07A0Xk"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                        "client_id": "957704868032-omqni0vnqfaqk6gkq14cd43v58gghbrs.apps.googleusercontent.com",
+                        "client_type": 3
+                    },
+                    {
+                        "client_id": "957704868032-pknmouqq63gkkr9bkjgnkh2gco8md9fn.apps.googleusercontent.com",
+                        "client_type": 2,
+                        "ios_info": {
+                            "bundle_id": "switch-maker.assurances"
+                        }
+                    }
+                ]
+            }
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    }],
+    "configuration_version": "1"
 }

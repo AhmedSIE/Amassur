@@ -112,7 +112,7 @@ const styles=StyleSheet.create({
         // textAlign:'center',
         color:'#2E3682',
         fontWeight:'bold',
-        fontSize:25,
+        fontSize:20,
 
     },
     entete2:{

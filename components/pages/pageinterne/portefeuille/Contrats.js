@@ -5,14 +5,14 @@ import AppLoading from '../../../AppLoading';
 import WebView from 'react-native-webview';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-class Factures extends React.Component {
+class Contrats extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             loading:false,
-            factures: [],
+            contrats: [],
             modalVisible:false,
-            facture:''
+            contrat:''
         };
     }
 
@@ -22,7 +22,7 @@ class Factures extends React.Component {
     }
     
     fetchListData = async () => {
-        this.setState({ factures: this.props.route.params.factures,loading:false});
+        this.setState({ contrats: this.props.route.params.contrats,loading:false});
     };
 
     open= (contrat) => {
@@ -46,11 +46,11 @@ class Factures extends React.Component {
             <View style={{flex:1}}>
                 {
                     this.state.loading ? (
-                        <AppLoading titreMessage={'Factures en cours de chargement ...'}/>
+                        <AppLoading titreMessage={'Contrats en cours de chargement ...'}/>
                     ):(
                         <View style={styles.safeArea}>
                             <FlatList
-                                data={this.state.factures}
+                                data={this.state.contrats}
                                 keyExtractor={(_, index) => index.toString()}
                                 renderItem={
                                     ({item}) => 
@@ -73,7 +73,7 @@ class Factures extends React.Component {
                                 </TouchableOpacity>
                               }
                             />
-                             <Modal
+                            <Modal
                                 animationType="slide"
                                 transparent={true}
                                 visible={this.state.modalVisible}
@@ -116,14 +116,14 @@ const styles=StyleSheet.create({
     demacate: {
         borderBottomColor: '#2E3682',
         borderBottomWidth: 2,
-        borderRadius:10,       
+        borderRadius:10
     },
     item: {
         paddingBottom: 5,
         paddingLeft: 3,
         paddingTop: 5,
         fontSize: 14,
-        height: 55,
+        height: 52,
         maxWidth:'90%',
     },
     image1:{
@@ -142,6 +142,7 @@ const styles=StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         padding: 10,
+        // alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -173,5 +174,5 @@ const mapStateToProps = (state) => {
         users:state.users
     }
 }
-export default connect(mapStateToProps)(Factures)
+export default connect(mapStateToProps)(Contrats)
 // export default Parametres

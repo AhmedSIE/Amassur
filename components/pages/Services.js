@@ -65,12 +65,11 @@ const styles=StyleSheet.create({
 
     },
     entete:{
-        margin:20,
-        marginTop:0,
+        margin:5,
         textAlign:'center',
         color:'#2E3682',
         fontWeight:'bold',
-        fontSize:25,
+        fontSize:16,
     },
     direct:{
         fontSize:30,
@@ -89,7 +88,7 @@ const styles=StyleSheet.create({
     },
     select:{
         backgroundColor:'#fafafa',
-        height:200,
+        height:230,
         marginLeft:5,
         marginRight:5,
 

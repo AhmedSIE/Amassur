@@ -2,7 +2,7 @@ import React,{ Component,} from "react";
 import {StyleSheet, Image,View,ScrollView,Button,LayoutAnimation,AsyncStorage} from 'react-native';
 import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
 import HeaderNavigator from "../../navigation/MonHeader";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import {connect} from  'react-redux';
 import AppLoading from '../../components/AppLoading';
 
@@ -41,7 +41,7 @@ class Accueil extends React.Component {
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.1.115:8000/api/auth/notifications',{
+            await fetch('http://192.168.11.62:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -60,53 +60,55 @@ class Accueil extends React.Component {
             });
     }
     notifications= () => {
-        if (this.state.notifications.length>0) {
-            return this.state.notifications.map((notification) =>  (
-                    <View>
-                        <Text style={styles.entete4}>{notification.jour}</Text>
-                        <Container style={styles.simplecard} >
-                            <Card style={styles.card} noShadow={true}>
-                                <CardItem style={styles.carditem}>
-                                    <Body>
-                                        <Text style={styles.paragr2}>
-                                            {notification.libelle}
-                                        </Text>
-                                        <Text style={styles.paragr}>
-                                            {notification.description}
-                                        </Text>
-                                    </Body>
-                                </CardItem>
-                            </Card>
-                        </Container>
-                    </View>
-                )
-            ) 
-        } 
-        // this.setState({ loading: true })
+        return  <FlatList
+            data={this.state.notifications}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={
+            ({item}) =>
+            <View>
+                <Text style={styles.entete4}>{item.jour}</Text>
+                <Container style={styles.simplecard} >
+                    <Card style={styles.card} noShadow={true}>
+                        <CardItem style={styles.carditem}>
+                            <Body>
+                                <Text style={styles.paragr2}>
+                                    {item.libelle}
+                                </Text>
+                                <Text style={styles.paragr}>
+                                    {item.description}
+                                </Text>
+                                {/* <Text style={styles.entete7}>{item.created_at}</Text> */}
+                            </Body>
+                        </CardItem>
+                    </Card>
+                </Container>
+            </View>
+        }
+    />
     }
     assuranceAuto= ()=> {
-        if (this.props.users.token!='') {
+        if (this.props.users.token !=null) {
             this.props.navigation.navigate('Assurance Auto');
         } else {
             this.props.navigation.navigate('AuthUser')  
         }
     }
     assuranceMoto=()=>{
-        if (this.props.users.token!='') {
+        if (this.props.users.token!=null) {
             this.props.navigation.navigate('Assurance Moto');
         } else {
             this.props.navigation.navigate('AuthUser')  
         }
     }
     assuranceMaison=()=>{
-        if (this.props.users.token!='') {
+        if (this.props.users.token!=null) {
             this.props.navigation.navigate('Assurance Maison');
         } else {
             this.props.navigation.navigate('AuthUser')  
         }
     }
     assuranceSante=()=>{
-        if (this.props.users.token!='') {
+        if (this.props.users.token!=null) {
             this.props.navigation.navigate('Assurance Sante');
         } else {
             this.props.navigation.navigate('AuthUser')  
@@ -125,8 +127,8 @@ class Accueil extends React.Component {
                         <Container style={styles.corp}>
                             <HeaderNavigator navigation={navigation}/>
                             <ScrollView style={styles.scrollView}>
+                                <Text style={styles.entete6}>Souscrire à une assurance</Text>
                                 <Container style={styles.display}>
-
                                     <Container style={styles.display2}>
                                         <TouchableOpacity onPress={()=>this.assuranceAuto()}>
                                             <Card style={styles.card1}>
@@ -297,6 +299,19 @@ const styles = StyleSheet.create({
         color:'#272822',
         fontSize:12
     },
+    entete6:{
+        textAlign:'center',
+        color:'#272822',
+        fontSize:13,
+        fontWeight:'bold'
+    },
+    entete7:{
+        color:'#272822',
+        fontSize:9,
+        paddingTop:5,
+        paddingLeft:'80%',
+        position:'relative'
+    },
    
     card:{  
         borderRadius:10,
@@ -369,7 +384,8 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent',
         position:'absolute',
         top:'85%',
-        left:'6%'
+        left:'5%',
+        width:'90%'
         
         
     },

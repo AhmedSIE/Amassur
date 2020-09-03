@@ -25,7 +25,7 @@ class LoginEmail extends React.Component {
         if (this.state.email != '' && this.state.password != '') {
             const email = this.state.email;
             const password = this.state.password;
-            await fetch('http://192.168.1.115:8000/api/auth/loginemail',{
+            await fetch('http://192.168.11.62:8000/api/auth/loginemail',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
@@ -41,6 +41,7 @@ class LoginEmail extends React.Component {
                     prenom:resData.prenom,
                     email: resData.email,  
                     telephone:resData.telephone,
+                    carte_id:resData.carte_id,
                     photo:resData.photo,
                     sessionsexpire:resData.expires_in,
                 } 
@@ -75,7 +76,7 @@ class LoginEmail extends React.Component {
             <View style={{flex:1}}>
                 {
                     this.state.loading ?(
-                        <AppLoading titreMessage={'En cours de traitemenet ...'} />
+                        <AppLoading titreMessage={'Veuillez patienter ...'} />
                     ):(
                         <ScrollView>
                             <Container style={styles.container}>

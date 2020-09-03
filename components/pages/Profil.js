@@ -57,7 +57,6 @@ class Profil extends React.Component {
                 body: JSON.stringify({"token" : this.props.users.token,"photo": photo})
             }).then(res=>res.json())
             .then((resData) => {
-                alert('ok')
                 console.log(resData)
                 this.setState({ loading: false })
                 
@@ -149,11 +148,33 @@ class Profil extends React.Component {
                                 <Text>Ma carte </Text>
                             </Separator>
                             <ListItem>
-                                <TouchableOpacity>
-                                    <Card style={styles.select}>
-                                        <Text style={styles.montitre}>PLATINUME</Text>
-                                    </Card>
-                                </TouchableOpacity>
+                                {
+                                    this.props.users.carte_id==4 ? (
+                                        <TouchableOpacity>
+                                            <Card style={styles.select}>
+                                                <Image style={styles.image2} source={require('./../../assets/images/Cartes/platinum_card.png')}/>
+                                            </Card>
+                                        </TouchableOpacity>
+                                    ):this.props.users.carte_id==3 ?(
+                                        <TouchableOpacity>
+                                            <Card style={styles.select}>
+                                                <Image style={styles.image2} source={require('./../../assets/images/Cartes/gold_card.png')}/>
+                                            </Card>
+                                        </TouchableOpacity>
+                                    ):this.props.users.carte_id==2 ?(
+                                        <TouchableOpacity>
+                                            <Card style={styles.select}>
+                                                <Image style={styles.image2} source={require('./../../assets/images/Cartes/silver_card.png')}/>
+                                            </Card>
+                                        </TouchableOpacity>
+                                    ):(
+                                        <TouchableOpacity>
+                                            <Card style={styles.select}>
+                                                <Image style={styles.image2} source={require('./../../assets/images/Cartes/free_card.png')}/>
+                                            </Card>
+                                        </TouchableOpacity>
+                                    )
+                                }
                             </ListItem>
                         </ScrollView>
                     )
@@ -187,13 +208,8 @@ const styles=StyleSheet.create({
     select:{
         backgroundColor:'#fafafa', 
         height:200,
-        width:'200%',
-        marginLeft:5,
-        marginRight:5,
-
-    },
-    montitre:{
-        padding:30,
+        minWidth:'98%',
+        marginLeft:'1%',
     },
     photo:{
         alignItems:'center'
@@ -206,6 +222,10 @@ const styles=StyleSheet.create({
         borderWidth:2,
         borderRadius:100,
         margin:20,
+    },
+    image2:{
+        height:'100%',
+        width:'100%',
     }
 });
 

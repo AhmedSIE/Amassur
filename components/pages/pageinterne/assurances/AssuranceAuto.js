@@ -14,7 +14,7 @@ class AssuranceAuto extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            loading:false, resourcePath: '' , resourcePathPermis:'', etape:1, immatriculation:'',
+            loading:false, resourcePath:'' , resourcePathPermis:'', etape:1, immatriculation:'',
             marque:'', modele:'', age:'', agepermis:'', ville:'', corporel:'', materiel:'', vol:'',
             brisGlace:'', offre:'', compagnie:'', modepayement:'',
         };
@@ -74,8 +74,8 @@ class AssuranceAuto extends React.Component{
     };
     premier= () => {
         if (this.state.immatriculation!='' && this.state.marque!='' && 
-        this.state.modele!=''
-        //  && this.state.resourcePath!=''
+        this.state.modele!='' 
+        // && this.state.resourcePath!=''
          ) {
             this.setState({etape:2})   
         } else {
@@ -122,7 +122,7 @@ class AssuranceAuto extends React.Component{
     
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.109:8000/api/assurances/assuranceAuto/save',{
+        await fetch('http://192.168.11.62:8000/api/assurances/assuranceAuto/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -130,7 +130,7 @@ class AssuranceAuto extends React.Component{
             },
             body: JSON.stringify({
                 "token":this.props.users.token,
-                "immatriculation" : this.state.immatriculation,
+                "immatriculation":this.state.immatriculation,
                 "marque":this.state.marque,
                 "modele":this.state.modele,
                 "carteGriseImage":this.state.resourcePath,
@@ -166,7 +166,7 @@ class AssuranceAuto extends React.Component{
             <View style={{flex:1}}>
                 {
                     this.state.loading ? (
-                        <AppLoading/>
+                        <AppLoading titreMessage='Traitement en cours ...'/>
                     ):(
                         <Container style={{flex:1}}>
                             <ScrollView>
@@ -180,6 +180,7 @@ class AssuranceAuto extends React.Component{
                                                     placeholder="Immatriculation"
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
+                                                    value={this.state.immatriculation}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
                                                     onChangeText={(text)=>this.immatriculation(text)}
@@ -188,6 +189,7 @@ class AssuranceAuto extends React.Component{
                                                     placeholder="Marque du véhicule"
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
+                                                    value={this.state.marque}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
                                                     onChangeText={(text)=>this.mamarque(text)}
@@ -196,6 +198,7 @@ class AssuranceAuto extends React.Component{
                                                     placeholder="Modèle"
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
+                                                    value={this.state.modele}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.monmodele(text)}
                                                 />
@@ -210,6 +213,7 @@ class AssuranceAuto extends React.Component{
                                                                         uri: 'data:image/jpeg;base64,' + this.state.resourcePath,
                                                                         }}
                                                                         style={styles.image1}
+                                                                        
                                                                     />
                                                                 </View>
                                                             ):(
@@ -243,6 +247,7 @@ class AssuranceAuto extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
+                                                    value={this.state.age}
                                                     onChangeText={(text)=>this.age(text)}
                                                 />
                                                 <TextInput
@@ -252,6 +257,7 @@ class AssuranceAuto extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
+                                                    value={this.state.agepermis}
                                                     onChangeText={(text)=>this.agepermis(text)}
                                                 />
                                                 <TextInput
@@ -259,6 +265,7 @@ class AssuranceAuto extends React.Component{
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
+                                                    value={this.state.ville}
                                                     onChangeText={(text)=>this.ville(text)}
                                                 />
                                                 <View style={styles.cartgrise}>
@@ -308,6 +315,7 @@ class AssuranceAuto extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
+                                                    value={this.state.corporel}
                                                     onChangeText={(text)=>this.corporel(text)}
                                                 />
                                                 <TextInput
@@ -317,6 +325,7 @@ class AssuranceAuto extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
+                                                    value={this.state.materiel}
                                                     onChangeText={(text)=>this.materiel(text)}
                                                 />
                                                 <TextInput
@@ -326,6 +335,7 @@ class AssuranceAuto extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
+                                                    value={this.state.vol}
                                                     onChangeText={(text)=>this.vol(text)}
                                                 />
                                                 <TextInput
@@ -333,6 +343,7 @@ class AssuranceAuto extends React.Component{
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
+                                                    value={this.state.brisGlace}
                                                     onChangeText={(text)=>this.brisGlace(text)}
                                                 />
                                             </View>
@@ -374,12 +385,12 @@ class AssuranceAuto extends React.Component{
                                             <Text style={styles.entete}>Compagnie</Text>
                                             <View style={styles.container}>
                                                 <TextInput
-                                                        keyboardType='phone-pad'
                                                         placeholder="Choisir l'offres"
                                                         placeholderTextColor="#888"
                                                         style={styles.input}
                                                         returnKeyType="done"
                                                         autoCompleteType="tel"
+                                                        value={this.state.offre}
                                                         onChangeText={(text)=>this.offre(text)}
                                                     />
                                                 <TextInput
@@ -389,15 +400,16 @@ class AssuranceAuto extends React.Component{
                                                         style={styles.input}
                                                         returnKeyType="done"
                                                         autoCompleteType="tel"
+                                                        value={this.state.compagnie}
                                                         onChangeText={(text)=>this.compagnie(text)}
                                                     />
                                                 <TextInput
-                                                        keyboardType='phone-pad'
                                                         placeholder="Choisir le mode de payement"
                                                         placeholderTextColor="#888"
                                                         style={styles.input}
                                                         returnKeyType="done"
                                                         autoCompleteType="tel"
+                                                        value={this.state.modepayement}
                                                         onChangeText={(text)=>this.modepayement(text)}
                                                     />
                                             </View>
@@ -410,6 +422,71 @@ class AssuranceAuto extends React.Component{
                                                 </TouchableOpacity>
                                             </View>
                                         </View>   
+                                    )
+                                }
+                                {
+                                    this.state.etape==1 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+
+                                    ): this.state.etape == 2 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity style={styles.compt3} onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+
+                                    ):this.state.etape == 3 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+                                    ): this.state.etape == 4 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                <Text style={styles.compt2}>3</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+                                    ):(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                <Text style={styles.compt2}>3</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:4})}>
+                                                <Text style={styles.compt2}>4</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>5</Text>
+                                        </View>
                                     )
                                 }
                             </ScrollView>
@@ -433,7 +510,7 @@ const styles=StyleSheet.create({
         // textAlign:'center',
         color:'#2E3682',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     entete1:{
@@ -466,10 +543,9 @@ const styles=StyleSheet.create({
         marginLeft:20,
         marginTop:0,
         marginBottom:0,
-        // textAlign:'center',
         color:'black',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     sousent:{
@@ -578,6 +654,48 @@ const styles=StyleSheet.create({
     icon:{
         color:'#2E3682',
         fontSize:50,
+    },
+    compteur:{
+        flex:1,
+        flexDirection:'row',
+        paddingBottom:20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    compt:{
+        borderColor:'black',
+        backgroundColor:'#eff0f1',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+    },
+    compt1:{
+        borderColor:'black',
+        backgroundColor:'red',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
+    },
+    compt2:{
+        borderColor:'black',
+        backgroundColor:'#2E3682',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
     },
    
 });

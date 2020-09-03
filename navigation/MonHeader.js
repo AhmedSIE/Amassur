@@ -29,12 +29,19 @@ class MonHeader extends React.Component{
                     <View style={styles.display}>
                         <Container style={styles.display2}>
                                 {
-                                    this.props.users.photo ? (
+                                    this.props.users.token ? (
                                         <TouchableOpacity  style={styles.onPress} onPress={()=>this.profil()}>
-                                            <Image style={styles.image2} 
-                                            source={{
-                                                uri: 'data:image/jpeg;base64,' + this.props.users.photo,
-                                            }}/>
+                                           
+                                           {
+                                               this.props.users.photo ? (
+                                                    <Image style={styles.image2} 
+                                                    source={{
+                                                        uri: 'data:image/jpeg;base64,' + this.props.users.photo,
+                                                    }}/>
+                                               ):(
+                                                    <FontAwesome name='user-circle' style={styles.iconex}/>
+                                               )
+                                           } 
                                         </TouchableOpacity>
                                     ):(
                                         <TouchableOpacity style={styles.onPress} onPress={()=>this.connexion()}>
@@ -95,6 +102,11 @@ const styles = StyleSheet.create({
        marginTop:'15%',
        marginLeft:'70%',
        textAlign: "left",
+    },
+    iconex:{
+       fontSize:25, 
+       marginTop:'15%',
+       marginLeft:'5%',
     },
     container: {
         flex: 1,

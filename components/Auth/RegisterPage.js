@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
         if (this.state.nom !='' && this.state.prenom !='' && this.state.email !='' && 
             this.state.telephone !='' && this.state.password !='') {
             if (this.state.password == this.state.confirm) {
-                await fetch('http://192.168.1.121:8000/api/auth/register',{
+                await fetch('http://192.168.11.62:8000/api/auth/register',{
                     method:'POST',
                     headers:{
                         'Accept':'application/json',
@@ -88,7 +88,7 @@ class RegisterPage extends React.Component {
             <View style={{flex:1}}>
                 {
                     this.state.loading ?(
-                        <AppLoading titreMessage={'En cours de traitemenet ...'} />
+                        <AppLoading titreMessage={'Veuillez patienter ...'} />
                     ):(
                         <Container>
                             <Container style={styles.enteim}>

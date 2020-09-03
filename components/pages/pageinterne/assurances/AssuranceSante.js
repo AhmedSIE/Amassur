@@ -157,7 +157,7 @@ class AssuranceSante extends React.Component{
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.123:8000/api/assurances/assuranceSante/save',{
+        await fetch('http://192.168.1.102:8000/api/assurances/assuranceSante/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -1010,6 +1010,186 @@ class AssuranceSante extends React.Component{
                                         </View>    
                                     )
                                 }
+                                {
+                                    this.state.etape==11 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                        </View>
+
+                                    ): this.state.etape == 21 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ):this.state.etape == 22 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity style={styles.compt3} onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ):this.state.etape == 31 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ):this.state.etape == 32 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity style={styles.compt3} onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ):this.state.etape == 41 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+
+                                    ):this.state.etape == 42 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity style={styles.compt3} onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+
+                                    ):this.state.etape == 43 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                            <Text style={styles.compt}>5</Text>
+                                        </View>
+                                    ):this.state.etape == 3 ?(
+                                        this.state.nomconjoint != '' && this.state.enfants.length > 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:41})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:42})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:43})}>
+                                                    <Text style={styles.compt2}>3</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>4</Text>
+                                                <Text style={styles.compt}>5</Text>
+                                            </View>
+                                        ):this.state.nomconjoint != '' && this.state.enfants.length == 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:21})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:22})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>3</Text>
+                                                <Text style={styles.compt}>4</Text>
+                                            </View>
+                                        ):this.state.nomconjoint == '' && this.state.enfants.length > 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:31})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:32})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>3</Text>
+                                                <Text style={styles.compt}>4</Text>
+                                            </View>
+                                        ):(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:11})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>2</Text>
+                                                <Text style={styles.compt}>3</Text>
+                                            </View>
+                                        )
+                                    ):this.state.etape==4 ? (
+                                        this.state.nomconjoint != '' && this.state.enfants.length > 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:41})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:42})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:43})}>
+                                                    <Text style={styles.compt2}>3</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                    <Text style={styles.compt2}>4</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>5</Text>
+                                            </View>
+                                        ):this.state.nomconjoint != '' && this.state.enfants.length == 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:21})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:22})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                    <Text style={styles.compt2}>3</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>4</Text>
+                                            </View>
+                                        ):this.state.nomconjoint == '' && this.state.enfants.length > 0 ?(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:31})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:32})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                    <Text style={styles.compt2}></Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>4</Text>
+                                            </View>
+                                        ):(
+                                            <View style={styles.compteur}>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:11})}>
+                                                    <Text style={styles.compt2}>1</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                    <Text style={styles.compt2}>2</Text>
+                                                </TouchableOpacity>
+                                                <Text style={styles.compt1}>3</Text>
+                                            </View>
+                                        )
+                                    ):(
+                                        <View></View>
+                                    )
+                                }
                             </ScrollView>
                         </Container>
                     )
@@ -1054,7 +1234,7 @@ const styles=StyleSheet.create({
         marginBottom:10,
         color:'#2E3682',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     entete1:{
@@ -1073,7 +1253,7 @@ const styles=StyleSheet.create({
         // textAlign:'center',
         color:'black',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     entete3:{
@@ -1265,7 +1445,49 @@ const styles=StyleSheet.create({
     },
     carditem:{
         backgroundColor:'transparent'
-    }
+    },
+    compteur:{
+        flex:1,
+        flexDirection:'row',
+        paddingBottom:20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    compt:{
+        borderColor:'black',
+        backgroundColor:'#eff0f1',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+    },
+    compt1:{
+        borderColor:'black',
+        backgroundColor:'red',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
+    },
+    compt2:{
+        borderColor:'black',
+        backgroundColor:'#2E3682',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
+    },
    
 });
 

@@ -93,7 +93,7 @@ class AssuranceMoto extends React.Component{
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.109:8000/api/assurances/assuranceMoto/save',{
+        await fetch('http://192.168.1.102:8000/api/assurances/assuranceMoto/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -134,7 +134,7 @@ class AssuranceMoto extends React.Component{
             <View style={{flex:1}}>
                 {
                     this.state.loading ? (
-                        <AppLoading/>
+                        <AppLoading titreMessage='Traitement en cours ...'/>
                     ):(
                         <Container style={{flex:1}}>
                             <ScrollView>
@@ -312,6 +312,51 @@ class AssuranceMoto extends React.Component{
                                         </View>   
                                     )
                                 }
+                                {
+                                    this.state.etape==1 ?(
+                                        <View style={styles.compteur}>
+                                            <Text style={styles.compt1}>1</Text>
+                                            <Text style={styles.compt}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ): this.state.etape == 2 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity style={styles.compt3} onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>2</Text>
+                                            <Text style={styles.compt}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+
+                                    ):this.state.etape == 3 ?(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>3</Text>
+                                            <Text style={styles.compt}>4</Text>
+                                        </View>
+                                    ):(
+                                        <View style={styles.compteur}>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:1})}>
+                                                <Text style={styles.compt2}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:2})}>
+                                                <Text style={styles.compt2}>2</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity onPress={()=>this.setState({etape:3})}>
+                                                <Text style={styles.compt2}>3</Text>
+                                            </TouchableOpacity>
+                                            <Text style={styles.compt1}>4</Text>
+                                        </View>
+                                    )
+                                }
                             </ScrollView>
                         </Container>
                     )
@@ -333,7 +378,7 @@ const styles=StyleSheet.create({
         // textAlign:'center',
         color:'#2E3682',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     entete1:{
@@ -351,7 +396,7 @@ const styles=StyleSheet.create({
         marginBottom:0,
         color:'black',
         fontWeight:'bold',
-        fontSize:28,
+        fontSize:20,
 
     },
     entete3:{
@@ -476,6 +521,48 @@ const styles=StyleSheet.create({
     icon:{
         color:'#2E3682',
         fontSize:50,
+    },
+    compteur:{
+        flex:1,
+        flexDirection:'row',
+        paddingBottom:20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    compt:{
+        borderColor:'black',
+        backgroundColor:'#eff0f1',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+    },
+    compt1:{
+        borderColor:'black',
+        backgroundColor:'red',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
+    },
+    compt2:{
+        borderColor:'black',
+        backgroundColor:'#2E3682',
+        margin:10,
+        paddingLeft:15,
+        paddingRight:15,
+        paddingTop:10,
+        paddingBottom:10,
+        fontSize:10,
+        borderRadius:100,
+        color:'white'
     },
    
 });

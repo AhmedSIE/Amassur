@@ -3,11 +3,14 @@ import  {StyleSheet, Image,View,Text,TextInput, AsyncStorage, Keyboard,Button } 
 import HeaderNavigator from "../../navigation/MonHeader";
 import {connect} from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import { TouchableOpacity, ScrollView, FlatList } from "react-native-gesture-handler";
 import { Right, Left } from 'native-base';
 import {LocalNotification} from './../../services/LocalPushController';
-import RemotePushController from './../../services/RemotePushController'
+import RemotePushController from './../../services/RemotePushController';
+import Pusher from 'pusher-js/react-native';
 
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
 
 class Messages extends React.Component{
     constructor(props){
@@ -15,22 +18,28 @@ class Messages extends React.Component{
         this.state={
             message:'',
             messages:[],
-        }
+        }        
+        this.pusher=null,
         this.scrollView=null,
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow',this._keyboardDidShow.bind(this))
     }
+    
     handleButtonPress = () => {
         LocalNotification()
     }
     componentWillUnmount () {
         this.keyboardDidShowListener.remove();
+
     }
     _keyboardDidShow() {
         this.scrollView.scrollToEnd();
     }
     componentDidMount() {
         this.lesmessages();
-    
+        var pusher = new Pusher('1692f1e2f1dc6035844e', {cluster: 'us2'});
+        var channel = pusher.subscribe('my-channel');
+        this.pusher=channel.bind('my-event', function(data) {return JSON.stringify(data);});
+        console.log(this.pusher)
     }
 
     messages = async() => {
@@ -51,7 +60,7 @@ class Messages extends React.Component{
     }
 
     lesmessages = async()=>{
-        await fetch('http://192.168.1.107:8000/api/messages/message',{
+        await fetch('http://192.168.11.62:8000/api/messages/message',{
             method:'post',
             headers:{
                 'Accept':'application/json',
@@ -72,7 +81,7 @@ class Messages extends React.Component{
 
     onSend = async() => {
         if (this.state.message!='') {
-            await fetch('http://192.168.1.115:8000/api/messages/message/save',{
+            await fetch('http://192.168.11.62:8000/api/messages/message/save',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
@@ -97,26 +106,32 @@ class Messages extends React.Component{
 
     mesmessages=()=> {
         if (this.state.messages.length>0) {
-            return this.state.messages.map((message)=> (
-                <View>             
+            return <FlatList
+                data={this.state.messages}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={
+                    ({item}) =>
+                        
+                    <View>             
                     {
-                        message.statut =='envoyé' ? (
+                        item.statut =='envoyé' ? (
                             <View style={styles.right}>
                                 <Right style={styles.textdroit}>
-                                    <Text style={styles.textsms}>{message.texte}</Text>    
+                                    <Text style={styles.textsms}>{item.texte}</Text>    
                                 </Right>
                             </View>
                         ):(
                             <View>
                                 <Left style={styles.textgauche}>
-                                    <Text style={styles.textsms}>{message.texte}</Text>
+                                    <Text style={styles.textsms}>{item.texte}</Text>
                                 </Left>
                             </View>
                         )
                     }
-                </View>
-                )
-            )
+                    </View>
+                }
+            />
+           
         }else{
             return (
                 <View>
@@ -158,13 +173,13 @@ class Messages extends React.Component{
                     </View>
                     <View>
                         <TextInput
-                                onChangeText={(text)=>this.onChangeMessage(text)}
-                                keyboardType='default'
-                                placeholderTextColor="#888"
-                                style={styles.input}
-                                returnKeyType="done"
-                                autoCompleteType="tel"
-                                value={this.state.message}
+                            onChangeText={(text)=>this.onChangeMessage(text)}
+                            keyboardType='default'
+                            placeholderTextColor="#888"
+                            style={styles.input}
+                            returnKeyType="done"
+                            autoCompleteType="tel"
+                            value={this.state.message}
                         />
                     </View>
                     

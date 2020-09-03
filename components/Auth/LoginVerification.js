@@ -32,7 +32,7 @@ class LoginVerification extends React.Component{
     auth = async() => {
         const tel =this.numeroTel;
         // this.setState({loading:true})
-        await fetch('http://192.168.1.107:8000/api/auth/login',{
+        await fetch('http://192.168.11.62:8000/api/auth/login',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
@@ -49,6 +49,7 @@ class LoginVerification extends React.Component{
                 email: resData.email,  
                 telephone:resData.telephone,
                 photo:resData.photo,
+                carte_id:resData.carte_id,
                 sessionsexpire:resData.expires_in,
             } 
             AsyncStorage.setItem('user',JSON.stringify(user))
@@ -64,7 +65,7 @@ class LoginVerification extends React.Component{
             <View style={{flex:1}}>
               {
                 this.state.loading ? (
-                  <AppLoading />
+                  <AppLoading titreMessage={'Veuillez patienter ...'}/>
                 ):(
                   <Container style={styles.container}>
                     <Image style={styles.authimage} source={require("./../../assets/images/logo2.png")} />

@@ -1,7 +1,6 @@
 import React from 'react';
-import {View,Text,StyleSheet,AsyncStorage} from 'react-native';
+import {View,Text,StyleSheet,AsyncStorage,ScrollView, FlatList} from 'react-native';
 import {Container,List,ListItem,Left,Right} from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AppLoading from '../../../AppLoading';
 
@@ -43,7 +42,7 @@ class Silver extends React.Component{
     }
 
     services = async()=>{
-        await fetch('http://192.168.1.146:8000/api/services/servicessilver',{
+        await fetch('http://192.168.11.62:8000/api/services/servicessilver',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -64,38 +63,46 @@ class Silver extends React.Component{
         });
     }
     
-    messervices=()=> {
-        return this.state.servicessilver.map((servicessilve) =>  (
+    messervices=() => {
+        return  <FlatList
+            data={this.state.servicessilver}
+            renderItem={
+                ({item})=>
                 <View>
                     <ListItem>
                         <Left>
-                            <Text style={styles.text3}>{servicessilve.libelle}</Text>
+                            <Text style={styles.text3}>{item.libelle}</Text>
                         </Left>
                         <Right>
                             <FontAwesome name="check-circle" style={styles.icon}/>
                         </Right>    
                     </ListItem>
-                </View>
-            )
-        )     
+                </View> 
+            }
+        />    
     }
 
-    autreservices=()=>{
-        return this.state.autreservices.map(autreservice=> (
-            <View>
-                <ListItem >
-                    <Left>
-                        <Text style={styles.text4}>{autreservice.libelle}</Text>
-                    </Left>
-                    <Right>
-                        <FontAwesome name="check-circle" style={styles.icon2}/>
-                    </Right>
-                </ListItem>
-            </View>
-            )
-        ) 
+    autreservices= () => {
+        if (this.state.autreservices.length>0) {
+            return <FlatList
+                data={this.state.autreservices}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={
+                    ({item})=>
+                    <View>
+                        <ListItem >
+                            <Left>
+                                <Text style={styles.text4}>{item.libelle}</Text>
+                            </Left>
+                            <Right>
+                                <FontAwesome name="check-circle" style={styles.icon2}/>
+                            </Right>
+                        </ListItem>
+                    </View>
+                }
+            />
+        }
     }
-
     render(){
         return(
             <View style={{flex:1}}>
@@ -124,14 +131,14 @@ class Silver extends React.Component{
 
 const styles=StyleSheet.create({
     text1:{
-        fontSize:24,
+        fontSize:16,
         color:'#2E3682',
         fontWeight:'bold',
         position:'absolute',
         right:'10%',
     },
     text2:{
-        fontSize:20,
+        fontSize:14,
         color:'green',
         fontWeight:'bold',
         marginLeft:'5%',
@@ -143,6 +150,7 @@ const styles=StyleSheet.create({
     },
     text4:{
         fontSize:13,
+        color:'silver'
 
     },
     icon:{
