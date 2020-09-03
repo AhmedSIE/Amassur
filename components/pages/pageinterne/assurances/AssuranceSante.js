@@ -216,7 +216,6 @@ class AssuranceSante extends React.Component{
                                 {
                                     this.state.etape == 1 ? (
                                         <View style={styles.section1}>
-                                            {/* <Text style={styles.entete2}>Informations</Text> */}
                                             <Text style={styles.entete}>Qui souhaitez-vous assurer ?</Text>
                                             <View style={styles.container}>
                                                 <View style={styles.display}>
@@ -289,6 +288,7 @@ class AssuranceSante extends React.Component{
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.nom(text)}
+                                                value={this.state.nom}
                                             />
                                             <TextInput
                                                 placeholder="Prénoms"
@@ -297,6 +297,7 @@ class AssuranceSante extends React.Component{
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.prenom(text)}
+                                                value={this.state.prenom}
                                             />
                                             <TextInput
                                                 keyboardType='phone-pad'
@@ -305,12 +306,15 @@ class AssuranceSante extends React.Component{
                                                 style={styles.input}
                                                 returnKeyType="done"
                                                 onChangeText={(text)=>this.age(text)}
+                                                value={this.state.age}
+
                                             />
                                             <TextInput
                                                 placeholder="Ville"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.ville}
                                                 onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
@@ -318,6 +322,8 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.email}
+
                                                 onChangeText={(text)=>this.email(text)}
                                             />
                                             <TextInput
@@ -326,6 +332,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.telephone}
                                                 onChangeText={(text)=>this.telephone(text)}
                                             />
                                             <Form style={styles.form}>
@@ -337,6 +344,7 @@ class AssuranceSante extends React.Component{
                                                     headerTitleStyle={{ color: "#fff" }}
                                                     selectedValue={this.state.selected}
                                                     onValueChange={this.onValueChange.bind(this)}
+                                                    value={this.state.selected}
                                                 >
                                                     <Picker.Item label="Régimes obligatoires" />
                                                     <Picker.Item label="Régime général" value="Régime général" />
@@ -383,13 +391,14 @@ class AssuranceSante extends React.Component{
                                         <Text style={styles.entete2}>Informations</Text>
                                         <Text style={styles.entete}>Assuré principal</Text>
                                         <View style={styles.container}>
-                                            <TextInput
+                                        <TextInput
                                                 placeholder="Nom"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.nom(text)}
+                                                value={this.state.nom}
                                             />
                                             <TextInput
                                                 placeholder="Prénoms"
@@ -398,19 +407,24 @@ class AssuranceSante extends React.Component{
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.prenom(text)}
+                                                value={this.state.prenom}
                                             />
                                             <TextInput
+                                                keyboardType='phone-pad'
                                                 placeholder="Age"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
                                                 onChangeText={(text)=>this.age(text)}
+                                                value={this.state.age}
+
                                             />
                                             <TextInput
                                                 placeholder="Ville"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.ville}
                                                 onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
@@ -418,6 +432,8 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.email}
+
                                                 onChangeText={(text)=>this.email(text)}
                                             />
                                             <TextInput
@@ -426,6 +442,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.telephone}
                                                 onChangeText={(text)=>this.telephone(text)}
                                             />
                                             <Form style={styles.form}>
@@ -437,6 +454,7 @@ class AssuranceSante extends React.Component{
                                                     headerTitleStyle={{ color: "#fff" }}
                                                     selectedValue={this.state.selected}
                                                     onValueChange={this.onValueChange.bind(this)}
+                                                    value={this.state.selected}
                                                 >
                                                     <Picker.Item label="Régimes obligatoires" />
                                                     <Picker.Item label="Régime général" value="Régime général" />
@@ -480,7 +498,6 @@ class AssuranceSante extends React.Component{
                                     </View>
                                     ): this.state.etape == 22 ? (
                                         <View style={styles.section1}>
-                                            {/* <Text style={styles.entete2}>Informations</Text> */}
                                             <Text style={styles.entete}>Conjoint à assurer</Text>
                                             <View style={styles.container}>
                                                 <TextInput
@@ -489,6 +506,7 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.nomconjoint(text)}
+                                                    value={this.state.nomconjoint}
                                                 />
                                                 <TextInput
                                                     placeholder="Prénoms"
@@ -496,6 +514,8 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.prenomconjoint(text)}
+                                                    value={this.state.prenomconjoint}
+
                                                 />
                                                 <TextInput
                                                     keyboardType='phone-pad'
@@ -504,8 +524,10 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.ageconjoint(text)}
+                                                    value={this.state.ageconjoint}
+
                                                 />
-                                            <Form style={styles.form}>
+                                                <Form style={styles.form}>
                                                     <Picker
                                                         mode="dropdown"
                                                         iosIcon={<Icon name="arrow-down" />}
@@ -514,6 +536,7 @@ class AssuranceSante extends React.Component{
                                                         headerTitleStyle={{ color: "#fff" }}
                                                         selectedValue={this.state.selectedfemme}
                                                         onValueChange={this.onValueChange1.bind(this)}
+                                                        value={this.state.selectedfemme}
                                                     >
                                                         <Picker.Item label="Régimes obligatoires" />
                                                         <Picker.Item label="Régime général" value="Régime général" />
@@ -534,13 +557,14 @@ class AssuranceSante extends React.Component{
                                         <Text style={styles.entete2}>Informations</Text>
                                         <Text style={styles.entete}>Assuré principal</Text>
                                         <View style={styles.container}>
-                                            <TextInput
+                                        <TextInput
                                                 placeholder="Nom"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.nom(text)}
+                                                value={this.state.nom}
                                             />
                                             <TextInput
                                                 placeholder="Prénoms"
@@ -549,19 +573,24 @@ class AssuranceSante extends React.Component{
                                                 returnKeyType="done"
                                                 autoCompleteType="tel"
                                                 onChangeText={(text)=>this.prenom(text)}
+                                                value={this.state.prenom}
                                             />
                                             <TextInput
+                                                keyboardType='phone-pad'
                                                 placeholder="Age"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
                                                 onChangeText={(text)=>this.age(text)}
+                                                value={this.state.age}
+
                                             />
                                             <TextInput
                                                 placeholder="Ville"
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.ville}
                                                 onChangeText={(text)=>this.ville(text)}
                                             />
                                             <TextInput
@@ -569,6 +598,8 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.email}
+
                                                 onChangeText={(text)=>this.email(text)}
                                             />
                                             <TextInput
@@ -577,6 +608,7 @@ class AssuranceSante extends React.Component{
                                                 placeholderTextColor="#888"
                                                 style={styles.input}
                                                 returnKeyType="done"
+                                                value={this.state.telephone}
                                                 onChangeText={(text)=>this.telephone(text)}
                                             />
                                             <Form style={styles.form}>
@@ -588,6 +620,7 @@ class AssuranceSante extends React.Component{
                                                     headerTitleStyle={{ color: "#fff" }}
                                                     selectedValue={this.state.selected}
                                                     onValueChange={this.onValueChange.bind(this)}
+                                                    value={ this.state.selected}
                                                 >
                                                     <Picker.Item label="Régimes obligatoires" />
                                                     <Picker.Item label="Régime général" value="Régime général" />
@@ -722,6 +755,7 @@ class AssuranceSante extends React.Component{
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
                                                     onChangeText={(text)=>this.nom(text)}
+                                                    value={this.state.nom}
                                                 />
                                                 <TextInput
                                                     placeholder="Prénoms"
@@ -730,6 +764,7 @@ class AssuranceSante extends React.Component{
                                                     returnKeyType="done"
                                                     autoCompleteType="tel"
                                                     onChangeText={(text)=>this.prenom(text)}
+                                                    value={this.state.prenom}
                                                 />
                                                 <TextInput
                                                     keyboardType='phone-pad'
@@ -738,12 +773,15 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.age(text)}
+                                                    value={this.state.age}
+
                                                 />
                                                 <TextInput
                                                     placeholder="Ville"
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
+                                                    value={this.state.ville}
                                                     onChangeText={(text)=>this.ville(text)}
                                                 />
                                                 <TextInput
@@ -751,6 +789,8 @@ class AssuranceSante extends React.Component{
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
+                                                    value={this.state.email}
+
                                                     onChangeText={(text)=>this.email(text)}
                                                 />
                                                 <TextInput
@@ -759,6 +799,7 @@ class AssuranceSante extends React.Component{
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
+                                                    value={this.state.telephone}
                                                     onChangeText={(text)=>this.telephone(text)}
                                                 />
                                                 <Form style={styles.form}>
@@ -770,6 +811,7 @@ class AssuranceSante extends React.Component{
                                                         headerTitleStyle={{ color: "#fff" }}
                                                         selectedValue={this.state.selected}
                                                         onValueChange={this.onValueChange.bind(this)}
+                                                        value={this.state.selected}
                                                     >
                                                         <Picker.Item label="Régimes obligatoires" />
                                                         <Picker.Item label="Régime général" value="Régime général" />
@@ -813,15 +855,15 @@ class AssuranceSante extends React.Component{
                                         </View>
                                     ): this.state.etape == 42 ? (
                                         <View style={styles.section1}>
-                                            {/* <Text style={styles.entete2}>Informations</Text> */}
                                             <Text style={styles.entete}>Conjoint à assurer</Text>
                                             <View style={styles.container}>
-                                                <TextInput
+                                            <TextInput
                                                     placeholder="Nom"
                                                     placeholderTextColor="#888"
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.nomconjoint(text)}
+                                                    value={this.state.nomconjoint}
                                                 />
                                                 <TextInput
                                                     placeholder="Prénoms"
@@ -829,6 +871,8 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.prenomconjoint(text)}
+                                                    value={this.state.prenomconjoint}
+
                                                 />
                                                 <TextInput
                                                     keyboardType='phone-pad'
@@ -837,8 +881,10 @@ class AssuranceSante extends React.Component{
                                                     style={styles.input}
                                                     returnKeyType="done"
                                                     onChangeText={(text)=>this.ageconjoint(text)}
+                                                    value={this.state.ageconjoint}
+
                                                 />
-                                            <Form style={styles.form}>
+                                                <Form style={styles.form}>
                                                     <Picker
                                                         mode="dropdown"
                                                         iosIcon={<Icon name="arrow-down" />}
@@ -847,6 +893,7 @@ class AssuranceSante extends React.Component{
                                                         headerTitleStyle={{ color: "#fff" }}
                                                         selectedValue={this.state.selectedfemme}
                                                         onValueChange={this.onValueChange1.bind(this)}
+                                                        value={this.state.selectedfemme}
                                                     >
                                                         <Picker.Item label="Régimes obligatoires" />
                                                         <Picker.Item label="Régime général" value="Régime général" />
@@ -1171,7 +1218,7 @@ class AssuranceSante extends React.Component{
                                                     <Text style={styles.compt2}>2</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={()=>this.setState({etape:3})}>
-                                                    <Text style={styles.compt2}></Text>
+                                                    <Text style={styles.compt2}>3</Text>
                                                 </TouchableOpacity>
                                                 <Text style={styles.compt1}>4</Text>
                                             </View>
