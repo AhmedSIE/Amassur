@@ -10,16 +10,16 @@ class Tarifs extends React.Component{
         super(props)
     }
     assuranceAuto=()=>{
-        this.props.navigation.navigate('Assurance Auto');
+        this.props.navigation.navigate('Tarif Auto');
     }
     assuranceMoto=()=>{
-        this.props.navigation.navigate('Assurance Moto');
+        this.props.navigation.navigate('Tarif Moto');
     }
     assuranceMaison=()=>{
-        this.props.navigation.navigate('Assurance Maison');
+        this.props.navigation.navigate('Tarif Maison');
     }
     assuranceSante=()=>{
-        this.props.navigation.navigate('Assurance Sante');
+        this.props.navigation.navigate('Tarif Sante');
     }
     render(){
         return (

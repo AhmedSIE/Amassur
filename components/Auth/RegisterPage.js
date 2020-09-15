@@ -22,10 +22,11 @@ class RegisterPage extends React.Component {
     }
  
     sendCode = async() => {
+        this.setState({ loading: true })
         if (this.state.nom !='' && this.state.prenom !='' && this.state.email !='' && 
             this.state.telephone !='' && this.state.password !='') {
             if (this.state.password == this.state.confirm) {
-                await fetch('http://192.168.11.62:8000/api/auth/register',{
+                await fetch('http://192.168.1.101:8000/api/auth/register',{
                     method:'POST',
                     headers:{
                         'Accept':'application/json',
@@ -40,6 +41,7 @@ class RegisterPage extends React.Component {
                     })
                 }).then(res=>res.json())
                 .then((resData) => {
+                    console.log('Ok1')
                     console.log(resData.nom)
                     this.setState({ loading: false })
                     let user ={
@@ -53,11 +55,17 @@ class RegisterPage extends React.Component {
                     AsyncStorage.setItem('user',JSON.stringify(user));
                     this.props.navigation.navigate("Main");
                 })
-                .catch((e) => console.log(e));
+                .catch((e) =>{
+                    this.setState({ loading: false })
+                    console.log(e)
+                    console.log('Ok2')
+                });
             } else {
+                this.setState({ loading: false })
                 alert("Erreur de mot de passe");
             }    
         } else {
+            this.setState({ loading: false })
             alert("Tous les champs sont obligatoires");
         }
     };

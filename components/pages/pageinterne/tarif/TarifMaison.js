@@ -8,7 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 import AppLoading from '../../../AppLoading';
 
-class AssuranceMaison extends React.Component{
+class TarifMaison extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -685,4 +685,4 @@ const mapStateToProps= (state) => {
         users: state.users
     }
 }
-export default connect(mapStateToProps)(AssuranceMaison)
+export default connect(mapStateToProps)(TarifMaison)

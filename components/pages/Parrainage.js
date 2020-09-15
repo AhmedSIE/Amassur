@@ -1,16 +1,26 @@
 import React from 'react';
-import  {StyleSheet, Image,View,ScrollView} from 'react-native';
-import {Container, Text, Title, Card, CardItem,Content, List, ListItem,Body , Left, Right,Icon} from "native-base";
+import  {StyleSheet, Image,View,ScrollView, Share} from 'react-native';
+import {Container, Text, Card, CardItem,} from "native-base";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HeaderNavigator from "../../navigation/MonHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Divider } from 'react-native-elements';
+import {connect} from 'react-redux';
 
 
 class Parrainage extends React.Component{
     constructor(props){
         super(props)
     }
+
+    onShare = async () => {
+        const result = await Share.share({
+            title: 'App link',
+            message:"Monsieur " + this.props.users.prenom + " vous invite a installer Amassur pour vos assurances : https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en, Code parrain : "+this.props.users.ref,
+            url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en'
+        });
+    } 
+    
     render(){
         let navigation = this.props.navigation
         return (
@@ -27,7 +37,7 @@ class Parrainage extends React.Component{
                     </Container>
                     
                     <Container style={styles.sectionbtn}>  
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity style={styles.button} onPress={()=>this.onShare()}>
                             <Text style={styles.textButton}>Parrainez vos proches par sms</Text>
                         </TouchableOpacity>
                     </Container>
@@ -180,4 +190,10 @@ const styles=StyleSheet.create({
         width:80,
     },
 });
-export default Parrainage
+const mapStateToProps=(state)=>{
+    return {
+        users:state.users
+    }
+}
+
+export default connect(mapStateToProps)(Parrainage)

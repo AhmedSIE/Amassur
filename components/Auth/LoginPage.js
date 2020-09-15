@@ -16,7 +16,7 @@ class LoginPage extends React.Component {
         if (this.state.phone.length >= 9) {
             const tel = this.state.phone;
             this.setState({ loading: true })
-            await fetch('http://192.168.10.174:8000/api/auth/login',{
+            await fetch('http://192.168.1.101:8000/api/auth/login',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',

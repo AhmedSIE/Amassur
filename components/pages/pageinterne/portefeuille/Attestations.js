@@ -31,11 +31,12 @@ class Attestations extends React.Component {
 
     open= (contrat) => {
         this.setState({contrat:contrat, modalVisible:true});
+        console.log(contrat)
     }
 
     close= () => {
         if (this.state.loading ==false && this.state.modalVisible==true){
-            this.setState({modalVisible:false});
+            setTimeout(() => this.setState({modalVisible:false}), 1000)
         }
     }
 
@@ -87,7 +88,7 @@ class Attestations extends React.Component {
                                         <SafeAreaView style={styles.modalView}>
                                             { 
                                                 <WebView
-                                                    source={{ uri: "http://192.168.11.62:8000/storage/"+this.state.contrat}}
+                                                    source={{ uri: "http://192.168.1.101:8000/storage/"+this.state.contrat}}
                                                     startInLoadingState={true} 
                                                     renderLoading={this.renderLoadingView}
                                                     style={{flex: 1}}

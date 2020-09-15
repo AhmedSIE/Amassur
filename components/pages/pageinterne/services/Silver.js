@@ -1,7 +1,8 @@
 import React from 'react';
-import {View,Text,StyleSheet,AsyncStorage,ScrollView, FlatList} from 'react-native';
+import {View,Text,StyleSheet,AsyncStorage,ScrollView, FlatList,TouchableOpacity} from 'react-native';
 import {Container,List,ListItem,Left,Right} from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 import AppLoading from '../../../AppLoading';
 
 
@@ -13,6 +14,7 @@ class Silver extends React.Component{
             servicessilver:[],
             autreservices:[],
         }
+        console.log(this.props.users.carte_id)
     }
     lesservices = async()=> {
         this.setState({ loading: false })
@@ -42,7 +44,7 @@ class Silver extends React.Component{
     }
 
     services = async()=>{
-        await fetch('http://192.168.11.62:8000/api/services/servicessilver',{
+        await fetch('http://192.168.1.101:8000/api/services/servicessilver',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -95,7 +97,7 @@ class Silver extends React.Component{
                                 <Text style={styles.text4}>{item.libelle}</Text>
                             </Left>
                             <Right>
-                                <FontAwesome name="check-circle" style={styles.icon2}/>
+                                <FontAwesome name="times-circle" style={styles.icon2}/>
                             </Right>
                         </ListItem>
                     </View>
@@ -103,6 +105,39 @@ class Silver extends React.Component{
             />
         }
     }
+    souscrire= async()=>{
+        const carte=2;
+        await fetch('http://192.168.1.101:8000/api/services/servicessourcription',{
+            method:'post',
+            headers:{
+                'Accept':'Application/json',
+                'Content-type':'Application/json'
+            },
+            body:JSON.stringify({'token':this.props.users.token,'carte':carte})
+        }).then(res=>res.json())
+        .then((resData)=>{
+            let user = {  
+                token: this.props.users.token,  
+                nom:resData.nom,
+                prenom:resData.prenom,
+                email: resData.email,  
+                telephone:resData.telephone,
+                carte_id:resData.carte_id,
+                photo:resData.photo,
+                sessionsexpire:this.props.users.sessionsexpire,
+            } 
+            AsyncStorage.setItem('user',JSON.stringify(user));
+            alert('Souscription réussie !');
+            const action = { type: "PROCESS_USER", value: user};
+            this.props.dispatch(action);
+        })
+        .catch((e)=>{
+            console.log(e)
+            alert("Pas c'accès internet !");
+            this.props.navigation.navigate('Main');
+        });
+    }
+
     render(){
         return(
             <View style={{flex:1}}>
@@ -121,6 +156,17 @@ class Silver extends React.Component{
                                 <Container style={styles.marg}>  
                                 </Container>
                             </ScrollView>
+                            {
+                                this.props.users.carte_id !=2 ? (
+                                    <View style={styles.sectionbtn}>  
+                                        <TouchableOpacity onPress={()=>this.souscrire()} style={styles.button}>
+                                            <Text style={styles.textButton}>Souscrire</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                ):(
+                                    <View></View>
+                                )
+                            }
                         </View>
                     )
                 }
@@ -145,12 +191,12 @@ const styles=StyleSheet.create({
         marginTop:30
     },
     text3:{
-        fontSize:14,
-        color:'green',
+        fontSize:12,
+        // color:'green',
     },
     text4:{
-        fontSize:13,
-        color:'silver'
+        fontSize:12,
+        // color:'silver'
 
     },
     icon:{
@@ -158,7 +204,7 @@ const styles=StyleSheet.create({
         fontSize:25
     },
     icon2:{
-        color:'silver',
+        color:'red',
         fontSize:25
     },
     paragr2:{
@@ -170,10 +216,41 @@ const styles=StyleSheet.create({
         marginBottom:5
     },
     marg:{
-        height:50,
+        height:130,
         backgroundColor:'transparent',
 
-    }
+    },    
+    sectionbtn:{
+        alignItems: "center",
+        height:'50%',
+        marginBottom:'5%',
+        backgroundColor:'transparent',
+        position:'absolute',
+        top:'78%',
+        left:'5%',
+        width:'90%'        
+    },
+    button: {
+        width: 320,
+        alignItems: "center",
+        backgroundColor: "#2E3682",
+        color: "white",
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 30,
+        marginBottom:10,
+    },
+    textButton: {
+        color: "white",
+        textAlign: "center",
+        fontSize: 14,
+
+    },
 });
 
-export default Silver
+const mapStateToProps=(state) => {
+    return {
+        users:state.users
+    }
+}
+export default connect(mapStateToProps)(Silver)

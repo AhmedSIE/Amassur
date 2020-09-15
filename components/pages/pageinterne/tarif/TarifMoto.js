@@ -10,7 +10,7 @@ import AppLoading from '../../../AppLoading';
 
 
 
-class AssuranceMoto extends React.Component{
+class TarifMoto extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -572,4 +572,4 @@ const mapStateToProps=(state)=>{
         users:state.users
     }
 }
-export default connect(mapStateToProps)(AssuranceMoto)
+export default connect(mapStateToProps)(TarifMoto)

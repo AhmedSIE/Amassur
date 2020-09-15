@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AppLoading from '../../../AppLoading';
 
-class AssuranceSante extends React.Component{
+class TarifSante extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -1545,4 +1545,4 @@ const mapStateToProps=(state) => {
     }
 }
 
-export default connect(mapStateToProps)(AssuranceSante)
+export default connect(mapStateToProps)(TarifSante)

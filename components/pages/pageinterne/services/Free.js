@@ -43,7 +43,7 @@ class Free extends React.Component{
     }
 
     services = async()=> {
-        await fetch('http://192.168.11.62:8000/api/services/servicesfree',{
+        await fetch('http://192.168.1.101:8000/api/services/servicesfree',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -96,7 +96,7 @@ class Free extends React.Component{
                                 <Text style={styles.text4}>{item.libelle}</Text>
                             </Left>
                             <Right>
-                                <FontAwesome name="check-circle" style={styles.icon2}/>
+                                <FontAwesome name="times-circle" style={styles.icon2}/>
                             </Right>
                         </ListItem>
                     </View>
@@ -147,12 +147,12 @@ const styles=StyleSheet.create({
         marginTop:30
     },
     text3:{
-        fontSize:14,
-        color:'green',
+        fontSize:12,
+        // color:'green',
     },
     text4:{
-        fontSize:13,
-        color:'silver'
+        fontSize:12,
+        // color:'silver'
 
     },
     icon:{
@@ -160,7 +160,7 @@ const styles=StyleSheet.create({
         fontSize:25
     },
     icon2:{
-        color:'silver',
+        color:'red',
         fontSize:25
     },
     paragr2:{
@@ -172,7 +172,7 @@ const styles=StyleSheet.create({
         marginBottom:5
     },
     marg:{
-        height:50,
+        height:100,
         backgroundColor:'transparent',
     }
 });

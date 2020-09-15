@@ -15,6 +15,10 @@ import PageAssuranceAuto from './../components/pages/pageinterne/assurances/Assu
 import PageAssuranceSante from './../components/pages/pageinterne/assurances/AssuranceSante';
 import PageAssuranceMoto from './../components/pages/pageinterne/assurances/AssuranceMoto';
 import PageAssuranceMaison from './../components/pages/pageinterne/assurances/AssuranceMaison';
+import PageTarifAuto from './../components/pages/pageinterne/tarif/TarifAuto';
+import PageTarifSante from './../components/pages/pageinterne/tarif/TarifSante';
+import PageTarifMoto from './../components/pages/pageinterne/tarif/TarifMoto';
+import PageTarifMaison from './../components/pages/pageinterne/tarif/TarifMaison';
 import CardFree from './../components/pages/pageinterne/services/Free';
 import CardSilver from './../components/pages/pageinterne/services/Silver';
 import CardGold from './../components/pages/pageinterne/services/Gold';
@@ -82,6 +86,7 @@ function UserSpaceDrawer (props) {
             tabBarOptions={{
               activeTintColor: '#2E3682',
               inactiveTintColor: 'gray',
+              keyboardHidesTabBar:true
             }}
         >
             <Tab.Screen name="Accueil" component={Accueil} />
@@ -159,6 +164,30 @@ class UserNavigation extends React.Component {
                 <RootUserStack.Screen 
                         name="Assurance Sante" 
                         component={PageAssuranceSante}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Tarif Auto" 
+                        component={PageTarifAuto}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Tarif Moto" 
+                        component={PageTarifMoto}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Tarif Maison" 
+                        component={PageTarifMaison}
+                        options={{
+                          headerShown: true
+                        }} />
+                <RootUserStack.Screen 
+                        name="Tarif Sante" 
+                        component={PageTarifSante}
                         options={{
                           headerShown: true
                         }} />

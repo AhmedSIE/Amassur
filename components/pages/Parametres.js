@@ -36,7 +36,7 @@ class Parametres extends React.Component {
     onShare = async () => {
         const result = await Share.share({
             title: 'App link',
-            message: "Veuillez installer cette application facile d'utilisation pour vos assurances , AppLink :https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en", 
+            message: "Souscrivez et ggerez votre assurance en un clic en Téléchargeant cette application : https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en", 
             url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en'
         });
     }

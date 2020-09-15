@@ -41,7 +41,7 @@ class Accueil extends React.Component {
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.11.62:8000/api/auth/notifications',{
+            await fetch('http://192.168.1.101:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -385,9 +385,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:'85%',
         left:'5%',
-        width:'90%'
-        
-        
+        width:'90%'        
     },
     image1:{
         height:35,
