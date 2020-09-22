@@ -83,7 +83,7 @@ class Contrats extends React.Component {
                                         <SafeAreaView style={styles.modalView}>
                                             { 
                                                 <WebView
-                                                    source={{ uri: "http://192.168.1.101:8000/storage/"+this.state.contrat}}
+                                                    source={{ uri: "http://192.168.1.123:8000/storage/"+this.state.contrat}}
                                                     startInLoadingState={true} 
                                                     renderLoading={this.renderLoadingView}
                                                     style={{flex: 1}}

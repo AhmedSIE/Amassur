@@ -41,7 +41,7 @@ class Accueil extends React.Component {
     }
     mesnotifications = async()=>{
             this.setState({ loading: false })
-            await fetch('http://192.168.1.101:8000/api/auth/notifications',{
+            await fetch('http://192.168.1.123:8000/api/auth/notifications',{
                 method:'get',
                 headers:{
                     'Accept':'application/json',
@@ -58,6 +58,10 @@ class Accueil extends React.Component {
                 console.log(e);
                 this.notification2();
             });
+    }
+
+    heure=(heur) => {
+        // return <Text style={styles.entete7}>{heur}</Text> 
     }
     notifications= () => {
         return  <FlatList
@@ -77,7 +81,7 @@ class Accueil extends React.Component {
                                 <Text style={styles.paragr}>
                                     {item.description}
                                 </Text>
-                                {/* <Text style={styles.entete7}>{item.created_at}</Text> */}
+                                {this.heure(item.created_at)}
                             </Body>
                         </CardItem>
                     </Card>

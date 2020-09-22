@@ -48,7 +48,7 @@ class Portefeuille extends React.Component{
     }
 
     fetchListData = async () => {
-        const response = await fetch('http://192.168.1.101:8000/api/assurances/fichiers',{
+        const response = await fetch('http://192.168.1.123:8000/api/assurances/fichiers',{
             method:'post',
             headers:{
                 'Accept':'Application/json',

@@ -44,7 +44,7 @@ class Silver extends React.Component{
     }
 
     services = async()=>{
-        await fetch('http://192.168.1.101:8000/api/services/servicessilver',{
+        await fetch('http://192.168.1.123:8000/api/services/servicessilver',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -107,7 +107,7 @@ class Silver extends React.Component{
     }
     souscrire= async()=>{
         const carte=2;
-        await fetch('http://192.168.1.101:8000/api/services/servicessourcription',{
+        await fetch('http://192.168.1.123:8000/api/services/servicessourcription',{
             method:'post',
             headers:{
                 'Accept':'Application/json',

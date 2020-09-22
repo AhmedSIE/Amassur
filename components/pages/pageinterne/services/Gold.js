@@ -44,7 +44,7 @@ class Gold extends React.Component{
     }
 
     services = async()=>{
-        await fetch('http://192.168.1.101:8000/api/services/servicesgold',{
+        await fetch('http://192.168.1.123:8000/api/services/servicesgold',{
             method:'get',
             headers:{
                 'Accept':'application/json',
@@ -108,7 +108,7 @@ class Gold extends React.Component{
 
     souscrire= async()=>{
         const carte=3;
-        await fetch('http://192.168.1.101:8000/api/services/servicessourcription',{
+        await fetch('http://192.168.1.123:8000/api/services/servicessourcription',{
             method:'post',
             headers:{
                 'Accept':'Application/json',

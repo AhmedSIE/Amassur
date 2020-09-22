@@ -93,7 +93,7 @@ class TarifMoto extends React.Component{
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.101:8000/api/assurances/assuranceMoto/save',{
+        await fetch('http://192.168.1.123:8000/api/assurances/assuranceMoto/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',

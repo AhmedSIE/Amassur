@@ -70,7 +70,7 @@ class Messages extends React.Component{
     }
     
     lesmessages = async()=>{
-        await fetch('http://192.168.1.101:8000/api/messages/message',{
+        await fetch('http://192.168.1.123:8000/api/messages/message',{
             method:'post',
             headers:{
                 'Accept':'application/json',
@@ -120,7 +120,7 @@ class Messages extends React.Component{
     }
     onSend = async(msg) => {
         if (msg.length>0) {
-            await fetch('http://192.168.1.101:8000/api/messages/message/save',{
+            await fetch('http://192.168.1.123:8000/api/messages/message/save',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',

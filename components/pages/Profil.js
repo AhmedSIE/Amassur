@@ -62,7 +62,7 @@ class Profil extends React.Component {
         if (this.state.resourcePath != null) {
             const photo = this.state.resourcePath;
             this.setState({ loading: true })
-            await fetch('http://192.168.1.101:8000/api/auth/photo',{
+            await fetch('http://192.168.1.123:8000/api/auth/photo',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',
@@ -136,7 +136,7 @@ class Profil extends React.Component {
         } else{
             
             this.setState({ loading: true })
-            await fetch('http://192.168.1.101:8000/api/auth/edit',{
+            await fetch('http://192.168.1.123:8000/api/auth/edit',{
                 method:'POST',
                 headers:{
                     'Accept':'application/json',

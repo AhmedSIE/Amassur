@@ -160,7 +160,7 @@ class AssuranceSante extends React.Component{
 
     valider = async() => {
         this.setState({ loading: true })
-        await fetch('http://192.168.1.101:8000/api/assurances/assuranceSante/save',{
+        await fetch('http://192.168.1.123:8000/api/assurances/assuranceSante/save',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
