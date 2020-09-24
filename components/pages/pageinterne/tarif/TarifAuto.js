@@ -35,7 +35,7 @@ class TarifAuto extends React.Component{
     }
     
     non=()=>{
-        this.props.navigation.navigate('Accueil');
+        this.setState({modalVisible:false})
     }
 
     onValuetype(value: string) {this.setState({ville: value});}
@@ -68,7 +68,6 @@ class TarifAuto extends React.Component{
                 tariftoutrisque:resData.tariftoutrisque,
                 tarifsimple:resData.tarifsimple
              })
-            console.log(resData.tariftoutrisque)
         })
         .catch((e) =>{
             this.setState({ loading: false })
@@ -87,15 +86,15 @@ class TarifAuto extends React.Component{
                        this.state.tarifsimple.length>0 ? (
                         <View>
                             <Separator bordered>
-                                <Text>Garantie au tiers</Text>
+                                <Text>Garantie au tiers(en FCFA)</Text>
                             </Separator>
                             <FlatList
                                 data={this.state.tarifsimple}
                                 renderItem={
                                 ({item})=>
                                 <ListItem>
-                                    <Text>{item.assureur}</Text>
-                                    <Text>{item.frais}</Text>
+                                    <Left><Text>{item.assureur}</Text></Left>
+                                    <Right><Text>{item.frais} </Text></Right>
                                 </ListItem>
                                 }
                             />
@@ -108,7 +107,7 @@ class TarifAuto extends React.Component{
                        this.state.tariftoutrisque.length>0 ? (
                         <View>
                             <Separator bordered>
-                                <Text>Tous risques</Text>
+                                <Text>Tous risques(en FCFA)</Text>
                             </Separator>
                             <FlatList
                                 data={this.state.tariftoutrisque}
@@ -116,7 +115,7 @@ class TarifAuto extends React.Component{
                                 ({item})=>
                                 <ListItem>
                                     <Left><Text>{item.assureur}</Text></Left>
-                                    <Right><Text>{item.frais}</Text></Right>
+                                    <Right><Text>{item.frais} FCFA</Text></Right>
                                 </ListItem>
                                 }
                             />
@@ -454,8 +453,8 @@ const styles=StyleSheet.create({
     aucun:{
         flex:1,
         paddingTop:40,
-        paddingLeft:25,
-        paddingRight:25,
+        paddingLeft:15,
+        paddingRight:15,
         alignItems:'center',
         justifyContent:'center',
     }
